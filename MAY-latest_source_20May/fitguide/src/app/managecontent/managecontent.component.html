@@ -1,0 +1,163 @@
+<div *ngIf="apiFlag == true" id="overlay">
+  <div id="text">Processing...<br /><i class="fa fa-spinner fa-spin" style="font-size:24px;color:rgb(0,0,0);"></i>
+  </div>
+  <div id="info_alert" class="alert_info alert" style="display: none;">
+      <span class="closebtn" (click)="close1()">&times;</span>
+      <strong>{{successMessage}}</strong>
+  </div>
+  <div id="info_success" class="success_info success" style="display: none;">
+      <span class="closebtn" (click)="close1()">&times;</span>
+      <strong>{{successMessage}}</strong>
+  </div>
+</div>
+
+<!-- begin row -->
+<div class="row">
+    <div class="col-xl-12"  >
+        <!-- begin panel -->
+        <div class="panel panel-inverse" style="margin: 0px !important;">
+         <!-- begin panel-heading -->
+            <div class="panel-heading">
+                <div class="row">
+                <div class="col-xl-5" style="margin-left: 30px;">
+                    <label>Quick Filter :</label> &nbsp;&nbsp;&nbsp;<input type="text" class="agform" placeholder="Filter quickly..." (keyup)="quickSearch()" [(ngModel)]="searchValue"><br/>
+                </div>
+                </div>
+            </div>
+            <!-- end panel-heading -->
+            <!-- begin panel-body -->
+            <div class="panel-body">                
+                
+                <ag-grid-angular id="ag_grid"
+                        style="width:100%;height: 67vh !important;"
+                        class="ag-theme-alpine"
+                        [rowData]="rowData"
+                        [columnDefs]="columnDefs"
+                        [modules]="modules"
+                        [animateRows]="true"
+                        [frameworkComponents]="frameworkComponents"
+                        (gridReady)="onGridReady($event)"
+                        [pagination]="true"
+                        [gridOptions]="gridOptions"
+                >
+            </ag-grid-angular>
+            </div>
+            <!-- end panel-body -->      
+        </div>
+        <!-- end panel -->
+    </div>
+</div>
+
+
+<div class="calloutmodal" id="modalEditContent">
+    <div class="modals-content">
+       <!--  <div class="icon" style="cursor: pointer;"> -->
+            <!-- <a style="cursor: pointer;" (click)="cancelIgn()" title="Close" class="close">X</a> -->
+            <!-- <div style="float:right"> -->
+             
+           <!--  </div>
+        </div> -->
+        <div class="modal-header">
+          <a style="cursor: pointer;z-index: 1;" (click)="cancelIgn()" title="Close" class="close">X</a>
+            <!-- <h4 class="modal-title" id="modal-title">Edit Content Details Here...</h4>
+            <div style="float:right">
+              <button type="button" (click)=" cancelIgn()"
+              style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+              class="btn btn-sm btn-danger">Back</button>&nbsp;&nbsp;
+          <button type="button" (click)="editContent()"
+              style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+              class="btn btn-sm btn-primary">Save</button>
+            </div> -->
+        </div>
+        <div class="modal-body">
+           <!--  <div class="row">
+                <div class="col-xl-12 order-xl-1">
+                    <div class="card-body modal-form">
+                        <div class="card-header bg-white border-0" style= "background-color:#fff !important; "> -->
+                            <form (ngSubmit)="editContent()" [formGroup]="form">
+                                <div class="row">
+                                  <div class="col-xl-12 order-xl-1">
+                                    <div class="card bg-secondary shadow">
+                                      <div class="card-header bg-white border-0">
+                                        <div class="row align-items-center">
+                                          <div class="col-lg-8 col-md-6 col-xs-6">
+                                            <h5 class="mb-0">Edit Content Details Here...</h5>
+                                          </div>
+                                          <div class="col-lg-4 col-md-6 col-xs-6 text-right" style="float: right">
+                                            <button type="button" (click)=" cancelIgn()"
+              style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+              class="btn btn-sm btn-danger" id="buttons">Back</button>
+          <button type="button" (click)="editContent()"
+              style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+              class="btn btn-sm btn-primary" id="buttons">Save</button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="card-body"  style="overflow-x:hidden;overflow-y: auto;margin-top: 10px;height: 42vh;">
+                                        <h6 class="heading-small text-muted mb-2">Edit Content information</h6>
+                                        <div class="pl-lg-4" style="height: 60vh; margin-top: 5px; max-height: 50%; margin-left: 0px;">                      
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                  <div class="form-group">
+                                                    <label class="form-control-label" for="input-pname">Page Name</label>
+                                                    <input type="text" formControlName="pageName" readonly class="form-control form-control-alternative" placeholder="Please enter the page name" >  
+                                                  </div>
+                                                </div>   
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                      <label class="form-control-label" for="input-sname">Section Name</label>
+                                                      <input type="text" formControlName="sectionName" readonly class="form-control form-control-alternative" placeholder="Please enter the section name" >  
+                                                    </div>
+                                                </div>                                                   
+                                              </div>
+                                              <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="form-group">
+                                                      <label class="form-control-label" for="input-tdata">Text Data</label>
+                                                      <textarea *ngIf="richText == false" id="textData" name="textData" placeholder="Please enter the text data" class="form-control form-control-alternative" formControlName="textData" rows="3" cols="50"></textarea>
+                                                    </div>
+                                                    <div *ngIf="richText == true" class="NgxEditor__Wrapper">
+                                                      <angular-editor formControlName="editorContent" [(ngModel)]="html" [config]="config"></angular-editor>
+                                                    </div>
+                                                </div>
+                                              </div>
+                                              <div class="row">
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                      <br/>
+                                                      <label class="form-control-label" for="store-image">Image</label>
+                                                      <img *ngIf="prevImage" src={{prevImage}} width="300px" height="150px"><br/><br/>
+                                                      <input type="file" formControlName="imageData" (change)="fileEvent($event)" />                                   
+                                                    </div>
+                                                  </div> 
+                                              </div> 
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <!-- <div class="card-header bg-white border-0">
+                                      <div class="row align-items-center">
+                                        <div class="col-12 text-right">
+                                          <button type="button" (click)="back()" class="btn btn-sm btn-danger">Back</button>
+                                          <button type="button" [disabled]="clicked" (click)="editContent()" class="btn btn-sm btn-primary">Save</button>
+                                        </div>
+                                      </div>
+                                    </div> -->
+                                    <!-- <button type="button" (click)="cancelIgn()"
+                    style="background-color: #c0c3d1; min-height: 36px; border: #c0c3d1; border-radius: 5px; color: #343643; font-family: Roboto; font-size: 14px; line-height: 20px;float:right"
+                    class="btn btn-sm btn-danger">Back</button>&nbsp;&nbsp;
+                <button type="button" (click)="editContent()"
+                    style="background-color: #1c3fff; min-height: 36px; border: #1c3fff; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;float:right;margin-right: 5px;"
+                    class="btn btn-sm btn-primary">Save</button> -->
+                                  </div>
+                                </div>
+                              </form>
+                      <!--   </div>
+                    </div>
+                </div>
+                
+            </div> -->
+           
+        </div>
+        
+        </div>
+</div>

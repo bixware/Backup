@@ -1,0 +1,23 @@
+<div class="iconContainer">
+    <i (click)="view()" class="ri-eye-line" title="View More Details" style="font-size: 20px;
+    color: #026680;cursor:pointer"></i>&nbsp;&nbsp;
+    <i (click)="edit()" class="ri-file-edit-fill" style="font-size: 20px;
+    color: #026680;cursor:pointer" title="Edit Vehicle"></i>&nbsp;&nbsp;
+    <i (click)="duplicate()" class='ri-file-copy-2-fill' style="font-size: 20px;
+    color: #026680;cursor:pointer" title="Duplicate Vehicle"></i>
+    <i *ngIf="params.data.ArchStatus != '1'" class="ri-archive-fill" (click)="archive()" style="cursor:pointer; font-size: 20px; margin-left: 10px;color: #026680;" title="Archive"></i>&nbsp;&nbsp;
+    <i *ngIf="params.data.ArchStatus == '1'" class='ri-creative-commons-sa-fill' (click)="restore()" style="cursor:pointer; font-size: 20px;color: #026680;"  title="Restore"></i>
+    <i *ngIf="params.data.ArchStatus == '1'" (click)="archiveDelete()" class="ri-delete-bin-5-fill icon_btn_danger" title="Delete archive part" style="cursor:pointer !important;font-size: 20px;" ></i>
+    </div>
+    <div class="slideContainer">
+        <label class="switch">
+            <input type="checkbox" id="{{'c_' + params.value}}" (click)="updateActive()" [checked]="params.data.isActive == '1'">
+            <div class="slider round"></div>
+        </label>
+    </div>
+   <!--  <label class="switch">
+        <input type="checkbox" class="switch-input">
+        <span class="switch-label" data-on="Active" data-off="InActive"></span>
+        <span class="switch-handle"></span>
+    </label> -->
+    

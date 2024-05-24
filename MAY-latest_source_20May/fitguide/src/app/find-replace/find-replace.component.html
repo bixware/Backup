@@ -1,0 +1,78 @@
+<div *ngIf="apiFlag == true" id="overlay">
+    <div id="text">Processing...<br/><i class="fa fa-spinner fa-spin" style="font-size:24px;color:rgb(0,0,0);"></i></div>
+    <div id="info_alert" class="alert_info alert" style="display: none;">
+      <span class="closebtn" (click)="close1()">&times;</span> 
+      <strong>{{successMessage}}</strong>
+    </div>
+    <div id="info_success" class="success_info success" style="display: none;">
+      <span class="closebtn" (click)="close1()">&times;</span> 
+      <strong>{{successMessage}}</strong>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xl-12 col-xs-12 col-md-12">
+        <div class="card">
+            <div class="card-body">
+                 <div class="style-module-formGroup-fo3l">
+<form [formGroup]="form" style="margin-top: 25px;">
+    <div class="col-lg-3 col-sm-4">
+        <div class="form-group focused">
+          <label class="form-control-label" for="input-sname">Select Section<span class="text-danger">*</span></label>
+          <select class="form-select form-control-alternative" formControlName="sectionName" placeholder="Select Section" [ngClass]="{ 'is-invalid': submitted && f.sectionName.invalid }" required>
+            <option value="">Select Section</option>
+            <option [value]="section.searchSectionName" *ngFor="let section of sections">{{section.searchSectionName}}</option>
+          </select>
+          <div *ngIf="submitted && f.sectionName.invalid" class="invalid-feedback">
+            <div *ngIf="f.sectionName.errors.required">Section Name is required </div>
+        </div>
+        </div>
+    </div>
+    
+<div class="form-box-content" style="margin-top: 25px;">
+<div class="row"> 
+    <div class="col-lg-4 col-md-4 col-xs-4">   
+    <div class="form-group">
+        <label class="control-label col-md-4">Find:&nbsp;</label>
+        <div class="input-group">
+            <input type="text" class="form-control" formControlName="findpartDisplayHeader">
+            <!--<div *ngIf="submitted && f.find.invalid" class="invalid-feedback">
+                <div *ngIf="f.find.errors.required">Receipt date is required </div>
+            </div>-->
+        </div>
+    </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-xs-4">
+    <div class="form-group">
+        <label class="control-label col-md-4">Replace:&nbsp;</label>
+        <div class="input-group">
+            <input type="text" class="form-control" formControlName="ReplacepartDisplayHeader">
+            <!--<div *ngIf="submitted && f.replace.invalid" class="invalid-feedback">
+                <div *ngIf="f.replace.errors.required">Receipt date is required </div>
+            </div>-->
+        </div>
+    </div>
+    </div>
+    </div>
+<div class="row">
+    <div class="col-lg-4 col-md-4 col-xs-4 mt-2"> 
+    <button type="button" (click)="replace($event)" class="btn btn-sm btn-primary">Replace</button>
+    </div>   
+</div> 
+</div>
+
+
+   
+
+
+<!--<div id="replace" style="display: none;">
+    <span class="closebtn" (click)="close2()">&times;</span> 
+    <strong>User is Archived, Could not Edit</strong>
+</div>-->
+</form>
+</div>
+</div>
+</div>
+</div>
+  </div>
+
+

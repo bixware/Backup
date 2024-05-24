@@ -1,0 +1,171 @@
+<div *ngIf="apiFlag == true" id="overlay">
+    <div id="text">Processing...<br /><i class="fa fa-spinner fa-spin" style="font-size:24px;color:rgb(0,0,0);"></i></div>
+    <div id="info_alert" class="alert_info alert" style="display: none;">
+      <span class="closebtn" (click)="close1()">&times;</span>
+      <strong>{{successMessage}}</strong>
+    </div>
+    <div id="info_success" class="success_info success" style="display: none;">
+      <span class="closebtn" (click)="close1()">&times;</span>
+      <strong>{{successMessage}}</strong>
+    </div>
+  </div>
+  
+  
+  <!-- begin row -->
+  <div class="row">
+    <div class="col-xl-12 order-xl-1">
+      
+      <div class="card bg-secondary shadow">
+        <form (ngSubmit)="addBanner()" [formGroup]="bannerform">
+          <div class="row">
+            <div class="col-xl-12 order-xl-1">
+              <div class="card bg-secondary shadow">
+                <div class="card-header bg-white border-0">
+                  <div class="row align-items-center">
+                    <!-- <div class="col-8">
+                      <h5 class="mb-0">Sign Up Form</h5>
+                    </div> -->
+                    <!--<div class="col-12 text-right">
+                      <button type="button" (click)="back()" class="btn btn-sm btn-danger">Back</button>
+                       <button type="submit" (click)="addBanner()" class="btn btn-sm btn-primary">Save</button> 
+                    </div>-->
+                  </div>
+                </div>
+                
+                  <div class="col-xl-12">
+                    <img src={{contentImage}} width="100%" height="400px">
+                  </div>
+                
+                <br />
+                <div class="row align-items-center">
+                  <div class="col-8">
+                    <h5 class="mb-0" style="margin-left: 15px;">Sign Up Form</h5>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="pl-lg-4">
+                    <div class="row">
+                      <div class="col-lg-4">
+                        <div class="form-group focused">
+                          <label class="form-control-label" for="input-first-name">First name <span
+                              class="text-danger">*</span></label>
+                          <input type="text" formControlName="firstName" placeholder="Please Enter First Name" required
+                            class="form-control" id="firstName" name="firstName"
+                            [ngClass]="{ 'is-invalid': submitted && b.firstName?.invalid }" />
+                          <div *ngIf="submitted && b.firstName?.invalid" class="invalid-feedback">
+                            <div *ngIf="b.firstName.errors.required">First Name is required</div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- <div class="col-lg-4">
+                        <div class="form-group focused">
+                          <label class="form-control-label" for="input-last-name">Last name <span
+                              class="text-danger">*</span></label>
+                          <input type="text" formControlName="lastName" placeholder="Please Enter Last Name" required
+                            class="form-control" id="lastName" name="lastName"
+                            [ngClass]="{ 'is-invalid': submitted && b.lastName?.invalid }" />
+                          <div *ngIf="submitted && b.lastName?.invalid" class="invalid-feedback">
+                            <div *ngIf="b.lastName.errors.required">Last Name is required</div>
+                          </div>
+                        </div>
+                      </div> -->
+                      <div class="col-lg-4">
+                        <div class="form-group focused">
+                          <label class="form-control-label" for="input-email">Email <span
+                              class="text-danger">*</span></label>
+                          <input type="text" formControlName="email" required class="form-control"
+                            placeholder="Please Enter Email" id="email" name="email"
+                            [ngClass]="{ 'is-invalid': submitted && b.email?.invalid }" email />
+                          <div *ngIf="submitted && b.email?.invalid" class="invalid-feedback">
+                            <div *ngIf="b.email.errors.required">Email is required</div>
+                            <div *ngIf="b.email.errors.email">Email format should be required</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-4">
+                        <div class="form-group focused">
+                          <label class="form-control-label" for="input-store">Store <span
+                              class="text-danger">*</span></label>
+                          <input type="text" formControlName="store" placeholder="Please Enter Store" required
+                            class="form-control" id="store" name="store"
+                            [ngClass]="{ 'is-invalid': submitted && b.store.invalid }" />
+                          <div *ngIf="submitted && b.store.invalid" class="invalid-feedback">
+                            <div *ngIf="b.store.errors.required">Store is required</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-4">
+                        <div class="form-group">
+                          <label class="form-control-label" for="input-phone">Phone <span
+                              class="text-danger">*</span></label>
+                          <input type="text" formControlName="phone" id="Phone" name="phone"
+                            class="form-control form-control-alternative" placeholder="Please Enter Phone Number"
+                            [ngClass]="{ 'is-invalid': submitted && b.phone.invalid }" required>
+                          <div *ngIf="submitted && b.phone.invalid" class="invalid-feedback">
+                            <div *ngIf="b.phone.errors.required">Phone is required</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <label class="form-control-label" for="input-decisionmakername"  style="margin-left: 10px;">Decision Maker For Business?<span
+                        class="text-danger">*</span></label>
+                      <div class="form-check" class="col-lg-3">
+                        <input type="radio" value="1" id="yes" name="isDecisionMaker" formControlName="checkyes" (click)="setDecisionMaker()" [ngClass]="{ 'is-invalid': submitted && b.checkyes.invalid}">
+                        <label class="rolecheckbox">Yes</label>
+  
+                        <input type="radio" value="0" id="no" (click)="setDecisionMaker()" name="isDecisionMaker" formControlName="checkyes" [ngClass]="{ 'is-invalid': submitted && b.checkyes.invalid}">
+                        <label class="rolecheckbox">No</label>
+                        <div *ngIf="submitted  && b.checkyes.invalid" class="invalid-feedback">
+                          <div *ngIf="b.checkyes.errors.required">Decision Maker is required</div>
+                        </div>
+                      </div>
+                      <div class="col-lg-4" *ngIf="decisionMakerFlag == true">
+                        <input type="text" formControlName="decisionMakerName"
+                          placeholder="Please Enter Decision Maker Name" class="form-control" id="decisionMakerName"
+                          name="decisionMakerName" style="margin-left: -74px;" [ngClass]="{ 'is-invalid': submitted && b.decisionMakerName.invalid }" required/>
+                          <div *ngIf="submitted && decisionCheckError" class="invalid-feedback">
+                            <div *ngIf="b.decisionMakerName.errors.required">DecisionMakerName is required</div>
+                          </div>
+                          <!-- <div *ngIf="submitted && b.decisionMakerName.invalid" class="invalid-feedback">
+                            <div *ngIf="b.decisionMakerName.errors.required">DecisionMakerName is required</div>
+                          </div>-->
+                      </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                      <div class="col-lg-8">
+                        <div class="form-group">
+                          <input id="isOtherFeatures" type="radio" value="0" name="isOtherFeatures"
+                            formControlName="isOtherFeatures" (change)="changeFeature($event)"
+                            [ngClass]="{ 'is-invalid': submitted && b.isOtherFeatures.invalid}">
+                          <label class="rolecheckbox">I want Information on what other features the12vdashboard
+                            has</label>
+                          <br />
+                          <input id="isOtherFeatures" type="radio" value="1" name="isOtherFeatures"
+                            formControlName="isOtherFeatures" (change)="changeFeature($event)"
+                            [ngClass]="{ 'is-invalid': submitted && b.isOtherFeatures.invalid}">
+                          <label class="rolecheckbox">I already know all the cool stuff the12vdashboard has - Sign me
+                            up!</label>
+                          <div *ngIf="submitted  && b.isOtherFeatures.invalid" class="invalid-feedback">
+                            <div *ngIf="b.isOtherFeatures.errors.required">Select Sign up Option</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 text-right">
+                      
+                      <button type="submit" class="btn btn-sm btn-primary">Sign Up</button>
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

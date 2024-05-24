@@ -1,0 +1,19 @@
+<div class="iconContainer">
+    <i (click)="view()" class="ri-eye-line" title="View More Details"
+     style="font-size: 20px;color: #026680;cursor:pointer;margin-right: -8px;"></i>&nbsp;&nbsp;   
+    <i (click)="edit()" class="ri-file-edit-fill" title="Edit Callout"
+     style="font-size: 20px;color: #026680;cursor:pointer;margin-right: -8px;"></i>&nbsp;&nbsp;   
+    <i (click)="duplicate()" class="ri-file-copy-2-fill" title="Duplicate Callout"
+     style="font-size: 20px;color: #026680;cursor:pointer;margin-right: -8px;"></i>
+    <i *ngIf="params.data.ArchStatus != '1'" class="ri-archive-fill" (click)="archive(1)" style="cursor:pointer; font-size: 20px; color: #026680;margin-left: 10px;" title="Archive"></i>&nbsp;&nbsp;
+    <i *ngIf="params.data.ArchStatus == '1'" class='fa fa-window-restore' (click)="restore(0)" style="cursor:pointer; font-size: 20px; color: #026680;" title="Restore"></i>
+    <i (click)="openModal('focusFirst')" class="fa fa-trash icon_btn_danger handCursor" title="delete callout" style="cursor:pointer;  color: #026680;"></i>&nbsp;&nbsp;
+</div>
+<div class="slideContainer">
+   <label class="switch">
+        <input type="checkbox" id="{{'c_' + params.value}}" (click)="updateActive()" [checked]="params.data.isActive == '1'">
+        <div class="slider round"></div>
+    </label>
+</div>
+
+<!-- <div [innerHTML]="params.value"></div> -->

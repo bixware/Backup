@@ -1,0 +1,520 @@
+<div *ngIf="apiFlag == true" id="overlay">
+  <div id="text">Processing...<br /><i class="fa fa-spinner fa-spin" style="font-size:24px;color:rgb(0,0,0);"></i>
+  </div>
+  <div id="info_alert" class="alert_info alert" style="display: none;">
+    <span class="closebtn" (click)="close1()">&times;</span>
+    <strong>{{successMessage}}</strong>
+  </div>
+  <div id="info_success" class="success_info success" style="display: none;">
+    <span class="closebtn" (click)="close1()">&times;</span>
+    <strong>{{successMessage}}</strong>
+  </div>
+</div>
+<!-- begin row -->
+<div class="row">
+  <div class="col-xl-12">
+    <!-- begin panel -->
+    <div class="panel panel-inverse" style="margin: 0px !important;">
+      <!-- begin panel-heading -->
+      <div class="panel-heading">
+        <div class="row">
+          <!-- <div class="col-xl-5">
+            <div style="margin-left: 30px;">
+              <label>Quick Filter :</label> &nbsp;&nbsp;&nbsp;<input type="text" class="agform"
+                placeholder="Filter quickly..." (keyup)="quickSearch()" [(ngModel)]="searchValue"><br />
+            </div>
+
+          </div>
+          <div class="col-xl-5"></div>
+          <div class="col-xl-2" style="margin-top: 17px;justify-content: right;display: flex;padding-right: 22px;">
+            <div style="float:right;">
+              <a (click)="AddBanner()" class="button btn-xs icon_btn_primary" title="Add New Banner"><i
+                  class="fe-plus me-1" style="padding: 7px 9px 7px 0px;
+                          border-radius: 5px;
+                          color: #fff;font-size: 16px;
+                          border-color: #00c9fd;
+                          background-color: #00c9fd;
+                          cursor:pointer;">Add New</i></a>&nbsp;&nbsp;
+            </div>
+          </div> -->
+          <div class="col-12">
+            <div class="page-title-boxnew">
+                <div class="style-module-titleWrap-mfvE" data-e2e="headerContentBlock">
+                  
+                    <label>Quick Filter :</label><input type="text" class="agform"
+                      placeholder="Filter quickly..." (keyup)="quickSearch()" [(ngModel)]="searchValue">
+                  
+                </div>
+  
+            <div class="style-module-actions-t2Ea mt-2" data-e2e="headerActionsBlock">
+              <a (click)="AddBanner()" class="button btn-xs icon_btn_primary" title="Add New Banner"><i
+                class="fe-plus me-1" style="padding: 7px 9px 7px 0px;
+                        border-radius: 5px;
+                        color: #fff;font-size: 16px;
+                        border-color: #00c9fd;
+                        background-color: #00c9fd;
+                        cursor:pointer;">Add New</i></a>
+    <!-- <button class="style-module-btn-dck8 style-module-btn_primary-x7pK style-module-btn_m-yQoV"   data-e2e="saveCompanyChanges" type="button">Save
+    </button> -->
+            </div>
+  
+  
+            </div>
+        </div>
+          <div class="panel-heading-btn">
+
+            <!-- <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a> -->
+          </div>
+        </div>
+
+
+
+      </div>
+      <!-- end panel-heading -->
+      <!-- begin panel-body -->
+      <div class="panel-body">
+
+        <ag-grid-angular id="ag_grid" style="width:100%;height: 62vh;" class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs"
+          [modules]="modules" [tooltipShowDelay]="tooltipShowDelay" [animateRows]="true"
+          [frameworkComponents]="frameworkComponents" (gridReady)="onGridReady($event)" [context]="context"
+          [pagination]="true">
+        </ag-grid-angular>
+      </div>
+    </div>
+    <!-- end panel -->
+  </div>
+</div>
+
+
+<div class="calloutmodal" id="modalAddBanner">
+  <div class="modals-content">
+    <!-- <div class="icon" (click)="cancelEdit()" style="cursor: pointer;"> -->
+    <!-- <i style="font-size:23px !important; float:right; margin-top: -37px; margin-right:-37px;" title="Close" class="fa fa-window-close"></i> -->
+    <!-- <a (click)="close1()" style="cursor: pointer;" title="Close" class="close">X</a> -->
+    <!-- <div style="float:right"> -->
+
+    <!-- </div> -->
+    <!--  </div> -->
+    <div class="modal-header">
+      <!-- <h4 class="modal-title" id="modal-title">Add Banner Details Here...</h4>
+      <div style="float:right">
+        <button type="button" (click)="close1()"
+        style="background-color: #00c9fd; min-height: 36px;border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+        class="btn btn-sm btn-danger">Back</button>&nbsp;&nbsp;
+      <button type="button" (click)="addBanner()"
+        style="background-color: #00c9fd; min-height: 36px;border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+        class="btn btn-sm btn-primary">Save</button>
+      </div> -->
+      <a (click)="close1()" style="cursor: pointer;" title="Close" class="close">X</a>
+    </div>
+    <div class="modal-body" style="overflow-x:hidden;overflow-y: auto;margin-top: 22px;">
+      <div class="row">
+        <div class="col-xl-12 order-xl-1">
+          <!-- <div class="card-body" style="height: 100vh; margin-top: 22px;  max-height: 50%; width: auto;">
+                        <div class="card-header bg-white border-0" style= "background-color:#fff !important;" > -->
+          <form [formGroup]="form">
+            <!-- <div class="row">
+                                  <div class="col-xl-12 order-xl-1">
+                                    <div class="card bg-secondary shadow">
+                                        <div class="row">
+                                          <div class="col-xl-12 order-xl-1">
+                                            <div class="card bg-secondary shadow"> -->
+            <!-- <div class="card-header bg-white border-0">
+                                                <div class="row align-items-center">
+                                                  <div class="col-8">
+                                                    <h5 class="mb-0">Add Banner Details Here...</h5>
+                                                  </div>
+                                                  <div class="col-4 text-right">
+                                                    <button type="button" (click)="back()" class="btn btn-sm btn-danger">Back</button>
+                                                    <button type="button" [disabled]="clicked" (click)="addBanner()" class="btn btn-sm btn-primary">Save</button>
+                                                  </div>
+                                                </div>
+                                              </div> -->
+            <!-- <div class="card-body">
+                                                <h6 class="heading-small text-muted mb-4">Add Banner Information</h6> -->
+            <div class="pl-lg-4">
+              <div class="row align-items-center">
+                <div class="col-lg-8 col-md-6 col-xs-6">
+                  <h5 class="modal-title" id="modal-title">Add Banner Details Here...</h5>
+                </div>
+                  <div class="col-lg-4 col-md-6 col-xs-6 text-right" style="float: right;">
+                    <button type="button" (click)=" close1()"
+                    style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+                    class="btn btn-sm btn-danger">Back</button>&nbsp;&nbsp;
+                  <button type="button" (click)="addBanner()"
+                    style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+                    class="btn btn-sm btn-primary">Save</button>
+                  
+                  
+                </div>
+              </div>
+              <div class="row mb-2">
+                <div class="col-lg-6">
+                  <div class="form-inline">
+                    <div class=" col-md-12 form-group">
+                      <input type="checkbox" (click)="showPanel('isRightBanner','isTopBanner')" id="isRightBanner"
+                        name="isRightBanner">
+                      <label class="col-sm-4 form-control-label" for="input-ielink" class="rolecheckbox">Is Right
+                        Banner</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-2">
+                <div class="col-lg-6">
+                  <div class="form-inline">
+                    <div class="col-md-12 form-group">
+                      <input type="checkbox" (click)="showPanel('isTopBanner','isRightBanner')" id="isTopBanner"
+                        name="isTopBanner">
+                      <label class="col-sm-4 form-control-label" for="input-ielink" class="rolecheckbox">Is Top
+                        Banner</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-2" formGroupName="rbform" *ngIf="bannerPanel === true">
+                <div class="col-lg-6">
+                  <div class="row">
+                    <div class="form-inline">
+                      <div class="col-md-12 form-group mobileview">
+                        <label class="col-sm-6 form-control-label" for="store-image">Banner Image <span
+                            class="text-danger">*</span></label>
+                        <input type="file" formControlName="bannerImage" (change)="fileEvent($event)"
+                          [ngClass]="{ 'is-invalid': submitted && this.form.get('rbform').get('bannerImage').invalid }"
+                          required />
+                        <div *ngIf="submitted && this.form.get('rbform').get('bannerImage').invalid"
+                          class="invalid-feedback">
+                          <div *ngIf="this.form.get('rbform').get('bannerImage').errors.required">Banner Image is
+                            required</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-inline">
+                      <div class="col-md-12 form-group" style="margin-top: 0.75rem !important;">
+                        <label class="col-sm-4 form-control-label" for="input-web">Web</label>
+                        <input type="text" formControlName="Web" class="form-control form-control-alternative"
+                          placeholder="Please Enter Web">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-2" formGroupName="norbform" *ngIf="sectionPanel === true">
+                <div class="col-lg-12">
+                  <div class="row mb-2">
+                    <div class="col-lg-6">
+                      <div class="form-inline">
+                        <div class="col-md-12 form-group ">
+                          <label class="col-sm-4 form-control-label" for="input-country">Section Name <span
+                              class="text-danger">*</span></label>
+                          <select formControlName="sectionName" class="form-control form-control-alternative" required
+                            [ngClass]="{ 'is-invalid': submitted && this.form.get('norbform').get('sectionName').invalid }">
+                            <option value="">Select Section</option>
+                            <option [value]="section.searchSectionUID" *ngFor="let section of sections">
+                              {{section.searchSectionName}}</option>
+                          </select>
+                          <div *ngIf="submitted && this.form.get('norbform').get('sectionName').invalid"
+                            class="invalid-feedback">
+                            <div *ngIf="this.form.get('norbform').get('sectionName').errors.required">Section Name is
+                              required
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-inline">
+                        <div class="col-md-12 form-group">
+                          <label class="col-sm-4 form-control-label" for="input-tdata">Section Notes <span
+                              class="text-danger">*</span></label>
+                          <textarea id="sectionNotes" required name="sectionNotes"
+                            placeholder="Please enter the section notes"
+                            [ngClass]="{ 'is-invalid': submitted && this.form.get('norbform').get('sectionNotes').invalid }"
+                            class="form-control form-control-alternative" formControlName="sectionNotes" rows="3"
+                            cols="50"></textarea>
+                          <div *ngIf="submitted && this.form.get('norbform').get('sectionNotes').invalid"
+                            class="invalid-feedback">
+                            <div *ngIf="this.form.get('norbform').get('sectionNotes').errors.required">Section Notes is
+                              required
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mb-2">
+                    <div class="col-lg-6">
+                      <div class="form-inline">
+                        <div class="col-md-12 form-group">
+                          <label class="col-sm-4 form-control-label" for="store-image">Section Image <span
+                              class="text-danger">*</span></label>
+                          <input type="file" formControlName="sectionImage" required
+                            [ngClass]="{ 'is-invalid': submitted && this.form.get('norbform').get('sectionImage').invalid }"
+                            (change)="fileSectionEvent($event)" />
+                          <div *ngIf="submitted && this.form.get('norbform').get('sectionImage').invalid"
+                            class="invalid-feedback">
+                            <div *ngIf="this.form.get('norbform').get('sectionImage').errors.required">Section Image is
+                              required
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- </div> -->
+            <!-- </div>
+                                              </div>
+                                            </div> -->
+            <!-- <div class="card-header bg-white border-0"> -->
+            <!-- <div class="row align-items-center">
+                                                <div class="col-12 text-right">
+                                                    <button type="button" (click)="close1()"
+                                                    style="background-color: #c0c3d1; min-height: 36px;border: #c0c3d1; border-radius: 5px; color: #343643; font-family: Roboto; font-size: 14px; line-height: 20px;float:right"
+                                                    class="btn btn-sm btn-danger">Back</button>&nbsp;&nbsp;
+                                                <button type="button" (click)="addBanner()"
+                                                    style="background-color: #1c3fff; min-height: 36px; margin-left: 335px; border: #1c3fff; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;float:right;margin-right: 5px;"
+                                                    class="btn btn-sm btn-primary">Save</button>
+                                                </div>
+                                              </div> -->
+            <!-- </div> -->
+
+            <!-- </div>
+                                        </div>
+                                    </div> -->
+          </form>
+          <!-- </div>
+                    </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="calloutmodal" id="modalEditBanner">
+  <div class="modals-content edit_banner">
+    <!-- <div class="icon" (click)="cancelEdit()" style="cursor: pointer;"> -->
+    <!-- <i style="font-size:23px !important; float:right; margin-top: -37px; margin-right:-37px;" title="Close" class="fa fa-window-close"></i> -->
+    <!-- <a (click)="close1()" style="cursor: pointer;" title="Close" class="close">X</a> -->
+    <!-- <div style="float:right"> -->
+
+    <!-- </div> -->
+    <!--  </div> -->
+    <div class="modal-header">
+      <a (click)="close1()" style="cursor: pointer;z-index: 1;" title="Close" class="close">X</a>
+      <!-- <h4 class="modal-title" id="modal-title">Edit Banner Details Here...</h4>
+      <div style="float:right">
+        <button type="button" (click)="close1()"
+        style="background-color: #00c9fd; min-height: 36px;border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+        class="btn btn-sm btn-danger">Back</button>&nbsp;&nbsp;
+      <button type="button" (click)="updateBanner()"
+        style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+        class="btn btn-sm btn-primary">Save</button>
+      </div> -->
+    </div>
+    <div class="modal-body">
+       <div class="row">
+        <div class="col-xl-12 order-xl-1">
+          <div class="card-body">
+            <div class="card-header bg-white border-0" style="background-color:#fff !important; ">
+      <form [formGroup]="form">
+        <!-- <div class="row">
+                  <div class="col-xl-12 order-xl-1">
+                    <div class="card bg-secondary shadow">
+                      <div class="row">
+                        <div class="col-xl-12 order-xl-1">
+                          <div class="card bg-secondary shadow"> -->
+        <!-- <div class="card-header bg-white border-0">
+                                                <div class="row align-items-center">
+                                                  <div class="col-8">
+                                                    <h5 class="mb-0">Add Banner Details Here...</h5>
+                                                  </div>
+                                                  <div class="col-4 text-right">
+                                                    <button type="button" (click)="back()" class="btn btn-sm btn-danger">Back</button>
+                                                    <button type="button" [disabled]="clicked" (click)="updateBanner()" class="btn btn-sm btn-primary">Save</button>
+                                                  </div>
+                                                </div>
+                                              </div> -->
+        <!-- <div class="card-body">
+                              <h6 class="heading-small text-muted mb-4">Edit Banner Information</h6> -->
+        <div class="pl-lg-4">
+          <div class="row align-items-center">
+            <div class="col-lg-8 col-md-6 col-xs-6">
+              <h5 class="modal-title" id="modal-title">Edit Banner Details Here...</h5>
+            </div>
+              <div class="col-lg-4 col-md-6 col-xs-6 text-right" style="float: right;">
+                <button type="button" (click)="close1()"
+                style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+                class="btn btn-sm btn-danger">Back</button>&nbsp;&nbsp;
+              <button type="button" (click)="updateBanner()"
+                style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+                class="btn btn-sm btn-primary">Save</button>
+              
+              
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-lg-6" id="RightBannnerDiv">
+              <div class="form-inline">
+                <div class="col-md-12 form-group">
+                  <input type="checkbox" disabled="disabled" (click)="showPanel('isRightBanner','isTopBanner')"
+                    id="isRightBanner" name="isRightBanner" checked>
+                  <label class="col-sm-4 form-control-label" for="input-ielink" class="rolecheckbox">Is Right Banner</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-lg-6" id="TopBannnerDiv">
+              <div class="form-inline">
+                <div class="col-md-12 form-group">
+                  <input type="checkbox" disabled="disabled" (click)="showPanel('isTopBanner','isRightBanner')"
+                     id="isTopBanner" name="isTopBanner" checked>
+                  <label class="col-sm-4 form-control-label" for="input-ielink" class="rolecheckbox">Is Top Banner</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-2" formGroupName="rbform" *ngIf="bannerPanel === true">
+            <div class="col-lg-6">
+              <div class="row">
+                <div class="form-inline">
+                  <div class="col-md-12 form-group">
+                    <label class="col-sm-4 form-control-label" for="input-web">Web</label>
+                    <input type="text" formControlName="Web" class="form-control form-control-alternative"
+                      placeholder="Please Enter Web">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-2" formGroupName="rbform" *ngIf="bannerPanel === true">
+            <div class="col-lg-6">
+              <div class="row">
+                <div class="form-inline">
+                  <div class="col-md-12 form-group">
+                    <label class="col-sm-4 form-control-label" for="store-image">Banner Image </label>
+                    <img *ngIf="prevImage" src={{prevImage}} width="280px" height="170px"><br /><br />
+                    <input type="file" formControlName="bannerImage" (change)="fileEvent($event)" />
+                    <br />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-2" formGroupName="norbform" *ngIf="sectionPanel === true">
+            <div class="col-lg-12">
+              <div class="row mb-2">
+                <div class="col-lg-6">
+                  <div class="form-inline">
+                    <div class="col-md-12 form-group">
+                      <label class="col-sm-4 form-control-label" for="input-country">Section Name</label>
+                     <!--  <select formControlName="sectionName" id="sectionName" 
+                        class="form-control form-control-alternative">
+                        <option value="0">Select Section</option>
+                        <option [value]="section.searchSectionUID" *ngFor="let section of sections">
+                          {{section.searchSectionName}}</option>
+                      </select> -->
+                      <select formControlName="sectionName" id="sectionName" class="form-control form-control-alternative" [ngClass]="{ 'is-invalid': submitted && this.form.get('norbform').get('sectionName').invalid }" required>
+                        <option value="0">Select Section</option>
+                        <option [value]="section.searchSectionUID" *ngFor="let section of sections">{{section.searchSectionName}} </option>                                                                 
+                      </select>
+                      <div *ngIf="submitted && this.form.get('norbform').get('sectionName').invalid" class="invalid-feedback">
+                        <div *ngIf="this.form.get('norbform').get('sectionName').invalid">Section Name is required</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-inline">
+                    <div class="col-md-12 form-group">
+                      <label class="col-sm-4 form-control-label" for="input-tdata">Section Notes <span
+                          class="text-danger">*</span></label>
+                      <textarea id="sectionNotes" required name="sectionNotes"
+                        placeholder="Please enter the section notes"
+                        [ngClass]="{ 'is-invalid': submitted && this.form.get('norbform').get('sectionNotes').invalid }"
+                        class="form-control form-control-alternative" formControlName="sectionNotes" rows="3"
+                        cols="50"></textarea>
+                      <div *ngIf="submitted && this.form.get('norbform').get('sectionNotes').invalid"
+                        class="invalid-feedback">
+                        <div *ngIf="this.form.get('norbform').get('sectionNotes').errors.required">Section
+                          Notes is required</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-2">
+                <div class="col-lg-6">
+                  <div class="form-inline">
+                    <div class="col-md-12 form-group">
+                      <label class="col-sm-4 form-control-label" for="store-image">Section Image</label>
+                      <img *ngIf="secImage" src={{secImage}} width="280px" height="170px"><br /><br />
+                      <input type="file" formControlName="sectionImage" (change)="fileSectionEvent($event)" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- </div> -->
+        <!-- </div>
+                        </div>
+                      </div> -->
+        <!-- <div class="card-header bg-white border-0">
+                                              <div class="row align-items-center">
+                                                <div class="col-12 text-right">
+                                                  <button type="button" (click)="back()" class="btn btn-sm btn-danger">Back</button>
+                                                  <button type="button" [disabled]="clicked" (click)="updateBanner()" class="btn btn-sm btn-primary">Save</button>
+                                                  <button type="button" (click)="close1()"
+                    style="background-color: #c0c3d1; min-height: 36px;border: #c0c3d1; border-radius: 5px; color: #343643; font-family: Roboto; font-size: 14px; line-height: 20px;float:right"
+                    class="btn btn-sm btn-danger">Back</button>&nbsp;&nbsp;
+                <button type="button" (click)="updateBanner()"
+                    style="background-color: #1c3fff; min-height: 36px; margin-left: 335px; border: #1c3fff; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;float:right;margin-right: 5px;"
+                    class="btn btn-sm btn-primary">Save</button>
+                                                </div>
+                                              </div>
+                                            </div> -->
+
+        <!-- </div>
+                  </div>
+                </div> -->
+      </form>
+      </div>
+          </div>
+        </div>
+      </div> 
+    </div>
+  </div>
+</div>
+
+<div class="calloutmodal" id="modalDeleteBanner">
+  <div class="modal-delete-content modalnew">
+    <!--  <div class="icon" style="cursor: pointer;"> -->
+    <a style="cursor: pointer;" (click)="close1()" title="Close" class="close">X</a>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title">Banner Deletion</h4>
+      <hr />
+    </div>
+    <div class="modal-body">
+      <p><strong>Are you sure you want to delete Banner?</strong></p>
+    </div>
+    <br />
+    <div class="modal-footer">
+      <button type="button" (click)="close1()"
+        style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;float:right"
+        class="btn btn-sm btn-danger">Cancel</button>&nbsp;&nbsp;
+      
+      <button type="button" (click)="deleteBanner()"
+        style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;float:right;margin-right: 5px;"
+        class="btn btn-sm btn-primary" id="buttons">Ok</button>
+    </div>
+  </div>
+</div>

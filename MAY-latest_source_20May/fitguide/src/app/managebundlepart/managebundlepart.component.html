@@ -1,0 +1,369 @@
+<div *ngIf="apiFlag == true" id="overlay">
+    <div id="text">Processing...<br/><i class="fa fa-spinner fa-spin" style="font-size:24px;color:rgb(0,0,0);"></i></div>
+    <div id="info_alert" class="alert_info alert" style="display: none;">
+      <span class="closebtn" (click)="close1()">&times;</span> 
+      <strong>{{successMessage}}</strong>
+    </div>
+    <div id="info_success" class="success_info success" style="display: none;">
+      <span class="closebtn" (click)="close1()">&times;</span> 
+      <strong>{{successMessage}}</strong>
+    </div>
+  </div>
+  <div class="row">
+      <div class="col-md-12 col-sm-12 search_place">
+        <div class="panel panel-inverse">
+          <div class="panel-body">
+          <div class="form-group row">
+          <div class="col-lg-12 col-xl-12 p-l-10">
+              <div class="row">
+                <div class="col-12">
+                  <h3 class="page-header" style="line-height:50px;padding: 5px;">Select Part</h3>
+                </div>
+              </div>
+              
+              <div class="form-group row">
+                <div class="col-12" style="display: flex">
+                  <ng-container>
+                    <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+                    <select class="form-select" name="sectionList" id="sectionList" (change)="getOptionSection($event)"
+                    >
+                    <option value="">Select Section</option>
+                    <option [value]="section.searchSectionUID" *ngFor="let section of sections">
+                      {{section.searchSectionName}}</option>
+                  </select>
+                  <span id="s_text" style="visibility: hidden; display: none;" class="m-l-10 text-warning"><small>Select
+                      Section</small></span>
+                    </div>
+                  </ng-container>&nbsp;&nbsp;
+                  <ng-container>
+                    <div class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                      <button class="btn btn-sm" (click)="getPartDetails()"
+                      style="background-color: #00c9fd;color: #fff;" type="button" id="buttons">Get Part</button>
+                    </div>
+                  </ng-container>
+                </div>
+                <!-- <div class="col-2 m-t-10" id="section_list_hide">
+                  
+                </div>
+    
+                <div class="col-10 m-l-20 m-t-10">
+                  
+                </div> -->
+                <!-- Get Part Details AG Grid  -->
+              </div>
+          
+              <div *ngIf="partDetailsFlag">
+                <ag-grid-angular style="width: 100%; height: 55vh; margin-top: 20px" class="ag-theme-alpine"
+                  [rowData]="rowData" [columnDefs]="columnDefs" [modules]="modules" [rowSelection]="rowSelection"
+                  (selectionChanged)="onSelectionChanged()" [animateRows]="true" 
+                  (gridReady)="onGridReady($event)" [pagination]="true">
+                </ag-grid-angular>
+                <br />
+                <div class="bundle">
+                  <button id="cBundle" (click)="createBundle()" class="btn btn-sm" type="button" style="background-color: #00c9fd;color: #fff;">Create Bundle</button>
+                </div>
+              </div>
+              <br />         
+             
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="bundlemodal" id="myModal">
+      <div class="modals-content newpopup">
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-title">Bundle Details Here...</h4>
+         <!--  <div class="icon" (click)="cancel()" style="cursor: pointer;">
+            <i style="font-size:36px !important;" class="fa fa-window-close"></i>
+          </div> -->
+        </div>
+        <div class="modal-body">
+          <!-- begin row -->
+          <div class="row">
+            <div class="col-xl-12 order-xl-1">
+              <!-- <div class="card bg-secondary shadow"> -->
+                <div class="row">
+                  <div class="col-mb-4">
+                      <input type="radio" id="alert-danger" name="color1" value="alert    alert-danger" (click)="create()" checked/>
+                      <label style="padding-top: 8px;padding-left: 2px;" for="alert-danger">Create&nbsp;&nbsp;</label>  
+                      
+                      <input type="radio" id="alert-primary" name="color1" value="alert alert-primary" (click)="update()">
+                      <label style="padding-top: 8px;padding-left: 2px;" for="alert-primary">Update&nbsp;&nbsp;</label>
+                      
+                      <input type="radio" id="alert-success" name="color1" value="alert alert-success" (click)="copy()">
+                      <label style="padding-top: 8px;padding-left: 2px;" for="alert-success">Copy&nbsp;&nbsp;</label>  
+                  </div>
+              </div>
+                <form [formGroup]="bundleform" id="bf">
+                  <div class="row">
+                  
+                    <div class="col-xl-12 order-xl-1">
+                      <div class="card bg-secondary shadow">
+    
+                      <div class="card-body">
+                          <h6 class="heading-small text-muted mb-2">Bundle information</h6>
+                          <div class="pl-lg-4">
+                            
+                   
+                          <div class="row">
+                              <div class="col-lg-7 col-sm-12 col-xs-12">
+                                <div class="form-group focused">
+                                  <label class="form-control-label" for="input-bname">Bundle Name<span class="text-danger">*</span></label>
+                                  <input type="text" formControlName="bundleName"   class="form-control form-control-alternative bundleinputbox"
+                                  placeholder="Please Enter Bundle Name" required [ngClass]="{ 'is-invalid': submitted && b.bundleName.invalid }">
+                                  <div *ngIf="submitted && b.bundleName.invalid" class="invalid-feedback">
+                                    <div *ngIf="b.bundleName.errors.required">Bundle Name is required</div>
+                                  </div>
+                                </div>
+                              </div>
+                             
+                              </div>
+                     
+                        
+                          <div class="row" style="margin-top: 15px;">
+                              
+                              <div class="col-sm-12">
+                                  <label class="form-control-label" for="menu">Selected parts</label>
+                                  <label class="form-control-label" for="menu">Final parts<span class="text-danger">*</span></label>
+                                  <ul class="listsection">
+                                    <li>  
+                                      <select multiple class="form-control swaptextbox" formControlName="selectedPart" name="section1" id="section1">
+                                        <option [value]="part.partUID" *ngFor="let part of SelectedParts">{{part.partNumber}}</option>
+                                    </select>
+                                    </li>
+                                    <li class="relative">
+                                        <input  type="button" value="&#8702;" class="section_add" (click)="swap('section1','section2')" />
+                                        <input  type="button" value="&#8701;" class="section_remove" (click)="swap('section2','section1')" />
+                                    </li>
+                                    <li>
+                                        <select multiple class="form-control swaptextbox" id="section2" name="section2" formControlName="selectedPart" style="width:140px;height:100px;padding:0px 0px 0px 5px;font-size:12px !important;">
+                                          <option [value]="part.partUID" *ngFor="let part of finalSelectedParts">{{part.partNumber}}</option>
+                                        </select>
+                                        
+                                    </li>
+                                   
+                                </ul>
+                                <div *ngIf="formErrorSection1" class="text-danger" style="font-size: 11px;margin-left: 63%;"> 
+                                  <div>FinalPart selection is required</div>
+                                </div>
+                                </div> 
+                               
+                              </div>
+                         
+                         
+                      </div>
+                          </div>
+                      </div>
+                    <div class="card-header bg-white border-0">
+                      <div class="row align-items-center">
+                        <div class="col-lg-12">
+                         
+                          <button type="button" (click)="addpartbundle()" class="btn btn-sm" style="float: right;background-color: #00c9fd;color: #fff;">Proceed</button>
+                          <button type="button" (click)="cancel()" class="btn btn-sm" style="margin-right: 5px;float: right;background-color: #00c9fd;color: #fff;">Cancel</button>
+                        
+                        <!-- <div id="arrows" style="display:none; clear:both;">	 -->
+                       <!--  <div class="icon" id="previous" class="arrowleft" (click)="Prev()" style="cursor: pointer;">
+                          <i style="font-size:26px !important;" class="fa fa-arrow-left"></i>
+                        </div> -->
+                      <!-- </div> -->
+                    </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+              </div>
+                </form>
+                <form [formGroup]="updateform" id="uf" style="display:none;">
+                  <div class="row">
+                  
+                    <div class="col-xl-12 order-xl-1">
+                      <div class="card bg-secondary shadow">
+    
+                      <div class="card-body">
+                          <h6 class="heading-small text-muted mb-2">Bundle information</h6>
+                          <div class="pl-lg-4">
+                            <div class="row">
+                              <div class="col-lg-7 col-sm-12 col-xs-12">
+                                <div class="form-group focused">
+                                  <label class="form-control-label" for="SelectBundle">Select Bundle<span class="text-danger">*</span></label>
+                                  <select class="form-control form-control-alternative bundleinputbox" id="bundleNamedropdown1" formControlName="bundleNameList" placeholder="Select Bundle" (change)="bundleOnchange($event)"  [ngClass]="{ 'is-invalid': submitted && u.bundleNameList?.invalid }" required
+                                  >
+                                  <option value=''>Select Bundle</option>
+                                  <option [value]="bundle.bundleUID" *ngFor="let bundle of bundleparts">
+                                    {{bundle.bundleName}}</option>
+                                </select>
+                                  <div *ngIf="submitted && u.bundleNameList.invalid" class="invalid-feedback">
+                                    <div *ngIf="u.bundleNameList.errors.required">Bundle Name is required</div>
+                                  </div>
+                                </div>
+                              </div>
+                             
+                              </div>
+                   
+                          <div class="row" style="margin-top: 15px;">
+                              <div class="col-lg-7 col-sm-12 col-xs-12">
+                                <div class="form-group focused">
+                                  <label class="form-control-label" for="input-bname">Bundle Name<!-- <span class="text-danger">*</span> --></label>
+                                  <input type="text" formControlName="bundleNameSelected"  class="form-control form-control-alternative bundleinputbox"
+                                  placeholder="Please Enter Bundle Name">
+                                 <!--  <div *ngIf="submitted && u.bundleNameList.invalid" class="invalid-feedback">
+                                    <div *ngIf="u.bundleNameList.errors.required">Bundle Name is required</div>
+                                  </div> -->
+                                </div>
+                              </div>
+                             
+                              </div>
+                     
+                        
+                          <div class="row" style="margin-top: 15px;">
+                              
+                              <div class="col-lg-12 col-sm-6">
+                                  <label class="form-control-label" for="menu">Selected/Removed parts</label>
+                                  <label class="form-control-label" for="menu">Final parts<span class="text-danger">*</span></label>
+                                  <ul class="listsection">
+                                    <li>  
+                                      <select multiple class="form-control swaptextbox" name="section3" id="section3">
+                                        <option [value]="part.partUID" *ngFor="let part of updateSelectedParts">{{part.partNumber}}</option>
+                                    </select>
+                                  
+                                    </li>
+                                    <li class="relative">
+                                        <input  type="button" value="&#8702;" class="section_add" (click)="swap('section3','section4')" />
+                                        <input  type="button" value="&#8701;" class="section_remove" (click)="swap('section4','section3')" />
+                                    </li>
+                                    <li>
+                                        <select class="form-control swaptextbox" id="section4" name="section4" multiple>
+                                          <option [value]="part.partUID" *ngFor="let part of bundleselectparts">{{part.partNumber}}</option>
+                                        </select>
+                                        
+                                    </li>
+                                </ul>
+                                <div *ngIf="formErrorSection2" class="text-danger" style="font-size: 11px;margin-left: 63%;"> 
+                                  <div>Part selection is required</div>
+                                </div>
+                                </div> 
+                               
+                              </div>
+                        </div>
+                          </div>
+                      </div>
+                    <div class="card-header bg-white border-0">
+                      <div class="row align-items-center">
+                        <div class="col-lg-12">
+                         
+                          <button type="button" (click)="updatePartBundle();" class="btn btn-sm" style="float: right;background-color: #00c9fd;color: #fff;">Update</button>
+                          <button type="button" (click)="cancel1()" class="btn btn-sm" style="margin-right: 5px;float: right;background-color: #00c9fd;color: #fff;">Cancel</button>
+                        
+                      
+                    </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+              </div>
+                </form>
+  
+                <form [formGroup]="copyform" id="cf" style="display:none;">
+                  <div class="row">
+                  
+                    <div class="col-xl-12 order-xl-1">
+                      <div class="card bg-secondary shadow">
+    
+                      <div class="card-body">
+                          <h6 class="heading-small text-muted mb-2">Bundle information</h6>
+                          <div class="pl-lg-4">
+                            <div class="row">
+                              <div class="col-lg-7 col-sm-12 col-xs-12 col-md-12">
+                                <div class="form-group focused">
+                                  <label class="form-control-label" for="SelectBundle">Select Bundle<span class="text-danger">*</span></label>
+                                  <select class="form-control form-control-alternative bundleinputbox" id="bundleNamedropdown2"  formControlName="bundleNameList" placeholder="Select Bundle" (change)="bundlecopyOnchange($event)"  [ngClass]="{ 'is-invalid': submitted && c.bundleNameList?.invalid }" required
+                                  >
+                                  <option value=''>Select Bundle</option>
+                                  <option [value]="bundle.bundleUID" *ngFor="let bundle of bundleparts">
+                                    {{bundle.bundleName}}</option>
+                                </select>
+                                  <div *ngIf="submitted && c.bundleNameList.invalid" class="invalid-feedback">
+                                    <div *ngIf="c.bundleNameList.errors.required">Bundle Name is required</div>
+                                  </div>
+                                </div>
+                              </div>
+                             
+                              </div>
+                   
+                              <div class="row" style="margin-top: 15px;">
+                                <div class="col-lg-7">
+                                  <div class="form-group focused">
+                                    <label class="form-control-label" for="input-bname">Bundle Name<!-- <span class="text-danger">*</span> --></label>
+                                    <input type="text" formControlName="bundleNameSelected"  class="form-control form-control-alternative bundleinputbox"
+                                    placeholder="Please Enter Bundle Name" >
+                                   <!--  <div *ngIf="submitted && u.bundleNameList.invalid" class="invalid-feedback">
+                                      <div *ngIf="u.bundleNameList.errors.required">Bundle Name is required</div>
+                                    </div> -->
+                                  </div>
+                                </div>
+                               
+                                </div>
+                     
+                        
+                                <div class="row" style="margin-top: 15px;">
+                              
+                                  <div  class="col-sm-12">
+                                      <label class="form-control-label" for="menu">Selected/Removed parts</label>
+                                      <label class="form-control-label" for="menu">Final parts<span class="text-danger">*</span></label>
+                                      <ul class="listsection">
+                                        <li>  
+                                          <select multiple class="form-control swaptextbox" name="section5" id="section5">
+                                            <option [value]="part.partUID" *ngFor="let part of updateSelectedParts">{{part.partNumber}}</option>
+                                        </select>
+                                      
+                                        </li>
+                                        <li class="relative">
+                                            <input  type="button" value="&#8702;" class="section_add" (click)="swap('section5','section6')" />
+                                            <input  type="button" value="&#8701;" class="section_remove" (click)="swap('section6','section5')" />
+                                        </li>
+                                        <li>
+                                            <select class="form-control swaptextbox" id="section6" name="section6" multiple>
+                                              <option [value]="part.partUID" *ngFor="let part of bundleselectparts">{{part.partNumber}}</option>
+                                            </select>
+                                           <!--  <div *ngIf="formErrorSection3" class="text-danger" style="font-size: 11px;"> 
+                                              <div>Part selection is required</div>
+                                            </div> -->
+                                        </li>
+                                    </ul>
+                                    <div *ngIf="formErrorSection3" class="text-danger" style="font-size: 11px;margin-left: 63%;"> 
+                                      <div>Part selection is required</div>
+                                    </div>
+                                    </div> 
+                                   
+                                  </div>
+                         
+                      </div>
+                          </div>
+                      </div>
+                    <div class="card-header bg-white border-0">
+                      <div class="row align-items-center">
+                        <div class="col-lg-12">
+                         
+                          <button type="button" (click)="copyPartBundle()" class="btn btn-sm" style="float: right;background-color: #00c9fd;color: #fff;">Proceed</button>
+                          <button type="button" (click)="cancel2()" class="btn btn-sm" style="margin-right: 5px;float: right;background-color: #00c9fd;color: #fff;">Cancel</button>
+                        
+                      
+                    </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+              </div>
+                </form>
+             
+              </div>
+            </div>
+          </div>
+          
+        </div>
+    
+    </div>
+  

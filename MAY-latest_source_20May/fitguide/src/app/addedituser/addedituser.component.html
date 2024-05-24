@@ -1,0 +1,1203 @@
+<div *ngIf="apiFlag == true" id="overlay">
+  <div id="text">Processing...<br /><i class="fa fa-spinner fa-spin" style="font-size:24px;color:rgb(0,0,0);"></i></div>
+  <div id="info_alert" class="alert_info alert" style="display: none;">
+    <span class="closebtn" (click)="close1()">&times;</span>
+    <strong>{{successMessage}}</strong>
+  </div>
+  <div id="info_success" class="success_info success" style="display: none;">
+    <span class="closebtn" (click)="close1()">&times;</span>
+    <strong>{{successMessage}}</strong>
+  </div>
+</div>
+<div *ngIf="apiFlagModal == true" id="overlay_modal">
+  <div id="text_modal">Processing...<br/><i class="fa fa-spinner fa-spin" style="font-size:24px;color:rgb(0,0,0);"></i></div>
+  <div id="info_alertadd" class="alert_info alert" style="display: none;">
+    <span class="closebtn" (click)="closeModalError()">&times;</span> 
+    <strong>{{successMessage}}</strong>
+  </div>
+  <div id="info_successadd" class="success_info success" style="display: none;">
+    <span class="closebtn" (click)="closeModal()">&times;</span> 
+    <strong>{{successMessage}}</strong>
+  </div>
+</div>
+<!-- begin row -->
+<div class="row">
+  <div class="col-xl-12 order-xl-1">
+    <div class="card bg-secondary shadow">
+      <form (ngSubmit)="editUser(f)" #f="ngForm">
+        <div class="row">
+          <div class="col-xl-12 order-xl-1">
+            <div class="card bg-secondary shadow">
+              <div class="card-header bg-white border-0">
+                <div class="row align-items-center">
+                  <div class="col-lg-8 col-md-6 col-xs-6">
+                    <h5 class="mb-0">Edit User Details Here...</h5>
+                  </div>
+                  <div class="col-lg-4 col-md-6 col-xs-6 text-right" style="float: right;">
+                    <button type="button" (click)="back()" class="btn btn-sm"
+                      style="background-color: #00c9fd;min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;">Back</button>
+                    <button type="submit" class="btn btn-sm"
+                      style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;">Save</button>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body" style="overflow-y: auto;overflow-x: hidden;">
+                <h6 class="heading-small text-muted mb-4">General information</h6>
+                <div class="col-12 text-right" style="float: right;">
+                  <button type="submit" (click)="sendCredentials()" class="btn btn-sm"
+                      style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px; margin-top:-70px;">Send Credentials</button>
+                </div>
+                <!-- <div class="pl-lg-4"> -->
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="form-inline">
+                      <div class="col-md-12 form-group focused" style="margin-bottom: 1.75rem !important;">
+                        <label class="col-sm-5 form-control-label" for="input-username">User Name <span
+                            class="text-danger">*</span></label>
+                        <input type="text" [(ngModel)]="Edituser.userName" pattern="^[-@.\/#&+\w\s]*$" id="Username"
+                          name="userName" class="form-control form-control-alternative" placeholder="Username" value=""
+                          #userName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && userName.invalid }"
+                          [attr.readonly]="isReadOnly" required>
+                        <div *ngIf="f.submitted && userName.invalid" class="invalid-feedback">
+                          <div *ngIf="userName.errors.required">User Name is required</div>
+                          <div *ngIf="userName.errors.pattern">Only Valid User Name Allowed</div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-inline">
+                      <div class="col-md-12 form-group focused" style="margin-bottom: 1.75rem !important;">
+                        <label class="col-sm-5 form-control-label" for="input-first-name">First Name <span
+                            class="text-danger">*</span></label>
+                        <input type="text" pattern="[a-zA-Z]+" [(ngModel)]="Edituser.firstName" required
+                          class="form-control" id="firstName" name="firstName" #firstName="ngModel"
+                          [ngClass]="{ 'is-invalid': f.submitted && firstName.invalid }" />
+                        <div *ngIf="f.submitted && firstName.invalid" class="invalid-feedback">
+                          <div *ngIf="firstName.errors.required">First Name is required</div>
+                          <div *ngIf="firstName.errors.pattern">Only Alphabets Allowed</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="form-inline">
+                      <div class="col-md-12 form-group focused" style="margin-bottom: 1.75rem !important;">
+                        <label class="col-sm-5 form-control-label" for="input-last-name">Last Name <span
+                            class="text-danger">*</span></label>
+                        <input type="text" pattern="[a-zA-Z]+" [(ngModel)]="Edituser.lastName" required
+                          class="form-control" id="lastName" name="lastName" #lastName="ngModel"
+                          [ngClass]="{ 'is-invalid': f.submitted && lastName.invalid }" />
+                        <div *ngIf="f.submitted && lastName.invalid" class="invalid-feedback">
+                          <div *ngIf="lastName.errors.required">Last Name is required</div>
+                          <div *ngIf="lastName.errors.pattern">Only Alphabets Allowed</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="col-lg-6">
+                    <div class="form-inline">
+                      <div class="col-md-12 form-group focused" style="margin-bottom: 1.75rem !important;">
+                        <label class="col-sm-5 form-control-label" for="input-email">Email <span
+                            class="text-danger">*</span></label>
+                        <input type="text" pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$" [(ngModel)]="Edituser.email"
+                          required class="form-control" id="email" name="email" #email="ngModel"
+                          [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" email />
+                        <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+                          <div *ngIf="email.errors.required">Email is required</div>
+                          <div *ngIf="email.errors.email">Email format should be required</div>
+                          <div *ngIf="email.errors.pattern">Valid Email Id should be required</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="form-inline">
+                      <div class="col-md-12 form-group focused" style="margin-bottom: 1.75rem !important;">
+                        <label class="col-sm-5 form-control-label" for="input-phone">Phone <span
+                            class="text-danger">*</span></label>
+                        <input type="text" [(ngModel)]="Edituser.phone" id="Phone"
+                          pattern="^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$" name="phone"
+                          class="form-control form-control-alternative" placeholder="Please Enter Phone Number"
+                          #phone="ngModel" [ngClass]="{ 'is-invalid': f.submitted && phone.invalid }" required>
+                        <div *ngIf="f.submitted && phone.invalid" class="invalid-feedback">
+                          <div *ngIf="phone.errors.required">Phone is required</div>
+                          <div *ngIf="phone.errors.pattern">Only USA Numbers are allowed</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-inline">
+                      <div class="col-md-12 form-group focused" style="margin-bottom: 1.75rem !important;">
+                        <label class="col-sm-5 form-control-label" for="role">Role <span
+                            class="text-danger">*</span></label>
+                        <select class="form-control form-control-alternative" (change)="getOptionMenu()"
+                          [(ngModel)]="Edituser.roleUID" required #roleUID="ngModel" name="roleUID" id="roleUID"
+                          [ngClass]="{ 'is-invalid': f.submitted && roleUID.invalid }">
+                          <option value="">Select Role</option>
+                          <option [value]="role.roleUID" *ngFor="let role of roles">{{role.roleName}}</option>
+                        </select>
+                        <div *ngIf="f.submitted && roleUID.invalid" class="invalid-feedback">
+                          <div *ngIf="roleUID.errors.required">Role is required</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row"
+                  *ngIf="(f.value.roleUID == '4' || f.value.roleUID == '5'|| f.value.roleUID == '6' || f.value.roleUID == '7')">
+                  <div class="col-lg-6"
+                    *ngIf="(f.value.roleUID == '4' || f.value.roleUID == '5'|| f.value.roleUID == '6' || f.value.roleUID == '7')">
+                    <div class="form-inline">
+                      <div class="col-md-12 form-group focused" style="margin-bottom: 1.75rem !important;">
+                        <label class="col-sm-5 form-control-label" for="dname">Select Distributor Name<span
+                            class="text-danger">*</span>
+                            <span>
+                              <a href="javascript:;" id="storeName_error" (click)="adddistributor()"
+                                title="Add Distributor"><i class="fa fa-plus-square"
+                                  style="font-size: 20px;color:green;padding-left: 10px;"></i></a>
+                            </span></label>
+                        <select class="form-control form-control-alternative" (change)="getCompany($event)"
+                          [(ngModel)]="sectionGroup.distributorName" required #distributorName="ngModel"
+                          name="distributorName" id="distributorName"
+                          [ngClass]="{ 'is-invalid': f.submitted && distributorName.invalid }">
+                          <option value="">Select Distributor</option>
+                          <option [value]="dist.distributorUID" *ngFor="let dist of distributors">
+                            {{dist.distributorName}}</option>
+                        </select>
+                        <div *ngIf="f.submitted && distributorName.invalid" class="invalid-feedback">
+                          <div *ngIf="distributorName.errors.required">Distributor Name is required</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6"
+                    *ngIf="(f.value.roleUID == '5'|| f.value.roleUID == '6' || f.value.roleUID == '7')">
+                    <div class="form-inline">
+                      <div class="col-md-12 form-group focused">
+                        <label class="col-sm-5 form-control-label" for="cname">Select Company Name<span
+                            class="text-danger">*</span>
+                            <span>
+                              <a href="javascript:;" (click)="addCompanyModal()" title="Add Company"><i class="fa fa-plus-square"
+                                  style="font-size: 20px;color:green;padding-left: 10px;"></i></a>
+                            </span>
+                          </label>
+                        <select class="form-control form-control-alternative" (change)="getOptionStores($event)"
+                          [(ngModel)]="sectionGroup.companyName" required #companyName="ngModel" name="companyName"
+                          id="companyName" [ngClass]="{ 'is-invalid': f.submitted && companyName.invalid }">
+                          <option value="">Select Company</option>
+                          <option [value]="comp.companyUID" *ngFor="let comp of company">{{comp.companyName}}</option>
+                        </select>
+                        <div *ngIf="f.submitted && companyName.invalid" class="invalid-feedback">
+                          <div *ngIf="companyName.errors.required">Company Name is required</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" style="margin-bottom: 1.75rem !important;">
+                  <div class="form-check col-lg-12">
+                    <input type="checkbox" id="isDistributorAds" name="isDistributorAds">
+                    <label class="rolecheckbox">isDistributorAds</label>
+                    <input type="checkbox" id="isCompanyPic" name="isCompanyPic">
+                    <label class="rolecheckbox">isCompanyPic</label>
+                    <input type="checkbox" id="isCompanyNotes" name="isCompanyNotes">
+                    <label class="rolecheckbox">isCompanyNotes</label>
+                    <input type="checkbox" id="isAdminPic" name="isAdminPic">
+                    <label class="rolecheckbox">isAdminPic</label>
+                    <input type="checkbox" id="isAdminNotes" name="isAdminNotes">
+                    <label class="rolecheckbox">isAdminNotes</label>
+                  </div>
+                </div>
+                <div class="row">
+                 <div class="form-check col-sm-12">
+                   <input type="checkbox" id="addBanner" name="addBanner">
+                    <label class="rolecheckbox">isBannerAds</label>
+
+                    <input type="checkbox" id="istrail" (click)="setDate()" name="istrail">
+                    <label class="rolecheckbox">isTrial</label>
+                    <input type="date" *ngIf="dateFlag" id="trialSetDate" [(ngModel)]="trialSetDate"
+                    name="trialSetDate">
+
+                      <span *ngIf="(f.value.roleUID != '1' && f.value.roleUID != '2' && f.value.roleUID != '3' && f.value.roleUID != '4')" >
+                        <input type="checkbox" id="addPricing" name="addPricing">
+                        <label class="rolecheckbox">Pricing</label>
+                      </span>
+                  </div>
+                </div>
+                <div class="row" style="margin-bottom: 1.75rem !important;">
+                  <div class="form-check" class="col-lg-12">
+                    <label class="form-control-label" for="role">Country<span class="text-danger">*</span></label>
+                    <div class="col-lg-12">
+                      <ng-container class="col-lg-2" *ngFor="let country of checkboxcountries; let j = index">
+                        <input type="checkbox" [(ngModel)]="country.checked" name="country_{{country.countryUID}}"
+                          value="{{country.countryUID}}" (change)="onCheckboxChange(country,$event)" />
+                        <label class="rolecheckbox">{{country.countryName}}</label>
+                      </ng-container>
+                      <small *ngIf="!isCountryChecked" style="color:red">Country is required</small>
+                    </div>
+                  </div>
+                </div>
+                <!-- </div> -->
+                <hr class="my-4">
+                <!-- Menu Informations -->
+                <h6 class="heading-small text-muted mb-4">Additional information</h6>
+                <div class="row" style="margin-bottom: 10px;">
+                  <!-- Start Single drop down for Store Admin -->
+                  <div class="col-sm-4" *ngIf="(f.value.roleUID == '6'|| f.value.roleUID == '7')">
+                    <label class="form-control-label" for="store">Select Store<span class="text-danger">*</span>
+                      <span>
+                        <a href="javascript:;" (click)="addStoreModal()" title="Add Store"><i class="fa fa-plus-square"
+                            style="font-size: 20px;color:green;padding-left: 10px;"></i></a>&nbsp;&nbsp;
+                      </span>
+                    </label>
+                    <select class="form-control" (change)="getOptionBranch($event)"
+                      [(ngModel)]="Edituser.singleStoreUID" required #section11="ngModel" name="section11"
+                      id="section11" [ngClass]="{ 'is-invalid': f.submitted && section11.invalid }">
+                      <option value="">--Select Store--</option>
+                      <option [value]="store.storeUID" *ngFor="let store of stores">{{store.storeName}}</option>
+                    </select>
+                    <div *ngIf="f.submitted && section11.invalid" class="invalid-feedback">
+                      <div *ngIf="section11.errors.required">Store selection is required</div>
+                    </div>
+                  </div>
+                  <!-- End Single drop down for Store Admin -->
+                </div>
+                <div class="row">
+                  <!--<div class="col-lg-5"  id="brand_list_hide" *ngIf="!(f.value.roleUID == '6'|| f.value.roleUID == '7')">
+                              <label class="form-control-label" for="store">Select Store <span class="text-danger">*</span></label>  
+                              <ul>
+                                <li>                                  
+                                  <select multiple class="form-control" [(ngModel)]="sectionGroup.section1" #section1="ngModel" name="section1" id="section1" style="width:140px;height:100px;padding:0px 0px 0px 5px;font-size:12px !important;">
+                                    <option [value]="store.storeUID" *ngFor="let store of finalStores">{{store.storeName}}</option>
+                                  </select>
+                                 <div *ngIf="formErrorSection1" class="text-danger" style="font-size: 11px;"> 
+                                  <div>Store selection is required</div>
+                                </div>
+                                </li>
+                                <li class="relative">
+                                    <input  type="button" class="section_add" value="&#8702;" (click)="swap('section1','section2')" />
+                                    <input  type="button" class="section_remove" value="&#8701;" (click)="swap('section2', 'section1')" />
+                                </li>
+                                <li>
+                                    <select class="form-control" [(ngModel)]="sectionGroup.section2" #section2="ngModel" style="width:140px;height:100px;padding:0px 0px 0px 5px;font-size:12px !important;" id="section2" name="section2" multiple>
+                                      <option [value]="store.storeUID" *ngFor="let store of finalSeletedStores">{{store.storeName}}</option>
+                                    </select>
+                                </li>
+                            </ul>
+                            </div>-->
+
+                  <!-- Select Branch Started Here -->
+                  <!--<div class="col-lg-5" style="margin-left:110px;" *ngIf="(f.value.roleUID == '6') ">
+                              <label class="form-control-label" for="branch">Select Branch <span class="text-danger">*</span></label>  
+                              <ul>
+                                <li>                                  
+                                  <select multiple class="form-control" [(ngModel)]="sectionGroup.sectionbranch"  #sectionbranch="ngModel" name="sectionbranch" id="sectionbranch" style="width:140px;height:100px;padding:0px 0px 0px 5px;font-size:12px !important;">
+                                    <option [value]="branch.storebranchUID" *ngFor="let branch of finalBranch">{{branch.branchName}}</option>
+                                  </select>
+                                 <div *ngIf="formErrorSection5" class="text-danger" style="font-size: 11px;"> 
+                                  <div>Branch selection is required</div>
+                                </div>
+                                </li>
+                                <li class="relative">
+                                    <input  type="button" class="section_add" value="&#8702;" (click)="swap('sectionbranch','section10')" />
+                                    <input  type="button" class="section_remove" value="&#8701;" (click)="swap('section10', 'sectionbranch')" />
+                                </li>
+                                <li>
+                                    <select class="form-control" [(ngModel)]="sectionGroup.section10" #section10="ngModel" style="width:140px;height:100px;padding:0px 0px 0px 5px;font-size:12px !important;" id="section10" name="section10" multiple>
+                                      <option [value]="branch.storebranchUID" *ngFor="let branch of finalSeletedBranches">{{branch.branchName}}</option>
+                                    </select>
+                                </li>
+                            </ul>
+                            </div>-->
+                  <!-- Branch End -->
+                  <div class="col-sm-5">
+                    <label class="form-control-label" for="menu">Select Menu <span class="text-danger">*</span></label>
+                    <ul>
+                      <li>
+                        <select multiple class="form-control" [(ngModel)]="sectionGroup.section3" #section3="ngModel"
+                          name="section3" id="section3"
+                          style="width:140px;height:100px;padding:0px 0px 0px 5px;font-size:12px !important;">
+                          <option [value]="menu.menuUID" *ngFor="let menu of finalMenus">{{menu.menuName}}</option>
+                        </select>
+                        <div *ngIf="formErrorSection2" class="text-danger" style="font-size: 11px;">
+                          <div>Menu selection is required</div>
+                        </div>
+                      </li>
+                      <li class="relative">
+                        <input type="button" value="&#8702;" class="section_add"
+                          (click)="swap('section3','section4')" />
+                        <input type="button" value="&#8701;" class="section_remove"
+                          (click)="swap('section4','section3')" />
+                      </li>
+                      <li>
+                        <select class="form-control" [(ngModel)]="sectionGroup.section4" #section4="ngModel"
+                          style="width:140px;height:100px;padding:0px 0px 0px 5px;font-size:12px !important;"
+                          id="section4" name="section4" multiple>
+                          <option [value]="menu.menuUID" *ngFor="let menu of finalSeletedMenus">{{menu.menuName}}
+                          </option>
+                        </select>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div class="col-sm-5" id="brand_list_hide">
+                    <label class="form-control-label" for="brands">Select Brand <span
+                        class="text-danger">*</span></label>
+                    <ul>
+                      <li>
+                        <select class="form-control" [(ngModel)]="sectionGroup.section5" #section5="ngModel"
+                          style="width:140px;height:100px;padding:0px 0px 0px 5px;font-size:12px !important;"
+                          id="section5" name="section5" multiple>
+                          <option [value]="brand.brandUID" *ngFor="let brand of finalBrands">{{brand.brandName}}
+                          </option>
+                        </select>
+                        <div *ngIf="formErrorSection3" class="text-danger" style="font-size: 11px;">
+                          <div>Brand selection is required</div>
+                        </div>
+                      </li>
+                      <li class="relative">
+                        <input type="button" class="section_add" value="&#8702;"
+                          (click)="swap('section5','section6')" />
+                        <input type="button" class="section_remove" value="&#8701;"
+                          (click)="swap('section6', 'section5')" />
+                      </li>
+                      <li>
+                        <select class="form-control" [(ngModel)]="sectionGroup.section6" #section6="ngModel"
+                          style="width:140px;height:100px;padding:0px 0px 0px 5px;font-size:12px !important;"
+                          id="section6" name="section6" multiple>
+                          <option [value]="brand.brandUID" *ngFor="let brand of finalSelectedBrands">{{brand.brandName}}
+                          </option>
+                        </select>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-sm-5" style="margin-top: 10px;">
+                    <label class="form-control-label" for="section">Select Section <span
+                        class="text-danger">*</span></label>
+                    <ul>
+                      <li>
+                        <select class="form-control" [(ngModel)]="sectionGroup.section7" #section7="ngModel"
+                          style="width:140px;height:100px;padding:0px 0px 0px 5px;font-size:12px !important;"
+                          id="section7" name="section7" multiple>
+                          <option [value]="section.searchSectionUID" *ngFor="let section of finalSections">
+                            {{section.searchSectionName}}</option>
+                        </select>
+                        <div *ngIf="formErrorSection4" class="text-danger" style="font-size: 11px;">
+                          <div>Section selection is required</div>
+                        </div>
+                      </li>
+                      <li class="relative">
+                        <input type="button" value="&#8702;" class="section_add"
+                          (click)="swap('section7','section8')" />
+                        <input type="button" value="&#8701;" class="section_remove"
+                          (click)="swap('section8','section7')" />
+                      </li>
+                      <li>
+                        <select class="form-control" [(ngModel)]="sectionGroup.section8" #section8="ngModel"
+                          style="width:140px;height:100px;padding:0px 0px 0px 5px;font-size:12px !important;"
+                          id="section8" name="section8" multiple>
+                          <option [value]="section.searchSectionUID" *ngFor="let section of finalSelectedSections">
+                            {{section.searchSectionName}}</option>
+                        </select>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="row" style="margin-top: 20px;">
+                  <div class="form-check col-lg-12">
+                    <input type="checkbox" id="terms" name="terms">
+                    <label class="rolecheckbox">Termsofuse</label>
+                    <!--  <div *ngIf="formErrorSection7" class="text-danger" style="font-size: 11px;">
+                                  Terms of Use should be checked
+                                </div> -->
+                  </div>
+                </div>
+                <h6 class="heading-small text-muted mb-4" style="margin-top: 10px;">User Notes </h6>
+                <div class="row">
+
+                  <div class="col-lg-10" style="margin-bottom: 10px;">
+                    <textarea id="userNoteTextArea" name="userNotes" placeholder="Please enter user notes"
+                      class="form-control userNoteTextArea" rows="2" cols="50"></textarea>
+                  </div>
+                  <div class="col-lg-2">
+                    <button type="button" class="btn btn-sm m-t-10" (click)="addUserNotes()"
+                      style="background-color: #00c9fd; color: #fff;">Add</button>
+                  </div>
+
+                </div>
+
+                <div *ngFor="let notes of userNotes.slice().reverse();let n = index" class="row userNotesSection">
+
+                  <div class="col-lg-9" class="userNotesDiv" style="margin-bottom: 10px;width:81%;margin-left: 10px">
+
+
+
+                    <div class="row">
+                      <div class="col-lg-12" style="font-size: 18px;">
+                        {{notes.note}}
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-lg-12" style="font-size: 12px;">
+                        <div class="firstname"><b>{{notes.name}}</b> &#8209;&nbsp;<b>{{notes.roleName}}</b></div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-lg-12" style="font-size: 11px;">
+                        {{notes.timestamp}}&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-trash" title="Delete Note"
+                          style="color:crimson;cursor: pointer;" (click)="deleteUserNotes(n)"></i>
+                      </div>
+                    </div>
+
+
+                  </div>
+                  <!-- <div class="col-lg-3" style="margin-bottom: 10px;">
+                    <button type="button" class="btn btn-sm btn-primary m-t-10" (click)="deleteUserNotes(n)">x</button>
+                  </div> -->
+
+                </div>
+
+              </div>
+            </div>
+            <div class="card-header bg-white border-0">
+              <div class="row align-items-center">
+                <div class="col-12 text-right buttonsave" style="float: right;">
+                  <button type="button" (click)="back()" class="btn btn-sm"
+                    style="background-color: #00c9fd;min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;">Back</button>
+                  <button type="submit" [disabled]="clicked" class="btn btn-sm"
+                    style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;">Save</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!--Distributor modal box-->
+<!-- Modal content -->
+<div class="calloutmodal" id="myDistributorModal">
+  <div class="modals-content">
+    <a (click)="cancel()" style="cursor: pointer;" title="Close" class="close">X</a>
+
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title">Add Distributor Details Here...</h4>
+<div style="float: right;">
+  <button type="button"
+  style="background-color: #00c9fd;min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+  (click)="cancel()" class="btn btn-sm btn-danger">Cancel</button>
+<button type="button"
+  style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+  (click)="saveDistributor()" class="btn btn-sm btn-primary">Save</button>
+</div>
+    </div>
+    <div class="modal-body" style="overflow-x:hidden;overflow-y: auto;">
+      <!-- begin row -->
+      <form [formGroup]="distributorform">
+        <div class="pl-lg-12" style=" height: 60vh; margin-top: 20px; max-height: 50%; margin-left: 0px;">
+          <div class="row" style="margin-bottom: 1.75rem !important;">
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group">
+                  <label class="col-sm-4 form-control-label" for="input-dname">Distributor Name <span
+                      class="text-danger">*</span></label>
+                  <input type="text" formControlName="distributorName" class="form-control form-control-alternative"
+                    placeholder="Please Enter Distributor Name"
+                    [ngClass]="{ 'is-invalid': submitted && d.distributorName?.invalid }" required>
+                  <div *ngIf="submitted && d.distributorName?.invalid" class="invalid-feedback">
+                    <div *ngIf="d.distributorName.errors.required">Distributor Name is required</div>
+                  </div>
+                  <!--<div id="distributorName_error" style="color:red; display:none;">Distributor Name is required</div>-->
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group">
+                  <label class="col-sm-4 form-control-label" placeholder="">Distributor Primary Contact Name</label>
+                  <input type="name" formControlName="distributorPrimaryContact"
+                    class="form-control form-control-alternative" placeholder="Please Enter the Primary Contact Name">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" style="margin-bottom: 1.75rem !important;">
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group">
+                  <label class="col-sm-4 form-control-label" for="input-daddress">Distributor Address</label>
+                  <input type="text" formControlName="distributorAddress" class="form-control form-control-alternative"
+                    placeholder="Please Enter Distributor Address">
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group">
+                  <label class="col-sm-4 form-control-label" for="input-country">Distributor State</label>
+                  <select (change)="getCity($event)" formControlName="distributorState"
+                    class="form-select form-control-alternative">
+                    <option value="">Select State</option>
+                    <option [value]="state.StateUID" *ngFor="let state of states">{{state.StateName}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" style="margin-bottom: 1.75rem !important;">
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group">
+                  <label class="col-sm-4 form-control-label" for="input-region">Distributor City </label>
+                  <select formControlName="distributorCity" class="form-select form-control-alternative">
+                    <option value="">Select City</option>
+                    <option [value]="city.cityUID" *ngFor="let city of cities">{{city.CityName}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group">
+                  <label class="col-sm-4 form-control-label" for="input-city">Distributor Region</label>
+                  <input type="text" formControlName="distributorRegion" placeholder="Please Enter Distributor Region"
+                    class="form-control form-control-alternative" />
+                  <!-- <select formControlName="distributorCity" class="form-control form-control-alternative">
+                            <option value="">Select City</option>
+                            <option [value]="city.CityUID" *ngFor="let city of cities">{{city.CityName}}</option>                                                                               
+                          </select>-->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" style="margin-bottom: 1.75rem !important;">
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group">
+                  <label class="col-sm-4 form-control-label" for="input-zip">Distributor Zip code</label>
+                  <input type="text" formControlName="distributorZip" placeholder="Please Enter Distributor ZipCode"
+                    class="form-control form-control-alternative" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group">
+                  <label class="col-sm-4 form-control-label" for="input-email">Distributor Primary Email</label>
+                  <input type="text" formControlName="distributorEmail" placeholder="Please Enter Distributor Email"
+                    class="form-control form-control-alternative" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" style="margin-bottom: 1.75rem !important;">
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group">
+                  <label class="col-sm-4 form-control-label" for="input-phone">Distributor Contact Number</label>
+                  <input type="text" formControlName="distributorContact" class="form-control form-control-alternative"
+                    placeholder="Please Enter Distributor Contact Number">
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group">
+                  <label class="col-sm-4 form-control-label" placeholder="">Distributor Website</label>
+                  <input type="name" formControlName="distributorWebsite" class="form-control form-control-alternative"
+                    placeholder="Please Enter Distributor Website">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" style="margin-bottom: 1.75rem !important;">
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group">
+                  <label class="col-sm-4 form-control-label" for="distributor-image">Distributor Image</label>
+                  <input type="file" formControlName="distributorImage" (change)="fileEvent($event)" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!--Company modal box-->
+<!-- Modal content -->
+
+<div class="calloutmodal" id="modalAddCompany">
+  <div class="modals-content">
+      <!-- <div class="icon" style="cursor: pointer;"> -->
+          <!-- <i style="font-size:23px !important; float:right; margin-top: -37px; margin-right:-37px;" title="Close" class="fa fa-window-close"></i> -->
+         <!--  <a (click)="cancelCompanyAdd()" style="cursor: pointer;" title="Close" class="close">X</a> -->
+          <!-- <div style="float:right"> -->
+       
+          <!-- </div>
+      </div> -->
+      <div class="modal-header">
+        <a (click)="cancelCompanyAdd()" style="cursor: pointer;" title="Close" class="close">X</a>
+          <h4 class="modal-title" id="modal-title">Add Company Details Here...</h4>
+          <div style="float:right">
+            <button type="button" (click)="cancelCompanyAdd()"
+            style="background-color: #00c9fd; min-height: 36px;font-weight: 400; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+            class="btn btn-sm btn-danger">Back</button>&nbsp;&nbsp;
+            <button type="button" (click)="submitForm()"
+            style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+            class="btn btn-sm btn-primary">Save</button>
+          </div>
+      </div>
+      <div class="modal-body" style="overflow-x:hidden;overflow-y: auto;margin-top: 10px;">
+        <form [formGroup]="form">
+          <div class="pl-lg-4" style="height: 60vh; margin-top: 20px; max-height: 50%; margin-left: 0px;">
+            <div class="row align-items-center">
+              <div class="col-lg-8 col-md-6 col-xs-6">
+                <h5 class="mb-1 header">Add Company Details Here...</h5>
+              </div>
+              <div class="col-lg-4 col-md-6 col-xs-6 text-right" style="float: right;">
+                 <!--  <a href="users_list.php" class="btn btn-sm btn-danger">Back</a> -->
+                 
+                <button (click)="cancelCompanyAdd()" style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;" type="button" class="btn btn-sm btn-danger" id="buttonsback">Back</button> 
+                <button type="button" (click)="submitForm()" style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;" name="submit" id="buttons" class="btn btn-sm btn-primary">Save</button>
+              </div>
+            </div>
+          <div class="row">
+            <div class="col-lg-6" >
+              <div  class="form-inline">
+                <div class="col-md-12 form-group"  style="margin-bottom: 1.75rem !important;">
+                  <label class="col-sm-5 form-control-label" for="input-dname">Company Name <span class="text-danger">*</span></label>
+                  <input type="text" formControlName="companyName" class="form-control form-control-alternative" placeholder="Please Enter Company Name" [ngClass]="{ 'is-invalid': submitted && f.companyName?.invalid }" required>
+                  <div *ngIf="submitted && f.companyName?.invalid" class="invalid-feedback">
+                    <div *ngIf="f.companyName.errors.required">Company Name is required</div>
+                  </div>
+                </div>
+                </div>
+                </div>
+                <div class="col-lg-6" >
+                  <div  class="form-inline">
+                    <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                      <label class="col-sm-5 form-control-label" for="input-country">Distributor Name <span class="text-danger">*</span></label>
+                      <select formControlName="distributorName" class="form-select form-control-alternative" [ngClass]="{ 'is-invalid': submitted && f.distributorName?.invalid }" required>
+                        <option value="">Select Distributor</option>
+                        <option [value]="dist.distributorUID" *ngFor="let dist of distributors">{{dist.distributorName}}</option>                                                                               
+                      </select>
+                      <div *ngIf="submitted && f.distributorName?.invalid" class="invalid-feedback">
+                        <div *ngIf="f.distributorName.errors.required">Distributor Name is required</div>
+                      </div>
+                    </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-6" >
+                    <div  class="form-inline">
+                      <div class="col-md-12 form-group"  style="margin-bottom: 1.75rem !important;">
+                        <label class="col-sm-5 form-control-label" placeholder="">Company Primary Contact Name</label>
+                        <input type="name" formControlName="companyPrimaryContact" class="form-control form-control-alternative" placeholder="Please Enter the Primary Contact Name">
+                      </div>
+                      </div>
+                      </div>
+                  <div class="col-lg-6" >
+                    <div  class="form-inline">
+                      <div class="col-md-12 form-group"  style="margin-bottom: 1.75rem !important;">
+                        <label class="col-sm-5 form-control-label" for="input-daddress">Company Address</label>
+                        <input type="text" formControlName="companyAddress" class="form-control form-control-alternative" placeholder="Please Enter Company Address">
+                      </div>
+                      </div>
+                      </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-6" >
+                          <div  class="form-inline">
+                            <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                              <label class="col-sm-5 form-control-label" for="input-country">Company Country
+                                <span>
+                                  <a href="javascript:;" (click)="addcountry()" title="Add Country"><i class="fa fa-plus-square" style="font-size: 20px;color:green;padding-left: 9px;"></i></a>
+                                </span>
+                              </label>
+                              <select (change)="countryOnchange($event)" formControlName="companyCountry" id="countryList" [(ngModel)]="countryName" class="form-select form-control-alternative">
+                                <option value=''>Select Country</option>
+                                <option [value]="country.countryName" *ngFor="let country of countries">{{country.countryName}}</option>                                                
+                              </select>
+                            </div>
+                            </div>
+                            </div>
+                            <div class="col-lg-6" *ngIf="showDropdown">
+                              <div  class="form-inline">
+                                <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                                  <label class="col-sm-5 form-control-label" for="input-state">Company State</label>
+                                  <select (change)="getCity($event)" formControlName="companyState" [(ngModel)]="adddropdownValuestate" id="stateCompany" class="form-select form-control-alternative">
+                                    <option value=''>Select State</option>
+                                    <option [value]="state.StateUID" *ngFor="let state of states">{{state.StateName}}</option>                                                                               
+                                  </select>
+                                </div>
+                                </div>
+                                </div>
+                                <div class="col-lg-6" *ngIf="!showDropdown">
+                                  <div  class="form-inline">
+                                    <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                                      <label class="col-sm-5 form-control-label" for="input-state">Company State</label>
+                                      <input type="text" [(ngModel)]="inputValueState" placeholder="Please Enter Company State" formControlName="companyState" class="form-control form-control-alternative">
+                                      </div>
+                                      </div>
+                                      </div>
+                            </div>
+                            <div class="row">
+                              <!-- <div class="col-lg-6">
+                                <div  class="form-inline">
+                                  <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                                    <label class="col-sm-5 form-control-label" for="input-city">Company City</label>
+                                    <select formControlName="companyCity" class="form-select form-control-alternative">
+                                      <option value="">Select City</option>
+                                      <option [value]="city.cityUID" *ngFor="let city of cities">{{city.CityName}}</option>                                                                               
+                                    </select>                                   
+                                  </div>
+                                  </div>
+                                  </div> -->
+                                  <div class="col-lg-6" *ngIf="showDropdown">
+                                    <div  class="form-inline">
+                                      <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                                        <label class="col-sm-5 form-control-label" for="input-region">Company City </label>
+                                        <select formControlName="companyCity" class="form-select form-control-alternative" id="cityList" [(ngModel)]="adddropdownValuecity">
+                                          <option value=''>Select City</option>
+                                          <option [value]="city.cityUID" *ngFor="let city of cities">{{city.CityName}}</option>                                                                               
+                                        </select>                                   
+                                      </div>
+                                      </div>
+                                      </div>
+                                      <div class="col-lg-6" *ngIf="!showDropdown">
+                                        <div  class="form-inline">
+                                          <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                                            <label class="col-sm-5 form-control-label" for="input-region">Company City </label>
+                                            <!-- <select formControlName="companyCity" class="form-select form-control-alternative" id="cityList">
+                                              <option value="">Select City</option>
+                                              <option [value]="city.cityUID" *ngFor="let city of cities">{{city.CityName}}</option>                                                                               
+                                            </select>  --> 
+                                            <input type="text"  [(ngModel)]="inputValueCity" placeholder="Please Enter Company City" formControlName="companyCity" class="form-control form-control-alternative">                                
+                                          </div>
+                                          </div>
+                                          </div>
+                                  <div class="col-lg-6" *ngIf="showDropdown">
+                                    <div  class="form-inline">
+                                      <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                                        <label class="col-sm-5 form-control-label" for="input-city">Company Region</label>
+                                        <!-- <input type="text" formControlName="companyRegion" placeholder="Please Enter Company Region" class="form-control" /> -->
+                                        <select formControlName="companyRegion" class="form-select form-control-alternative" id="regionList" [(ngModel)]="adddropdownValueRegion">
+                                          <option value=''>Select Region</option>
+                                          <option [value]="region.regionName" *ngFor="let region of regions">{{region.regionName}}</option> 
+                                          <!-- <option value="Midwest">Midwest</option>  
+                                          <option value="Mountain">Mountain</option>
+                                          <option value="West">West</option>
+                                          <option value="South">South</option>
+                                          <option value="Southeast">Southeast</option>
+                                          <option value="Southwest">Southwest</option>
+                                          <option value="Northern">Northern</option>
+                                          <option value="Northwest">Northwest</option>
+                                          <option value="Northeast">Northeast</option>
+                                          <option value="East">East</option>          -->                                                                    
+                                        </select>
+                                      </div>
+                                      </div>
+                                      </div>
+                                      <div class="col-lg-6" *ngIf="!showDropdown">
+                                        <div  class="form-inline">
+                                          <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                                            <label class="col-sm-5 form-control-label" for="input-city">Company Region</label>
+                                            <!-- <input type="text" formControlName="companyRegion" placeholder="Please Enter Company Region" class="form-control" /> -->
+                                            <input type="text"  [(ngModel)]="inputValueRegion" placeholder="Please Enter Company Region" formControlName="companyRegion" class="form-control form-control-alternative">  
+                                          </div>
+                                          </div>
+                                          </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-lg-6" >
+                                      <div  class="form-inline">
+                                        <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                                          <label class="col-sm-5 form-control-label" for="input-zip">Company Zip code</label>
+                                          <input type="tel" formControlName="companyZip" placeholder="Please Enter Company ZipCode" class="form-control form-control-alternative" />
+                                        </div>
+                                        </div>
+                                        </div>
+                                        <div class="col-lg-6" >
+                                          <div  class="form-inline">
+                                            <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                                              <label class="col-sm-5 form-control-label" for="input-email">Company Primary Email</label>
+                                              <input type="text" formControlName="companyEmail" placeholder="Please Enter Company Email" class="form-control form-control-alternative"/>
+                                            </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                          <div class="col-lg-6" >
+                                            <div  class="form-inline">
+                                              <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                                                <label class="col-sm-5 form-control-label" for="input-phone">Company Contact Number</label>
+                                                <input type="text" formControlName="companyContact" class="form-control form-control-alternative" placeholder="Please Enter Company Contact Number" [ngClass]="{ 'is-invalid': submitted && f.companyContact?.invalid }">
+                                                <div *ngIf="submitted && f.companyContact?.invalid" class="invalid-feedback">                                      
+                                                  <div *ngIf="f.companyContact.errors.pattern">Only USA Numbers are allowed</div>
+                                                </div>
+                                              </div>
+                                              </div>
+                                              </div>
+                                              <div class="col-lg-6" >
+                                                <div class="form-inline">
+                                                  <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                                                    <label class="col-sm-5 form-control-label" placeholder="">Company Website</label>
+                                                    <input type="name" formControlName="companyWebsite" class="form-control form-control-alternative" placeholder="Please Enter Company Website">
+                                                  </div>
+                                                  </div>
+                                                  </div>
+                                              </div>
+                                              <div class="row" style="margin-bottom: 1.75rem !important;">
+                                                <div class="col-lg-6" >
+                                                  <div  class="form-inline">
+                                                    <div class="col-md-12 form-group">
+                                                      <label class="col-sm-5 form-control-label" for="distributor-image">Company Image</label>
+                                                      <input type="file" formControlName="companyImage" (change)="fileEvent($event)"/>                                   
+                                                    </div>
+                                                    </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                      <div class="form-inline">
+                                                        <div class="col-md-12 form-group">
+                                                          <label class="col-sm-5 form-control-label">Search Limiter</label>
+                                                          <input type="number" class="searchlimiter" formControlName="searchLimiter"
+                                                            class="form-control form-control-alternative" placeholder="Please Enter Search limiter">
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                    </div>
+                </div>
+          </form>
+      </div>
+  </div>
+</div>
+
+<!--Store modal box-->
+<!-- Modal content -->
+<div class="calloutmodal" id="modalAddStore">
+  <div class="modals-content">
+    <a (click)="cancelStoreAdd()" style="cursor: pointer;" title="Close" class="close">X</a>
+
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title">Add Store Details Here...</h4>
+      <div style="float: right;">
+        <button type="button"
+        style="background-color: #00c9fd;min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+        (click)="cancelStoreAdd()" class="btn btn-sm btn-danger">Cancel</button>
+        <button type="button"
+        style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+        (click)="saveStore()" class="btn btn-sm btn-primary">Save</button>
+      </div>
+    </div>
+    <div class="modal-body">
+      <!-- begin row -->
+      <form [formGroup]="storeform">
+      <div class="row">
+                <div class="col-xl-12 order-xl-1">
+                      <div class="pl-lg-4">
+                        <div class="row">
+                          <div class="col-lg-4">
+                            <div class="form-group">
+                              <label class="form-control-label" for="input-sname">Store Name <span
+                                  class="text-danger">*</span></label>
+                              <input type="text" formControlName="storeName"
+                                class="form-control form-control-alternative" placeholder="Please Enter Store Name"
+                                [ngClass]="{ 'is-invalid': submitted && s.storeName.invalid }" required>
+                              <div *ngIf="submitted && s.storeName.invalid" class="invalid-feedback">
+                                <div *ngIf="s.storeName.errors.required">Store Name is required</div>
+                              </div>
+                              <!--<div id="storeName_error" style="color:red; display:none;">Store Name is required</div>-->
+                            </div>
+                          </div>
+                          <div class="col-lg-4">
+                            <div class="form-group focused">
+                              <label class="form-control-label" for="input-country">Distributor Name <span
+                                  class="text-danger">*</span></label>
+                              <select (change)="getCompany($event)" formControlName="distributorName"
+                                class="form-control form-control-alternative"
+                                [ngClass]="{ 'is-invalid': submitted && s.distributorName?.invalid }" required>
+                                <option value="">Select Distributor</option>
+                                <option [value]="dist.distributorUID" *ngFor="let dist of distributors">
+                                  {{dist.distributorName}}</option>
+                              </select>
+                              <div *ngIf="submitted && s.distributorName?.invalid" class="invalid-feedback">
+                                <div *ngIf="s.distributorName.errors.required">Distributor Name is required</div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-4">
+                            <div class="form-group focused">
+                              <label class="form-control-label" for="input-country">Company Name <span
+                                  class="text-danger">*</span></label>
+                              <select formControlName="companyName" class="form-control form-control-alternative"
+                                [ngClass]="{ 'is-invalid': submitted && s.companyName?.invalid }" required>
+                                <option value="">Select Company</option>
+                                <option [value]="comp.companyUID" *ngFor="let comp of company">{{comp.companyName}}
+                                </option>
+                              </select>
+                              <div *ngIf="submitted && s.companyName?.invalid" class="invalid-feedback">
+                                <div *ngIf="s.companyName.errors.required">Company Name is required</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-lg-4">
+                            <div class="form-group">
+                              <label class="form-control-label" for="input-saddress">Store Address</label>
+                              <input type="text" formControlName="storeAddress"
+                                class="form-control form-control-alternative" placeholder="Please Enter Store Address">
+                            </div>
+                          </div>
+                          
+                              
+                          <div class="col-lg-4">
+                            <label class="form-control-label" placeholder="">Store Primary Contact Name</label>
+                            <input type="name" formControlName="storePrimaryContact" class="form-control"
+                              placeholder="Please Enter the Primary Contact Name">
+                          </div>
+                          <div class="col-lg-4">
+                            <label class="form-control-label" placeholder="">Store Website</label>
+                            <input type="name" formControlName="storeWebsite" class="form-control"
+                              placeholder="Please Enter Store Website">
+                          </div>
+
+                        </div>
+
+                        <div class="row">
+                          <div class="col-lg-4" >
+                            <!--  <div  class="form-inline"> -->
+                               <div class="form-group focused">
+                                 <label class="form-control-label" for="input-countryName">Store Country
+                                 <!-- <select formControlName="companyCountry" class="form-control form-control-alternative">
+                                   <option value="">Select Country</option>
+                                   <option value="USA">USA</option> 
+                                   <option value="CANADA">CANADA</option>                                                  
+                                 </select> -->
+                                 <span>
+                                  <a href="javascript:;" (click)="addcountry()" title="Add Country"><i class="fa fa-plus-square" style="font-size: 20px;color:green;padding-left: 9px;"></i></a>
+                                </span>
+                               </label>
+                               <select (change)="countryOnchange($event)" [(ngModel)]="countryName" 
+                                   formControlName="storeCountry" class="form-control form-control-alternative " id="countryListstore">
+                                     <option value="">Select Country</option>
+                                     <option [value]="country.countryName" *ngFor="let country of countries">{{country.countryName}}</option>                                             
+                               </select>
+                               </div>
+                               <!-- </div> -->
+                               </div>
+                          <!-- <div class="col-lg-4">
+                            <div class="form-group focused">
+                              <label class="form-control-label" for="input-country">Store State</label>
+                              <select (change)="getCity($event)" formControlName="storeState"
+                                class="form-control form-control-alternative">
+                                <option value="">Select State</option>
+                                <option [value]="state.StateUID" *ngFor="let state of states">{{state.StateName}}
+                                </option>
+                              </select>
+                            </div>
+                          </div> -->
+                          <div class="col-lg-4" *ngIf="showDropdown">
+                            <!-- <div  class="form-inline"> -->
+                             <!--  <div class="form-group focused" style="margin-bottom: 1.75rem !important;">
+                                <label class="form-control-label" for="input-state">Store State</label>
+                                <select (change)="getCity($event)" formControlName="storeState" [(ngModel)]="storedropdownValuestate" id="stateStore" class="form-control form-control-alternative">
+                                  <option value=''>Select State</option>
+                                  <option [value]="state.StateUID" *ngFor="let state of states">{{state.StateName}}</option>                                                                               
+                                </select>
+                              </div> -->
+                              <!-- <div class="col-lg-6" *ngIf="showDropdown">
+                                <div  class="form-inline"> -->
+                                  <div class="form-group focused" style="margin-bottom: 1.75rem !important;">
+                                    <label class="form-control-label" for="input-state">Store State</label>
+                                    <select (change)="getCity($event)" formControlName="storeState" [(ngModel)]="storedropdownValuestate" id="stateStore" class="form-control form-control-alternative">
+                                      <option value="">Select State</option>
+                                      <option [value]="state.StateUID" *ngFor="let state of states">{{state.StateName}}</option>                                                                               
+                                    </select>
+                                  </div>
+                                  <!-- </div>
+                                  </div> -->
+                              <!-- </div> -->
+                              </div>
+                              <div class="col-lg-4" *ngIf="!showDropdown">
+                                <!-- <div  class="form-inline"> -->
+                                  <div class="form-group focused" style="margin-bottom: 1.75rem !important;">
+                                    <label class="form-control-label" for="input-state">Store State</label>
+                                    <input type="text" [(ngModel)]="storeinputValueState" placeholder="Please Enter Store State" formControlName="storeState" class="form-control form-control-alternative">
+                                    </div>
+                                    <!-- </div> -->
+                                    </div>
+                          <!-- <div class="col-lg-4">
+                            <div class="form-group focused">
+                              <label class="form-control-label" for="input-city">Store City</label>
+                              <select formControlName="storeCity" class="form-control form-control-alternative">
+                                <option value="">Select City</option>
+                                <option [value]="city.cityUID" *ngFor="let city of cities">{{city.CityName}}</option>
+                              </select>
+                            </div>
+                          </div> -->
+                          <div class="col-lg-4" *ngIf="showDropdown">
+                            <!-- <div  class="form-inline"> -->
+                              <div class="form-group focused" style="margin-bottom: 1.75rem !important;">
+                                <label class="form-control-label" for="input-region">Store City </label>
+                                <select formControlName="storeCity" class="form-control form-control-alternative" id="cityListstore" [(ngModel)]="storedropdownValuecity">
+                                  <option value=''>Select City</option>
+                                  <option [value]="city.cityUID" *ngFor="let city of cities">{{city.CityName}}</option>                                                                               
+                                </select>                                   
+                              </div>
+                              <!-- </div> -->
+                              </div>
+                              <div class="col-lg-4" *ngIf="!showDropdown">
+                                <!-- <div  class="form-inline"> -->
+                                  <div class="form-group focused" style="margin-bottom: 1.75rem !important;">
+                                    <label class="form-control-label" for="input-region">Store City </label>
+                                    <!-- <select formControlName="companyCity" class="form-control form-control-alternative" id="cityList">
+                                      <option value="">Select City</option>
+                                      <option [value]="city.cityUID" *ngFor="let city of cities">{{city.CityName}}</option>                                                                               
+                                    </select>  --> 
+                                    <input type="text" [(ngModel)]="storeinputValueCity" placeholder="Please Enter Store City" formControlName="storeCity" class="form-control form-control-alternative">                                
+                                  </div>
+                                  <!-- </div> -->
+                                  </div>
+                        
+                        </div>
+
+                        <div class="row">
+ <!--  <div class="col-lg-4">
+                            <div class="form-group focused">
+                              <label class="form-control-label" for="input-city">Store Region</label>
+                              <input type="text" formControlName="storeRegion" placeholder="Please Enter Store Region"
+                                class="form-control" />
+                            </div>
+                          </div> -->
+                          <div class="col-lg-4" *ngIf="showDropdown">
+                            <!-- <div  class="form-inline"> -->
+                              <div class="form-group focused" style="margin-bottom: 1.75rem !important;">
+                                <label class="form-control-label" for="input-city">Store Region</label>
+                                <!-- <input type="text" formControlName="companyRegion" placeholder="Please Enter Company Region" class="form-control" /> -->
+                                <select formControlName="storeRegion" class="form-control form-control-alternative" id="regionListstore" [(ngModel)]="storedropdownValueRegion">
+                                  <option value=''>Select Region</option>
+                                  <option [value]="region.regionName" *ngFor="let region of regions">{{region.regionName}}</option> 
+                                  <!-- <option value="Midwest">Midwest</option>  
+                                  <option value="Mountain">Mountain</option>
+                                  <option value="West">West</option>
+                                  <option value="South">South</option>
+                                  <option value="Southeast">Southeast</option>
+                                  <option value="Southwest">Southwest</option>
+                                  <option value="Northern">Northern</option>
+                                  <option value="Northwest">Northwest</option>
+                                  <option value="Northeast">Northeast</option>
+                                  <option value="East">East</option>          -->                                                                    
+                                </select>
+                              </div>
+                              <!-- </div> -->
+                              </div>
+                              <div class="col-lg-4" *ngIf="!showDropdown">
+                                <!-- <div  class="form-inline"> -->
+                                  <div class="form-group focused" style="margin-bottom: 1.75rem !important;">
+                                    <label class="form-control-label" for="input-city">Store Region</label>
+                                    <!-- <input type="text" formControlName="companyRegion" placeholder="Please Enter Company Region" class="form-control" /> -->
+                                    <input type="text"  [(ngModel)]="storeinputValueRegion" placeholder="Please Enter Store Region" formControlName="storeRegion" class="form-control form-control-alternative">  
+                                  </div>
+                                  <!-- </div> -->
+                                  </div>
+                          <div class="col-lg-4">
+                            <div class="form-group">
+                              <label class="form-control-label" for="input-country">Store Zip code</label>
+                              <input type="text" formControlName="storeZipcode" placeholder="Please Enter Store ZipCode"
+                                class="form-control" />
+                            </div>
+                          </div>
+
+                          <div class="col-lg-4">
+                            <div class="form-group focused">
+                              <label class="form-control-label" for="input-email">Store Email</label>
+                              <input type="text" formControlName="storeEmail" placeholder="Please Enter Store Email"
+                                class="form-control" />
+                            </div>
+                          </div>
+
+                          
+                        </div>
+                        <div class="row">
+                          <div class="col-lg-4">
+                            <div class="form-group">
+                              <label class="form-control-label" for="input-phone">Store Contact Number</label>
+                              <input type="text" formControlName="storeContact"
+                                class="form-control form-control-alternative"
+                                placeholder="Please Enter Store Contact Number">
+                            </div>
+                          </div>
+                          <div class="col-lg-4">
+                            <div class="form-group focused">
+                              <label class="form-control-label" for="store-image">Store Image</label>
+                              <input type="file" formControlName="storeImage" (change)="fileEvent($event)" />
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+              </div>
+            </div>
+          </form>
+        </div>
+    </div>
+</div>
+
+<!--Country modal box-->
+<!-- Modal content -->
+
+<div class="countrymodal" id="myModal">
+  
+  <div class="modals-country-content">
+    
+  <div class="modal-header" style="margin-top: 10px;">
+      <h4 class="modal-title" id="modal-title">Add Country</h4>
+  </div>
+  <div class="modal-body" style="margin-top: 12px;">
+    <form [formGroup]="countryform">
+      <div class="pl-lg-4" style=" height: 22vh; margin-top: 20px; max-height: 50%; margin-left: 0px;">
+        <div class="row" style="margin-bottom: 1.75rem !important;">
+          <div class="col-lg-6" >
+            <div  class="form-inline">
+              <div class="col-md-12 form-group">
+                <label class="col-sm-4 form-control-label" for="input-countryname">Country Name <span class="text-danger">*</span></label>
+                <input type="text" formControlName="countryName" class="form-control form-control-alternative" placeholder="Please Enter Country Name" [ngClass]="{ 'is-invalid': submitted && c.countryName?.invalid }" required>
+                <div *ngIf="submitted && c.countryName?.invalid" class="invalid-feedback">
+                  <div *ngIf="c.countryName.errors.required">Country Name is required</div>
+                </div>
+                <!--<div id="distributorName_error" style="color:red; display:none;">Distributor Name is required</div>-->
+              </div>
+              </div>
+              </div>
+              </div>
+              <div style="float: right;">
+                <button type="button" style="background-color: #00c9fd;min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;" (click)="cancel()" class="btn btn-sm btn-danger">Cancel</button>
+                <button  type="button" style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;" (click)="saveCountry()" class="btn btn-sm btn-primary">Save</button>
+             
+              </div>
+              
+      </div>
+    
+      </form>
+  </div>
+  
+</div>
+</div>

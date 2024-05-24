@@ -1,0 +1,214 @@
+<div *ngIf="apiFlag == true" id="overlay">
+    <div id="text">Processing...<br/><i class="fa fa-spinner fa-spin" style="font-size:24px;color:rgb(0,0,0);"></i></div>
+    <div id="info_alert" class="alert_info alert" style="display: none;">
+      <span class="closebtn" (click)="close1()">&times;</span> 
+      <strong>{{successMessage}}</strong>
+    </div>
+    <div id="info_success" class="success_info success" style="display: none;">
+      <span class="closebtn" (click)="close1()">&times;</span> 
+      <strong>{{successMessage}}</strong>
+    </div>
+  </div>
+  <div class="row">
+    <!-- <div class="page-size"> -->
+    <div class="col-md-12 col-sm-12 search_place">
+      <div class="panel panel-inverse">
+        <div class="panel-body">
+          <div class="row">  
+            <div class="col-12" style="display: flex !important;margin-bottom: 0.75rem;">        
+            <div class="col-lg-8 col-md-6 col-xs-6">
+              <div>
+              <h3 class="page-header" style="padding: 0px;">Enter Ign Interlock Guide Details</h3>
+            </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-xs-6 text-right" style="float:right">
+              <div>
+              <button type="button" (click)="back()" class="btn btn-sm" style="background-color: #00c9fd; color: #fff;">Back</button>
+              </div>
+            </div>
+          </div>
+          </div>
+        <div class="form-group row">
+          <div class="col-lg-2 col-sm-6">
+            <h4 class="page-header" style="padding: 0px;">Select Vehicle</h4>
+            <div class="row row-space-6">
+              <div class="col-12">
+                <!-- <label>Make</label> -->
+                <select class="form-control interlockinput" name="make_list" (change)="getModel($event)" id="make_list">
+                  <option value=null>Select Make</option>
+                  <option [value]="make.vehicleUID" *ngFor="let make of makes">{{make.Make}}</option>
+                </select>
+              </div>
+  
+              <div class="col-12" id="model_list_hide" style="visibility: hidden; margin-top: 10px;display:none;">
+  
+                <!-- <label>Model</label> -->
+                <select class="form-control interlockinput" name="model_list" id="model_list" (change)="getYear($event)"
+                  >
+                  <option value=null>Select Model</option>
+                  <option [value]="model.Model" *ngFor="let model of models">{{model.Model}}</option>
+                </select>
+              </div>
+              <div class="col-12" id="year_list_hide" style="visibility: hidden; margin-top: 10px; display: none;">
+                <!-- <label>Year</label> -->
+                <select multiple class="form-control interlockinput" name="year_list" id="year_list" (change)="getOptionOne($event)"
+                  >
+                  <option value=null>Select Year </option>
+                  <option [value]="year.Year" *ngFor="let year of years">{{year.Year}}</option>
+                </select>
+              </div>
+  
+              <div class="col-12" id="options_1_hide" style="visibility: hidden;margin-top: 10px;display:none;">
+                <!-- <label>Key type</label> -->
+                <select multiple class="form-control interlockinput" name="options_1" id="options_1" (change)="getOptionTwo($event)"
+                  >
+                  <option value=null>Select Keys</option>
+                  <option [value]="one.Option1" *ngFor="let one of ones">{{one.Option1}}</option>
+                </select>
+              </div>
+              <div class="col-12" id="options_2_hide" style="visibility: hidden;margin-top: 10px;display:none;">
+                <!-- <label>Options 1</label> -->
+                <select multiple class="form-control interlockinput" (change)="getOptionThree($event)" name="options_2" id="options_2"
+                  >
+                  <option value=null>Select Option </option>
+                  <option [value]="two.Option2" *ngFor="let two of twos">{{two.Option2}}</option>
+                </select>
+              </div>
+              <div class="col-12" id="options_3_hide" style="visibility: hidden;margin-top: 10px;display:none;">
+                <!-- <label>Options 2</label> -->
+                <select multiple class="form-control interlockinput" name="options_3" (change)="getOptionFour($event)" id="options_3"
+                  >
+                  <option value=null>Select Option </option>
+                  <option [value]="three.Option3" *ngFor="let three of threes">{{three.Option3}}</option>
+                </select>
+              </div>
+              <div class="col-12" id="options_4_hide" style="visibility: hidden;margin-top: 10px;display:none;">
+                <!-- <label>Options 3</label> -->
+                <select multiple class="form-control interlockinput" *ngIf="fours" name="options_4" (change)="getOptionFive($event)"
+                  id="options_4">
+                  <option value=null>Select Option </option>
+                  <option [value]="four.Option4" *ngFor="let four of fours">{{four.Option4}}</option>
+                </select>
+              </div>
+              <div class="col-12" id="options_5_hide" style="visibility: hidden;margin-top: 10px;display:none;">
+                <!-- <label>Options 4</label> -->
+                <select multiple class="form-control interlockinput" name="options_5" (change)="getOptionSix($event)" id="options_5"
+                  >
+                  <option value=null>Select Option </option>
+                  <option [value]="five.Option5" *ngFor="let five of fives">{{five.Option5}}</option>
+                </select>
+              </div>
+  
+              <div class="col-12" id="options_6_hide" style="visibility: hidden;margin-top: 10px;display:none;">
+                <!-- <label>Options 5</label> -->
+                <select multiple class="form-control interlockinput" name="options_6" (change)="getOptionSeven($event)" id="options_6"
+                  >
+                  <option value=null>Select Option</option>
+                  <option [value]="six.Option6" *ngFor="let six of sixes">{{six.Option6}}</option>
+                </select>
+              </div>
+  
+            </div>
+            <div class="m-t-20" style="margin-top: 10px;">
+              <button (click)="getVehicleDetails()" id="getvehicle" class="btn btn-sm" type="button" style="background-color: #00c9fd; color: #fff;">Get
+                Vehicle</button>
+            </div>
+          </div>
+  
+          <div class="col-lg-10 col-sm-12">
+            
+           <!--  <div class="form-group row" style="margin-top: -30px;">
+              <div class="col-2 m-t-10" id="section_list_hide" style="margin-top: 10px;">
+                <select class="form-control" name="sectionList" (change)="getOptionSection($event)" id="sectionList"
+                  style="width:140px;height:25px;padding:0px 0px 0px 5px;font-size:12px !important;">
+                  <option value="">Select Section</option>
+                  <option [value]="section.searchSectionUID" *ngFor="let section of sections">
+                    {{section.searchSectionName}}</option>
+                </select>
+                <span id="s_text" style="visibility: hidden; display: none;" class="m-l-10 text-warning"><small>Please Select
+                    Section</small></span>
+              </div>
+            </div> -->
+            <form [formGroup]="form">
+              <div class="row">
+                <div class="col-lg-12">
+                  <button type="button" class="btn btn-sm" (click)="addHeader()" style="background-color: #00c9fd; color: #fff;margin-top: 0.75rem !important;">Add Ign guide  +</button>
+                </div>
+              </div>              
+              <ng-container formArrayName="headers" *ngFor="let header of form.get('headers')['controls']; let i = index">
+                <div [formGroupName]="i">
+                  <div class="row">
+                   
+                    <div class="col-lg-2 col-sm-3">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-country">Function</label>
+                        <input type="text" formControlName="functionName" class="form-control interlockinput"/>
+                      </div>
+                    </div>
+    
+                    <div class="col-lg-2 col-sm-2">
+                        <div class="form-group focused">
+                          <label class="form-control-label" for="input-email">Wire Color</label>
+                          <input type="text" formControlName="wireColor" class="form-control interlockinput"/>
+                        </div>
+                      </div>
+    
+                      <div class="col-lg-2 col-sm-3">
+                        <div class="form-group">
+                          <label class="form-control-label" for="input-phone">Wire Location</label>
+                          <input type="text" formControlName="wireLocation" class="form-control interlockinput">
+                        </div>
+                      </div>  
+                      
+                      <div class="col-lg-2 col-sm-3">
+                        <div class="form-group">
+                          <label class="form-control-label" for="input-phone">Additional Note</label>
+                          <input type="text" formControlName="additionalNote" class="form-control interlockinput">
+                        </div>                        
+                      </div>
+                      <div class="col-lg-1 col-sm-1">
+                        <div class="form-group">
+                          <button type="button" id="closebutton" class="btn btn-sm" (click)="deleteHeader(i)" style="background-color: #00c9fd; color: #fff;margin-top: 20px;">x</button>
+                        </div>
+                      </div>
+                      
+                    </div>            
+                </div> 
+              </ng-container>
+              <div class="row">
+                <div class="col-lg-12">
+                  <span id="h_text" style="visibility: hidden; display: none;" class="m-l-10 text-warning"><small>Please Enter Ign Guide Details</small></span>
+                </div>
+              </div>   
+            </form>
+            <br /><br />
+            <div class="updatebtnenable" *ngIf="updateBtnFlag">
+              <div style="display: inline;"><span *ngIf="vehicleDetailsFlag" class="page-header"><h3>Vehicle Details</h3></span></div>
+              <!-- <div style="display: inline;float: right;"><button id="uVehicle1" (click)="updateVehicleDetails()" class="btn btn-primary btn-sm" type="button">Update Vehicle</button></div> -->
+            </div>
+            <div *ngIf="vehicleDetailsFlag">
+              <ag-grid-angular style="width: 100%; height: 40vh; margin-top: 20px" class="ag-theme-alpine"
+                [rowData]="rowData1" [columnDefs]="columnDefs1" [modules]="modules1" [rowSelection]="rowSelection1"
+                (selectionChanged)="onSelectionChanged1()" [animateRows]="true" [frameworkComponents]="frameworkComponents1"
+                (gridReady)="onGridReady1($event)" [pagination]="true">
+              </ag-grid-angular>
+            </div>
+            <br />         
+            <div class="updatebtnenable" *ngIf="updateBtnFlag">
+              <p>Please Enter Ign Guide and Select Vehicles to update against it.</p>
+              <button id="uVehicle" (click)="updateVehicleDetails()" class="btn btn-sm m-10" type="button" style="background-color: #00c9fd; color: #fff;">Update
+                Vehicle</button>
+            </div>
+            <!-- <div class="row">
+              <div class="col-12 text-right" style="margin-top:10px;text-align:right">
+                <button type="button" (click)="back()" class="btn btn-sm btn-danger">Back</button>
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  <!-- </div> -->
+  </div>
+

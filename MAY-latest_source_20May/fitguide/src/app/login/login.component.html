@@ -1,0 +1,105 @@
+<div *ngIf="apiFlag == true" id="overlay">
+	<div id="text">Processing...<br/><i class="fa fa-spinner fa-spin" style="font-size:24px;color:rgb(0,0,0);"></i></div>
+	<div id="info_alert" class="alert_info alert" style="display: none;">
+	 <span class="closebtn" (click)="close1()">&times;</span>
+	  <strong>{{successMessage}}</strong>
+	</div>
+	<div id="info_success" class="success_info success" style="display: none;"> 
+	  <span class="closebtn" (click)="close1()">&times;</span> 
+	  <strong>{{successMessage}}</strong>
+	</div>
+  </div>
+<!-- begin login -->
+<div class="login login-with-news-feed">
+	<!-- begin news-feed -->
+	<div class="news-feed">
+		<div class="news-image" [ngStyle]="{'background-image': 'url(' + loginImage + ')'}"></div>
+		<div class="news-caption">
+			<h4 class="caption-title"><b>{{title}}</b></h4>&nbsp;
+			<h5 style="color:#FFFFFFD9">{{subTitle1}}</h5>&nbsp;
+			<p style="margin: 0; margin-bottom: 40px;">{{subTitle2}}</p>
+		</div>
+	</div>
+	<!-- end news-feed -->
+	<!-- begin right-content -->
+	<div class="right-content">
+        <div class="text-center w-75 m-auto" *ngIf="imgFlag">
+            <div class="auth-logo">
+                <a href="javascript: void(0);" class="logo logo-dark text-center">
+                    <span class="logo1-lg">
+                        <img src="assets/images/newlogo.png" alt="" height="90">
+                    </span>
+                </a>
+
+                <a href="javascript: void(0);" class="logo logo-light text-center">
+                    <span class="logo1-lg">
+                        <img src="assets/images/newlogo.png" alt="" height="90">
+                    </span>
+                </a>
+            </div>
+        </div>
+		 <!--signInForm-->
+     <form *ngIf="registerFlag == false" style="height: 195px;" [formGroup]="signInForm" (ngSubmit)="submit()">
+
+      <div class="mb-2">
+          <label for="emailaddress" class="form-label">User Name</label>
+          <input class="form-control" formControlName="userName" type="email" required="" placeholder="Enter Username">
+          <div *ngIf="f1.userName.touched && f1.userName.invalid" class="alert alert-danger">
+              <div *ngIf="f1.userName.errors.required">User Name is required.</div>
+          </div>
+      </div>
+
+      <div class="mb-2">
+          <label for="password" class="form-label">Password</label>
+          <div class="input-group input-group-merge">
+              <input type="password" formControlName="password" class="form-control" placeholder="Enter your password">
+              
+              <div class="input-group-text" data-password="false">
+                  <span class="password-eye"></span>
+              </div>                                    
+          </div>
+          <div *ngIf="f1.password.touched && f1.password.invalid" class="alert alert-danger">
+              <div *ngIf="f1.password.errors.required">Password is required.</div>
+              <div *ngIf="f1.password.errors.password">Please enter valid password address.</div>
+          </div>
+      </div>
+
+      <div class="row" style="margin-bottom: 12px;">
+          <div class="col-sm-5">
+     <input type="text" class="form-control" formControlName="captchaInt" required readonly id="txtCaptcha" name="txtCaptcha" > 
+          </div>
+
+          <!-- Refresh icon -->
+          <div class="col-sm-1">
+          <i class="fa fa-refresh" (click)="randomInteger()" aria-hidden="true" style="cursor: pointer;"></i>
+     </div>
+
+     
+         <!-- Captcha Entered here -->
+         <div class="col-sm-6">
+            <input type="text" class="form-control" formControlName="captchaVal" (focusout)="removeError($event)" required id="txtInput" name="txtInput" placeholder="Enter captcha">
+            <span style="color:red;" id="captcha_error">{{capserror_msg}}</span>
+            </div>
+            
+          </div>
+
+      <div class="d-grid mb-2 text-center">
+          <button class="btn btn-primary" type="submit"> Log In </button>
+      </div>
+      <div class="alert alert-danger alert-dismissible" *ngIf="error && registerFlag == false">
+        {{error_msg}}
+      </div>
+      <div *ngIf="registerFlag == false" class="m-t-20 text-inverse">
+          Forgot Password? Click <a routerLink="/forgot_password">here</a> to reset.
+          <hr/>
+          <p class="text-center text-grey-darker mb-0" >
+            {{copyright}}
+          </p>
+      </div>
+  </form>                
+<!-- <footer class="footer footer-alt">
+    2023 &copy; The12VDashboard All Rights Reserved. 
+</footer> -->
+  </div>
+  </div>
+                

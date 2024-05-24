@@ -1,0 +1,82 @@
+<div id="page-content" style="min-height: 89vh !important;">
+    <!-- Navigation info -->
+    <div *ngIf="voucherFlag == true">
+        <form id="form-validation" [formGroup]="form" class="form-horizontal form-box remove-margin">
+        <div class="form">
+            <div class="form-box-content">
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-lg-3">
+                            <label class="control-label col-md-5" for="val_date" style="padding-left:30px;">From Date<span class="red">*</span>:&nbsp;</label>
+                            <div class="input-group" style="width:140px;padding-top: 2px;">
+                                <input type="date" id="FromDate" name="FromDate" class="form-control" formControlName="FromDate" style="height:30px;" [ngClass]="{ 'is-invalid': submitted && f.FromDate.invalid }" >
+                                <div *ngIf="submitted && f.FromDate.invalid" class="red">
+                                    <div *ngIf="f.FromDate.errors.required">FromDate is required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="control-label col-md-2" for="val_date">To Date<span class="red">*</span>:&nbsp;</label>
+                            <div class="input-group" style="width: 140px;padding-top: 2px;">
+                                <input type="date" id="ToDate" name="ToDate" class="form-control" formControlName="ToDate" style="height:30px;margin-left:10px;" [ngClass]="{ 'is-invalid': submitted && f.ToDate.invalid }" >
+                                <div *ngIf="submitted && f.ToDate.invalid" class="red">
+                                    <div *ngIf="f.ToDate.errors.required">ToDate is required</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="form-group">
+                    <div class="col-md-10 col-md-offset-2">
+                        <div *ngIf= "voucherFlag == true">
+                            <button type="button" (click)="load()" class="btn btn-success" style="float: left!important;margin-bottom: 18px;"> Load</button>
+                        <div *ngIf="dataFlag == true" class="nodata">No data for this specific date</div>
+                        </div> 
+                    </div>
+                </div> 
+            </div>
+        </div>
+        </form>
+        </div>
+
+    <div *ngIf="voucherFlag == false">     
+    <div  style="margin-bottom:20px;">
+        <div class="form-group form-actions">
+        <div class="form-group btn_panel">
+            <smart-button class="small" #button id="xlsxBtn">Export to Excel <i id="loader" style="display:none;" class="fa fa-spinner fa-spin"></i></smart-button>
+        </div>
+    </div>
+    </div>
+    <div>
+        <button type="button" (click)="clear()" class="btn btn-default" style="margin-left:154px;margin-top:-88px;">CLEAR ALL</button>
+    </div>
+    <div>
+        <smart-grid
+            #grid 
+            [paging]="paging" 
+            [pager]="pager"
+            [appearance]="appearance"
+            [sorting]="sorting" 
+            [filtering]="filtering"
+            [grouping]="grouping" 
+            [dataSource]="dataSource" 
+            [header]="header"
+            [columns]="columns" 
+            [behavior]="behavior"
+            id="grid" style="width:99%;height: 460px;margin-top: -34px;">
+        </smart-grid>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10 col-md-offset-2">
+            <button type="button" (click)="exit()" class="btn btn-success" style="float: left !important;"> Exit</button>
+        </div>
+    </div>
+    </div>
+</div>
+
+<footer>
+    <div class="footer">
+        <p>Copyrights &copy;2022. ABFRL Customer Complaints</p>
+    </div>
+</footer>

@@ -1,0 +1,140 @@
+ <!-- Error Msg showing -->
+ <div *ngIf="apiFlag == true" id="overlay">
+    <div id="text">Processing...<br/><i class="fa fa-spinner fa-spin" style="font-size:24px;color:rgb(0,0,0);"></i></div>
+    <div id="info_alert" class="alert_info alert" style="display: none;">
+      <span class="closebtn" (click)="close1()">&times;</span>
+      <strong>{{err_message}}</strong>
+    </div>
+  </div>
+  <div *ngIf="apiFlag1 == true" id="overlay">
+    <div id="info_alert12" class="alert_info alert" style="background-color:red;">
+        <span class="closebtn" (click)="close2()">&times;</span>
+        <strong>No User Found</strong>
+    </div>
+</div>
+
+<!-- begin row -->
+<div class="row">
+    <div class="col-xl-12">
+        <!-- begin panel -->
+        <div class="panel panel-inverse">
+            <!-- begin panel-heading -->
+            <!-- <div class="panel-heading">
+                <h4 class="panel-title">Top 10 Vehicles</h4>
+                <div class="panel-heading-btn">
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default"
+                        data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                </div> 
+            </div>-->
+            <!-- end panel-heading -->
+            <!-- begin panel-body -->
+            <div class="panel-body">
+                <div class="m-t-20 m-b-20">
+                    <div class="form-group row">
+                    <div class="col-lg-12 col-xl-12">
+                        <div class="row row-space-6">
+                            <div class="col-2">
+                                  <label>Distributor</label>
+                                  <select (change)="distributorEvent($event)" class="form-control" name="distributorName" id="distributorName">
+                                    <option value="">Select Distributor</option>
+                                    <option value="all"> View All </option>
+                                    <option [value]="dist.distributorUID" *ngFor="let dist of distributors">{{dist.distributorName}}</option>
+                                  </select>
+                              </div>
+                              <div class="col-2">
+                                <label>Company</label>
+                                <select (change)="companyEvent($event)" class="form-control" name="companyName" id="companyName">
+                                  <option value="">Select Company</option>
+                                  <option value="all"> View All </option>
+                                  <option [value]="comp.companyUID" *ngFor="let comp of scompanyList">{{comp.companyName}}</option>
+                                </select>
+                            </div>
+                              <div class="col-2">
+                                <label>Store</label>
+                                <select (change)="storeEvent($event)" class="form-control" name="storeuser" id="storeuser">
+                                  <option value="">Select store</option>
+                                  <option value="all"> View All </option>
+                                  <option [value]="store.storeUID" *ngFor="let store of sstoreList">{{store.storeName}}</option>
+                                </select>
+                            </div>
+                            <div class="col-2">
+                                <label>Region</label>
+                                <select class="form-control" (change)="regionEvent($event)" name="region" id="region">
+                                    <option value=""> Select Region </option>
+                                    <option value="all"> View All </option>
+                                    <option [value]="region.Region" *ngFor="let region of sregionList">{{region.Region}}</option>
+                                </select>
+                            </div>
+                            <div class="col-2">
+                                <label>By User</label>
+                                <select class="form-control" (change)="uservalidation($event)" [(ngModel)]="topvehicles.userid" name="userid" id="userid">
+                                    <option selected value=""> Select User </option>
+                                    <option value="all"> View All </option>
+                                    <option [value]="user.userUID" *ngFor="let user of usersList">{{user.firstName}} {{user.lastName}}</option>
+                                </select>
+                                <span id="u_text" style="visibility: hidden;display: none;" class="m-l-10 text-warning"><small>Please Select
+                                    User</small></span>
+                            </div>
+                        </div>
+                        <div class="row row-space-6" style="padding-top: 15px;">
+                            <div class="col-2">
+                                <label>From Date</label>
+                                <div class="input-group input-daterange">
+                                    <input type="text" class="form-control" (click)="fromDateValidation()" name="start" id="start"  placeholder="From Date" style="text-align: left;" />
+                                </div>
+                                <span id="fd_text" style="visibility: hidden;display: none;" class="m-l-10 text-warning"><small>Please Select
+                                    From_Date</small></span>
+                            </div>
+                            <div class="col-2">
+                                <label>To Date</label>
+                                <div class="input-group input-daterange">
+                               <input type="text" class="form-control" (click)="toDateValidation()" name="end" id="end"  placeholder="End Date"  style="text-align: left;"/>
+                            </div>
+                            <span id="td_text" style="visibility: hidden;display: none;" class="m-l-10 text-warning"><small>Please Select
+                                To_Date</small></span>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="m-b-10 m-t-20">
+                            <button id="vsearch" (click)="getvehicleDetails()" type="button" class="btn"  style="background-color: #00c9fd; color: #fff;">Search Results</button>
+                        </div>
+                    </div>
+                    </div>
+                    </div>
+                    
+                    <!-- end row -->
+                    <!-- begin row -->
+                    <div *ngIf="this.series.length > 0" class="row">
+                    <!-- begin col-6 -->
+                    <div class="col-xl-12">
+                    <!-- begin panel -->
+                    <div class="panel panel-inverse" >
+                        <!-- <div class="panel-heading">
+                            <h4 class="panel-title">Top 10 Vehicles</h4>
+                            <div class="panel-heading-btn">
+                                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                            </div>
+                        </div> -->
+                    <hr/>
+                        <div class="panel-body p-0">
+                            <div style="width:98%">
+                                <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [labels]="chartOptions.labels" [responsive]="chartOptions.responsive"></apx-chart>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end panel -->
+                    </div>
+                    <!-- end col-6 -->
+                    <!-- begin col-6 -->
+                    <div class="col-xl-6"></div>
+                    <!-- end col-6 -->
+                    </div>
+                    <!-- end row -->
+                    
+
+                </div>
+            </div>
+            </div>
+            </div>
+
+

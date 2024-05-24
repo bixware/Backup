@@ -1,0 +1,244 @@
+<div *ngIf="apiFlag == true" id="overlay">
+    <div id="text">Processing...<br /><i class="fa fa-spinner fa-spin" style="font-size:24px;color:rgb(0,0,0);"></i>
+    </div>
+    <div id="info_alert" class="alert_info alert" style="display: none;">
+        <span class="closebtn" (click)="close1()">&times;</span>
+        <strong>{{successMessage}}</strong>
+    </div>
+    <div id="info_success" class="success_info success" style="display: none;">
+        <span class="closebtn" (click)="close1()">&times;</span>
+        <strong>{{successMessage}}</strong>
+    </div>
+</div> 
+<!-- begin row -->
+<div class="row">
+    <div class="col-xl-12">
+        <!-- begin panel -->
+        <div class="panel panel-inverse" style="margin: 0px !important;">
+            <!-- begin panel-heading -->
+            <div class="panel-heading">
+              <div class="row">
+                <!-- <div class="col-xl-3">
+                <h4 class="panel-title">Vehicle Non Part</h4>
+                </div> -->
+                <!-- <div class="col-xl-5">
+                  <div style="margin-left: 30px;">
+                    <label>Quick Filter :</label> &nbsp;&nbsp;&nbsp;<input type="text" class="agform" placeholder="Filter quickly..." (keyup)="quickSearch()" [(ngModel)]="searchValue"/>
+                  </div>                  
+                </div>
+                <div class="col-xl-7" style="margin-top: 18px;">                    
+                  <div style="float:right;margin-right: 40px;">
+                    <a routerLink="/home/vehiclenonpart/addvehiclenonpart" style="cursor: pointer;" class="icon_btn_success" title="Add Vehicle"><i class="fa fa-plus-square" style="font-size: 32px; color:green;"></i></a>
+                  </div>   
+                  <div style="float:right;margin-top: 10px;margin-right: 10px;">
+                    <label>Archive :</label> &nbsp;
+                    <input type="checkbox" (click)="clickEvent()" class="form control" style="margin-right:6px;" id="archive">
+                  </div>          
+                </div>   -->    
+                <div class="col-12">
+                  <div class="page-title-boxnew">
+                      <div class="style-module-titleWrap-mfvE" data-e2e="headerContentBlock">
+                        <label>Quick Filter :</label> &nbsp;&nbsp;&nbsp;<input type="text" class="agform" placeholder="Filter quickly..." (keyup)="quickSearch()" [(ngModel)]="searchValue"/>
+                        
+                      </div>
+        
+                  <div class="style-module-actions-t2Ea mt-2 stylebuttons"  data-e2e="headerActionsBlock">
+                    <a routerLink="/home/vehiclenonpart/addvehiclenonpart" style="cursor: pointer;" class="icon_btn_success" title="Add Vehicle"><i class="fa fa-plus-square" style="font-size: 32px; color:green;"></i></a>&nbsp;&nbsp;
+                    <label style="padding: 5px;">Archive :</label> &nbsp;
+                    <input type="checkbox" (click)="clickEvent()" class="form control" style="margin-right:6px;margin-bottom: 2px;" id="archive">
+                    
+                    
+          <!-- <button class="style-module-btn-dck8 style-module-btn_primary-x7pK style-module-btn_m-yQoV"   data-e2e="saveCompanyChanges" type="button">Save
+          </button> -->
+                  </div>
+        
+        
+                  </div>
+              </div>          
+              </div>
+            </div>
+            <!-- end panel-heading -->
+            <!-- begin panel-body -->
+            <div class="panel-body">
+                <ag-grid-angular id="ag_grid" style="width: 100%; height: 63vh;" class="ag-theme-alpine" [rowData]="rowData"
+                    [columnDefs]="columnDefs" [modules]="modules" [animateRows]="true"
+                    [overlayLoadingTemplate]="overlayLoadingTemplate" [frameworkComponents]="frameworkComponents"
+                    (gridReady)="onGridReady($event)" (cellValueChanged)="onCellValueChanged($event)"
+                    [pagination]="true" [gridOptions]="gridOptions">
+                </ag-grid-angular>
+            </div>
+            <!-- end panel-body -->
+        </div>
+        <!-- end panel -->
+    </div>
+</div>
+
+<div class="calloutmodal" id="modalNonpart">
+    <div class="modals-content nonpartpopup">
+       <!--  <div class="icon" style="cursor: pointer;"> -->
+            <a style="cursor: pointer;" (click)="cancelNonpart()" title="Close" class="close">X</a>
+            <!-- <div style="float:right"> -->
+           
+           <!--  </div>
+        </div> -->
+        <div class="modal-header">
+            <!-- <h4 class="modal-title" id="modal-title">Nonpart Vehicle Details Here...</h4>
+            <div style="float:right">
+              <button type="button" (click)=" cancelNonpart()"
+              style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+              class="btn btn-sm btn-danger">Back</button>&nbsp;&nbsp;
+          <button type="button" (click)="submitForm()"
+              style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+              class="btn btn-sm btn-primary">Save</button>
+            </div> -->
+        </div>
+        <div class="modal-body">
+            <!-- <div class="row">
+                <div class="col-xl-12 order-xl-1">
+                    <div class="card-body" style="height: 100vh; margin-top: 22px; margin-right: -33px; max-height: 50%; width: auto; margin-left: 0px;">
+                        <div class="card-header bg-white border-0" style= "background-color:#fff !important; "> -->
+                            <form (ngSubmit)="submitForm()" [formGroup]="form">
+                               <!--  <div class="row"> -->
+                                    <!-- <div class="col-xl-12 order-xl-1"> -->
+                                      <!-- <div class="card bg-secondary shadow"> -->
+                                        <!-- <div class="card-header bg-white border-0">
+                                          <div class="row align-items-center">
+                                            <div class="col-8">
+                                              <h5 class="mb-0">Edit NonPart Details Here...</h5>
+                                            </div>
+                                            <div class="col-4 text-right">
+                                              <button type="button" (click)="back()" class="btn btn-sm btn-danger">Back</button>
+                                              <button  type="button" [disabled]="clicked" (click)="submitForm()" class="btn btn-sm btn-primary">Save</button>
+                                            </div>
+                                          </div>
+                                        </div> -->
+                                        <!-- <div class="card-body"> -->
+                                            
+                                            <div class="pl-lg-4" style="height: 50vh;width: auto;">
+                                             
+                                              <div class="row align-items-center">
+                                                <div class="col-lg-8 col-md-6 col-xs-6">
+                                                  <h5 class="mb-0 header">Nonpart Vehicle Details Here...</h5>
+                                                </div>
+                                                <div class="col-lg-4 col-md-6 col-xs-6 text-right" style="float: right;">
+                                                   <!--  <a href="users_list.php" class="btn btn-sm btn-danger">Back</a> -->
+                                                   
+                                                  <button (click)="cancelNonpart()" style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;" type="button" class="btn btn-sm btn-danger" id="buttons">Back</button>&nbsp;&nbsp;
+                                                  <button type="button" (click)="submitForm()" style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;" name="submit" id="buttons" class="btn btn-sm btn-primary">Save</button>
+                                                </div>
+                                                <h6 class="heading-small text-muted">NonPart information</h6>
+                                              </div>
+                                              <div class="row">
+                                                <div class="col-12">
+                                                  <label class="form-control-label" for="sectionList">Section Name</label>                         
+                                                <div class="form-group">
+                                                    <select class="form-control" formControlName="sectionList" (change)="getOptionSection($event)" id="sectionList"
+                                                      style="width:140px;height:30px;padding:0px 0px 0px 5px;font-size:12px !important;">
+                                                      <option [value]="section.searchSectionUID" *ngFor="let section of sections">
+                                                        {{section.searchSectionName}}</option>
+                                                    </select>                                   
+                                                </div>
+                                              </div>
+                                          </div>
+                                              <!-- <ng-container formArrayName="headers" *ngFor="let header of form.get('headers')['controls']; let i = index">
+                                                <div [formGroupName]="i"> -->
+                                                  <div class="row" style="margin-top: 20px;">
+                                                    <div class="col-lg-3">
+                                                      <div class="form-group">
+                                                        <label class="form-control-label" for="input-country">Display Header</label>
+                                                        <input type="text" style="height:30px;" formControlName="displayHeader" class="form-control"/>
+                                                      </div>
+                                                    </div>
+                                    
+                                                    <div class="col-lg-3">
+                                                        <div class="form-group focused">
+                                                          <label class="form-control-label" for="input-email">1SpeakerSize</label>
+                                                          <input type="text" style="height:30px;" formControlName="value1" class="form-control"/>
+                                                        </div>
+                                                      </div>
+                                    
+                                                      <div class="col-lg-3">
+                                                        <div class="form-group">
+                                                          <label class="form-control-label" for="input-phone">1SpeakerLocation</label>
+                                                          <input type="text" style="height:30px;" formControlName="value2" class="form-control form-control-alternative">
+                                                        </div>
+                                                      </div>  
+                                                      
+                                                      <div class="col-lg-3">
+                                                        <div class="form-group">
+                                                          <label class="form-control-label" for="input-phone">2SpeakerSize</label>
+                                                          <input type="text" style="height:30px;" formControlName="value3" class="form-control form-control-alternative">
+                                                        </div>                        
+                                                      </div>
+
+                                                      <div class="col-lg-3">
+                                                        <div class="form-group">
+                                                          <label class="form-control-label" for="input-phone">2SpeakerLocation</label>
+                                                          <input type="text" style="height:30px;" formControlName="value4" class="form-control form-control-alternative">
+                                                        </div>                        
+                                                      </div>
+
+                                                      <div class="col-lg-3">
+                                                        <div class="form-group">
+                                                          <label class="form-control-label" for="input-phone">3SpeakerSize</label>
+                                                          <input type="text" style="height:30px;" formControlName="value5" class="form-control form-control-alternative">
+                                                        </div>                        
+                                                      </div>
+
+                                                      <div class="col-lg-3">
+                                                        <div class="form-group">
+                                                          <label class="form-control-label" for="input-phone">3SpeakerLocation</label>
+                                                          <input type="text" style="height:30px;" formControlName="value6" class="form-control form-control-alternative">
+                                                        </div>                        
+                                                      </div>
+
+                                                      <div class="col-lg-3">
+                                                        <div class="form-group">
+                                                          <label class="form-control-label" for="input-phone">1DisplayNote</label>
+                                                          <input type="text" style="height:30px;" formControlName="value7" class="form-control form-control-alternative">
+                                                        </div>                        
+                                                      </div>
+
+                                                      <div class="col-lg-3">
+                                                        <div class="form-group">
+                                                          <label class="form-control-label" for="input-phone">2DisplayNote</label>
+                                                          <input type="text" style="height:30px;" formControlName="value8" class="form-control form-control-alternative">
+                                                        </div>                        
+                                                      </div>
+                                                      <!-- <div class="col-lg-2">
+                                                        <div class="form-group" style="margin-top: 28px;">
+                                                          <button type="button" class="btn btn-sm btn-primary" (click)="deleteHeader(i)">x</button>
+                                                        </div>
+                                                      </div> -->
+                                                  </div>                  
+                                                <!-- </div> 
+                                              </ng-container>  -->
+                                         <!--    </div> -->                               
+                                           <!-- </div>  -->                       
+                                        <!-- </div> -->
+                                        <!-- <div class="card-header bg-white border-0">
+                                            <div class="row align-items-center">                          
+                                              <div class="col-12 text-right">
+                                                  <button type="button" (click)=" cancelNonpart()"
+        style="background-color: #c0c3d1; min-height: 36px; border: #c0c3d1; border-radius: 5px; color: #343643; font-family: Roboto; font-size: 14px; line-height: 20px;float:right;margin-right: 25px;"
+        class="btn btn-sm btn-danger">Back</button>&nbsp;&nbsp;
+    <button type="button" (click)="submitForm()"
+        style="background-color: #1c3fff; min-height: 36px; border: #1c3fff; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;float:right;margin-right: 5px;"
+        class="btn btn-sm btn-primary">Save</button>
+                                              </div>
+                                            </div>
+                                        </div> -->
+                                       
+                                    <!-- </div> -->
+                                </div>
+                              </form>
+                  <!--       </div>
+                    </div>
+                </div>
+                
+            </div> -->
+           
+        </div>
+        
+        </div>
+</div>

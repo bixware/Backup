@@ -1,0 +1,262 @@
+<div *ngIf="apiFlag == true" id="overlay">
+  <div id="text">Processing...<br/><i class="fa fa-spinner fa-spin" style="font-size:24px;color:rgb(0,0,0);"></i></div>
+  <div id="info_alert" class="alert_info alert" style="display: none;">
+    <span class="closebtn" (click)="close1()">&times;</span> 
+    <strong>{{successMessage}}</strong>
+  </div>
+  <div id="info_success" class="success_info success" style="display: none;">
+    <span class="closebtn" (click)="close1()">&times;</span> 
+    <strong>{{successMessage}}</strong>
+  </div>
+</div>
+<!-- begin row -->
+<div class="row">
+  <div class="col-xl-12 col-md-12 col-xs-12">
+      <!-- begin panel -->
+      <div class="panel panel-inverse" style="margin: 0px !important;">
+        <div class="panel-heading">
+          <div class="row">
+            <!-- <div class="col-xl-3">
+            <h4 class="panel-title">Vehicle Master</h4>
+            </div> -->
+            <div class="col-12">
+              <div class="page-title-boxnew">
+                   <div class="style-module-titleWrap-mfvE" data-e2e="headerContentBlock">
+                           </div>
+              <div class="style-module-actions-t2Ea mt-2 stylebuttons"  data-e2e="headerActionsBlock">
+                  <a (click)="addLightingModal()"style="cursor: pointer;" class="icon_btn_success" title="Add Details"><i class="fa fa-plus-square" style="font-size: 32px; color:green;"></i></a>&nbsp;&nbsp;
+               
+              </div>
+    
+    
+              </div>
+          </div>
+       
+          </div>
+        </div>
+          <!-- begin panel-heading -->
+         <!--  <div class="panel-heading">
+              <h4 class="panel-title">Vehicle Additional</h4>
+          </div> -->
+          <!-- end panel-heading -->
+          <!-- begin panel-body -->                
+          <div class="panel-body">                
+  <ag-grid-angular
+  #agGrid
+  style="width: 100%; height: 69vh;"
+  id="ag_grid"
+  class="ag-theme-alpine"
+  [modules]="modules"
+  [columnDefs]="columnDefs"
+  [defaultColDef]="defaultColDef"
+  [components]="components"
+  [rowBuffer]="rowBuffer"
+  [rowModelType]="rowModelType"
+  [cacheBlockSize]="cacheBlockSize"
+  [cacheOverflowSize]="cacheOverflowSize"
+  [maxConcurrentDatasourceRequests]="maxConcurrentDatasourceRequests"
+  [infiniteInitialRowCount]="infiniteInitialRowCount"
+  [maxBlocksInCache]="maxBlocksInCache"
+  [rowData]="rowData"
+  (gridReady)="onGridReady($event)"
+  (cellValueChanged)="onCellValueChanged($event)"
+></ag-grid-angular>
+
+          </div>
+          <!-- end panel-body -->
+      </div>
+      <!-- end panel -->
+  </div>
+</div>
+
+<!-- Add modal popup -->
+<div class="calloutmodal" id="modalAdd">
+  <div class="modals-content">
+      <div class="modal-header">
+        <a style="cursor: pointer;" (click)="cancelAdd()" title="Close" class="close">X</a>
+      </div>
+      <div class="modal-body" style="overflow-x:hidden;overflow-y: auto;">
+                                <form (ngSubmit)="addLighting()" [formGroup]="form">
+                                  <div class="pl-lg-4" style="height: 60vh;margin-top: 22px;max-height: 50%; margin-left: 0px;">
+                                    <div class="row align-items-center">
+                                      <div class="col-lg-8 col-md-6 col-xs-6">
+                                        <h5 class="mb-2 header">Add Lighting Guide Details Here...</h5>
+                                      </div>
+                                      <div class="col-lg-4 col-md-6 col-xs-6 mb-2 text-right" style="float: right;">
+                                        <button (click)="cancelAdd()" style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;" type="button" class="btn btn-sm btn-danger" id="buttons">Back</button>&nbsp;&nbsp;
+                                        <button type="button" (click)="addLighting()" style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;" name="submit" id="buttons" class="btn btn-sm btn-primary">Save</button>
+                                      </div>
+                                    </div>
+                                   <div class="row">
+                                      <div class="col-lg-6 col-sm-6">
+                                        <div class="form-inline">
+                                          <div class="form-group col-md-12 col-xs-12" style="margin-bottom:0.75rem !important">
+                                            <label class="col-sm-5 form-control-label" for="input-Make">Make <span class="text-danger">*</span></label>
+                                            <select class="form-select form-selectsmall" name="make_list" (change)="getModel($event)" id="make_list" formControlName="Make"  [ngClass]="{ 'is-invalid': submitted && f.Make?.invalid }" required>
+                                              <option value=null>Select Make</option>
+                                              <option [value]="make.Make" *ngFor="let make of makes">{{make.Make}}</option>
+                                            </select>
+                                            <div *ngIf="submitted && f.Make?.invalid" class="invalid-feedback">
+                                              <div *ngIf="f.Make.errors.required">Make is required</div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                         
+                                      </div>  
+                                      <div class="col-lg-6 col-sm-6">
+                                        <div class="form-inline">
+                                          <div class="form-group col-md-12 col-xs-12" style="margin-bottom:0.75rem !important">
+                                            <label class="col-sm-5 form-control-label" for="input-Model">Model <span class="text-danger">*</span></label>
+                                            <select class="form-select form-selectsmall" name="model_list" id="model_list" (change)="getYear($event)" formControlName="Model" [ngClass]="{ 'is-invalid': submitted && f.Model?.invalid }">
+                                              <option value=null>Select Model</option>
+                                              <option [value]="model.Model" *ngFor="let model of models">{{model.Model}}</option>
+                                            </select>                                              <div *ngIf="submitted && f.Model?.invalid" class="invalid-feedback">
+                                                <div *ngIf="f.Model.errors.required">Model is required</div>
+                                              </div>
+                                            </div>
+                                        </div>
+                                         
+                                      </div> 
+                                    </div>
+                                      <div class="row">
+                                      <div class="col-lg-6 col-sm-6">
+                                        <div class="form-inline">
+                                          <div class="form-group col-md-12 col-xs-12" style="margin-bottom:0.75rem !important">
+                                            <label class="col-sm-5 form-control-label" for="input-Year">Year <span class="text-danger">*</span></label>
+                                            <select class="form-select form-selectsmall" formControlName="Year" name="year_list" id="year_list" [ngClass]="{ 'is-invalid': submitted && f.Year?.invalid }" required>
+                                              <option value=null>Select Year</option>
+                                              <option [value]="year.Year" *ngFor="let year of years">{{year.Year}}</option>
+                                            </select>
+                                              <div *ngIf="submitted && f.Year?.invalid" class="invalid-feedback">
+                                                <div *ngIf="f.Year?.errors.required">Year is required</div> 
+                                                <div *ngIf="f.Year.invalid && !f.Year.errors.required">Invalid Year</div>                                          
+                                              </div>
+                                            </div>
+                                        </div>
+                                        
+                                      </div> 
+                                      <div class="col-lg-6 col-sm-6">
+                                        <div class="form-inline">
+                                          <div class="form-group col-md-12 col-xs-12" style="margin-bottom:0.75rem !important">
+                                            <label class="col-sm-5 form-control-label" for="input-Qualifier">Qualifier <span class="text-danger">*</span></label>
+                                              <input type="text" formControlName="Qualifier"  placeholder="Please Enter Qualifier" class="form-control form-control-alternative" 
+                                              style="border: 1px solid #ccc;" [ngClass]="{ 'is-invalid': submitted && f.Qualifier?.invalid }" required >
+                                              <div *ngIf="submitted && f.Qualifier?.invalid" class="invalid-feedback">
+                                                <div *ngIf="f.Qualifier?.errors.required">Qualifier is required</div> 
+                                                <div *ngIf="f.Qualifier.invalid && !f.Qualifier.errors.required">Qualifier is required</div>                                          
+                                              </div>
+                                            </div>
+                                        </div>
+                                        
+                                      </div>
+                                      </div>
+                                      <div class="row">
+                                      
+                                      <div class="col-lg-6 col-sm-6">
+                                        <div class="form-inline">
+                                          <div class="form-group col-md-12 col-xs-12" style="margin-bottom:0.75rem !important">
+                                            <label class="col-sm-5 form-control-label" for="input-ShortDescription">ShortDescription<span class="text-danger">*</span></label>
+                                            <input type="text" formControlName="ShortDescription" placeholder="Please Enter ShortDescription" class="form-control form-control-alternative" 
+                                            style="border: 1px solid #ccc;" [ngClass]="{ 'is-invalid': submitted && f.ShortDescription?.invalid }" required>
+                                            <div *ngIf="submitted && f.ShortDescription?.invalid" class="invalid-feedback">
+                                              <div *ngIf="f.ShortDescription.errors.required">From To is required</div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                       
+                                      </div>
+                                      <div class="col-lg-6 col-sm-6">
+                                        <div class="form-inline">
+                                          <div class="form-group col-md-12 col-xs-12" style="margin-bottom:0.75rem !important">
+                                            <label class="col-sm-5 form-control-label" for="input-PartDispHeader">PartDisplay Header</label>
+                                            <input type="text" formControlName="PartDispHeader" placeholder="Please Enter DisplayHeader" class="form-control form-control-alternative" 
+                                            style="border: 1px solid #ccc;">
+                                            <!-- <div *ngIf="submitted && f.PartDispHeader?.invalid" class="invalid-feedback">
+                                              <div *ngIf="f.PartDispHeader.errors.required">PartDispHeader is required</div>
+                                            </div> -->
+                                          </div>
+                                        </div>
+                                       
+                                      </div>
+                                      </div>
+                                      <div class="row">
+                                      <div class="col-lg-6 col-sm-6">
+                                        <div class="form-inline">
+                                          <div class="form-group col-md-12 col-xs-12" style="margin-bottom:0.75rem !important">
+                                            <label class="col-sm-5 form-control-label" for="input-Partval1">Part value 1</label>
+                                            <input type="text" formControlName="Partval1" placeholder="Please Enter Partvalue 1" class="form-control form-control-alternative" 
+                                            style="border: 1px solid #ccc;">
+                                            <!-- <div *ngIf="submitted && f.Option1?.invalid" class="invalid-feedback">
+                                              <div *ngIf="f.Option1.errors.required">Option1 is required</div>
+                                            </div> -->
+                                          </div>
+                                        </div>
+                                      
+                                    </div> 
+                                    <div class="col-lg-6 col-sm-6">
+                                      <div class="form-inline">
+                                        <div class="form-group col-md-12 col-xs-12" style="margin-bottom:0.75rem !important">
+                                          <label class="col-sm-5 form-control-label" for="input-Partval1">Part value 2</label>
+                                          <input type="text" formControlName="Partval2" placeholder="Please Enter Partvalue 2" class="form-control form-control-alternative" 
+                                          style="border: 1px solid #ccc;">
+                                          <!-- <div *ngIf="submitted && f.Option1?.invalid" class="invalid-feedback">
+                                            <div *ngIf="f.Option1.errors.required">Option1 is required</div>
+                                          </div> -->
+                                        </div>
+                                      </div>
+                                    
+                                  </div>                    
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-lg-6 col-sm-6">
+                                      <div class="form-inline">
+                                        <div class="form-group col-md-12 col-xs-12" style="margin-bottom:0.75rem !important">
+                                          <label class="col-sm-5 form-control-label" for="input-Partval1">Part value 3</label>
+                                          <input type="text" formControlName="Partval3" placeholder="Please Enter Partvalue 3" class="form-control form-control-alternative" 
+                                          style="border: 1px solid #ccc;">
+                                          <!-- <div *ngIf="submitted && f.Option1?.invalid" class="invalid-feedback">
+                                            <div *ngIf="f.Option1.errors.required">Option1 is required</div>
+                                          </div> -->
+                                        </div>
+                                      </div>
+                                    
+                                  </div>
+                                  <div class="col-lg-6 col-sm-6">
+                                    <div class="form-inline">
+                                      <div class="form-group col-md-12 col-xs-12" style="margin-bottom:0.75rem !important">
+                                        <label class="col-sm-5 form-control-label" for="input-Partval1">Part value 4</label>
+                                        <input type="text" formControlName="Partval4" placeholder="Please Enter Partvalue 4" class="form-control form-control-alternative" 
+                                        style="border: 1px solid #ccc;">
+                                        <!-- <div *ngIf="submitted && f.Option1?.invalid" class="invalid-feedback">
+                                          <div *ngIf="f.Option1.errors.required">Option1 is required</div>
+                                        </div> -->
+                                      </div>
+                                    </div>
+                                  
+                                </div>
+                                  </div>
+                                  <div class="row">
+                                      
+                                    <div class="col-lg-6 col-sm-6">
+                                      <div class="form-inline">
+                                        <div class="form-group col-md-12 col-xs-12" style="margin-bottom:0.75rem !important">
+                                          <label class="col-sm-5 form-control-label" for="input-Partval1">Part value 5</label>
+                                          <input type="text" formControlName="Partval5" placeholder="Please Enter Partvalue 5" class="form-control form-control-alternative" 
+                                          style="border: 1px solid #ccc;">
+                                          <!-- <div *ngIf="submitted && f.Option1?.invalid" class="invalid-feedback">
+                                            <div *ngIf="f.Option1.errors.required">Option1 is required</div>
+                                          </div> -->
+                                        </div>
+                                      </div>
+                                    
+                                  </div>
+                                     
+                                    </div>
+                                   
+                                  
+                                
+                                </div>
+                              </form>
+      </div>
+  </div>
+</div>

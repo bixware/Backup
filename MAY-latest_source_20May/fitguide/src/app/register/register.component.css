@@ -1,0 +1,118 @@
+.red_error {
+    font-size: .6875rem;
+    color: #ea4335;
+}
+.arrowright{
+    float:right;
+    color:#6d7074;
+    /*background-color: #bfbfbf;*/
+}
+.arrowleft{
+    float:left;
+    color:#6d7074;
+    margin-bottom: 8px
+   /* background-color: #bfbfbf;*/
+    
+}
+/*newly added*/
+#overlay {
+	position: fixed;
+	display: block;
+	width: 100%;
+	height: 100%;
+	margin-left: 3.9%;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0,0,0,0.3);
+	z-index: 2;
+	cursor: pointer;
+	text-align: center;
+  }  
+  #text{
+	position: absolute;
+	top: 50%;
+	left: 34%;
+	font-size: 27px;
+	color: black;
+	transform: translate(-0%,-0%);
+	-ms-transform: translate(-0%,-0%);
+  }
+  .alert_info {
+	position: absolute;
+	top: 44%;
+	left: 35%;
+	font-size: 18px;
+	color: black;
+	transform: translate(-0%,-0%);
+	-ms-transform: translate(-0%,-0%);
+  }
+  .alert {
+	padding: 20px;
+	background-color: #f44336;
+	color: white;
+  } 
+  .success_info {
+	position: absolute;
+	top: 50%;
+	left: 24%;
+	font-size: 18px;
+	color: black;
+	transform: translate(-0%,-0%);
+	-ms-transform: translate(-0%,-0%);
+  } 
+  .success {
+	padding: 20px;
+	background-color: #04AA6D;
+	color: white;
+  }  
+  .closebtn {
+	margin-left: 15px;
+	margin-top: 3px;
+	color: white;
+	font-weight: bold;
+	float: right;
+	font-size: 22px;
+	line-height: 20px;
+	cursor: pointer;
+	transition: 0.3s;
+  }  
+  .closebtn:hover {
+	color: black;
+  }
+  .form-control {
+    display: block;
+    width: 100%;
+    padding: .45rem .9rem;
+    font-size: .9rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #6c757d;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: .2rem;
+    -webkit-transition: border-color .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out, -webkit-box-shadow .15s ease-in-out
+}
+@media only screen and (min-width: 425px) and (max-width: 1024px) and (orientation: landscape){
+	.scrollbar{
+		padding-bottom: 25px;
+	}
+}
+@media only screen and (min-width: 375px) and (max-width: 1024px) and (orientation: landscape){
+	.scrollbar{
+		padding-bottom: 35px;
+	}
+}
+@media only screen and (min-width: 320px) and (max-width: 1024px) and (orientation: landscape){
+	.scrollbar{
+		padding-bottom: 45px;
+	}
+}

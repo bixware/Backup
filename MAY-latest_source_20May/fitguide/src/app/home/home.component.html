@@ -1,0 +1,538 @@
+<!-- Begin page -->
+<div id="wrapper">          
+<!-- Topbar Start -->
+<div class="navbar-custom">
+    <div class="container-fluid">
+        <ul class="list-unstyled topnav-menu float-end mb-0">
+            <!--<li class="dropdown d-inline-block d-lg-none">
+                    <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                        <i class="fe-search noti-icon"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-lg dropdown-menu-end p-0">
+                        <form class="p-3">
+                            <input type="text" class="form-control" placeholder="Search ..." aria-label="Search">
+                        </form>
+                    </div>
+            </li>
+            <li class="dropdown d-none d-lg-inline-block">
+                    <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-toggle="fullscreen" href="#">
+                        <i class="fe-maximize noti-icon"></i>
+                    </a>
+            </li>-->
+            <li class="dropdown notification-list topbar-dropdown">
+                    <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                        <img *ngIf="companyprofileImage" src={{companyprofileImage}} alt="user-image" height="10px" width="10px">
+                        <img *ngIf="!companyprofileImage" src="assets/images/users/avatar-1.jpg" height="10px" width="10px">&nbsp;
+                        <!-- <span class="pro-user-name ms-1">
+                           Anand Kumaran<i class="mdi mdi-chevron-down"></i> 
+                        </span> -->
+                        <!-- <div class="info" style="z-index: 1002;"> -->
+                
+								 <b class=""></b>{{name}}<i class="mdi mdi-chevron-down"></i> 
+								 <div class="role" [ngSwitch]="roleUID">
+									<small *ngSwitchCase="1">Super Admin</small>
+									<small *ngSwitchCase="2">Admin</small>
+									<small *ngSwitchCase="3">Editor</small>
+									<small *ngSwitchCase="4">Distributor</small>
+									<small *ngSwitchCase="5">Company</small>
+									<small *ngSwitchCase="6">Store Admin</small>
+									<small *ngSwitchCase="7">Store User</small>
+								
+								<div class="" style="margin-top: 5px;">								
+									<small *ngSwitchCase="4">{{distributorName}}</small>
+									<small *ngSwitchCase="5">{{companyName}}</small>
+									<small *ngSwitchCase="6">{{storeName}}</small>
+									<small *ngSwitchCase="7">{{storeBranchName}}</small>
+								</div>
+              </div>
+							 <!-- </div> -->
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end profile-dropdown ">
+                        <!-- item-->
+                        <div class="dropdown-header noti-title">
+                            <h6 class="text-overflow m-0">Welcome !</h6>
+                        </div>
+                        <!-- item-->
+                        <a routerLink='/home/viewprofile' class="dropdown-item notify-item">
+                            <i class="ri-account-circle-line"></i>
+                            <span>My Profile</span>
+                        </a>
+                        <a routerLink='/home/resetpassword' *ngIf="ssoFlag != true" class="dropdown-item notify-item">
+                          <i class="ri-key-2-fill">
+                            Reset Password</i>
+                        </a>
+                        
+                        <!-- item-->
+                        <a class="dropdown-item notify-item" style="cursor: pointer;" (click)="Logout()">
+                            <i class="ri-logout-box-line"></i>
+                            <span>Logout</span>
+                        </a>
+                    </div>
+            </li>
+        </ul>
+        <div class="logo-box">
+                <a class="logo logo-dark text-center">
+                    <span class="logo-sm">
+                        <!--<img src="assets/images/logo-sm-dark.png" alt="" height="24"-->
+                        <span class="logo"><b>The 12V Dashboard</b></span> 
+                    </span>
+                    <span class="logo-lg">
+                        <!-- <img src="assets/images/logo-dark.png" alt="" height="20"> -->
+                        <span class="logo"><b>The 12V Dashboard</b></span> 
+                        <!-- <span class="logo-lg-text-light">M</span> -->
+                    </span>
+                </a>
+                <a class="logo logo-light text-center">
+                    <span class="logo-sm">
+                        <!-- <img src="assets/images/logo-sm.png" alt="" height="24"> -->
+                        <span class="logo">The 12V Dashboard</span> 
+                    </span>
+                    <span class="logo-lg">
+                        <!-- <img src="assets/images/logo-light.png" alt="" height="20"> -->
+                        <span class="logo" >The 12V Dashboard</span> 
+                    </span>
+                </a>
+            </div>
+            <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
+                <li>
+                  <button class="button-menu-mobile waves-effect waves-light" data-trigger="navbar_main" type="button" id="menu">
+                        <i class="fe-menu"></i>
+                  </button>
+                </li>
+                <li>
+                    <!-- Mobile menu toggle (Horizontal Layout)-->
+                    <a class="navbar-toggle nav-link" data-bs-toggle="collapse" data-bs-target="#topnav-menu-content">
+                        <div class="lines">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </a>
+                    <!-- End mobile menu toggle-->                    
+                </li>
+                <li><p id="page_title" class="title_top"></p></li>
+            </ul>         
+            <div class="clearfix"></div>
+    </div>
+</div>
+<!-- end Topbar -->
+<!---Mobile menu---->
+<span class="screen-darken"></span>
+<div class="container">
+    <nav id="navbar_main" class="mobile-offcanvas navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <div class="offcanvas-header">  
+                <button class="btn-close float-end"></button>
+            </div>
+            <a class="navbar-brand" href="#">The 12V Dashboard</a>
+            <div class="role" [ngSwitch]="roleUID">
+            <ul class="navbar-nav">
+              <ng-container *ngFor="let menu of processedMenu">           
+                <li class="nav-item active" *ngIf="menu.menuName == 'Dashboard'">
+                  <a class="nav-link" routerLink="/home/dashboard">
+                    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="mobile-svg">
+                      <path fill-rule="evenodd" d="M8 3H3v3h5V3zM3 2a1 1 0 00-1 1v3a1 1 0 001 1h5a1 1 0 001-1V3a1 1 0 00-1-1H3zm14 12h-5v3h5v-3zm-5-1a1 1 0 00-1 1v3a1 1 0 001 1h5a1 1 0 001-1v-3a1 1 0 00-1-1h-5zm-4-3H3v7h5v-7zM3 9a1 1 0 00-1 1v7a1 1 0 001 1h5a1 1 0 001-1v-7a1 1 0 00-1-1H3zm14-6h-5v7h5V3zm-5-1a1 1 0 00-1 1v7a1 1 0 001 1h5a1 1 0 001-1V3a1 1 0 00-1-1h-5z" clip-rule="evenodd" fill="#fff" stroke="#fff" stroke-width="1"/>
+                    </svg>Dashboard</a>
+                </li>
+                <li class="nav-item" *ngIf="menu.menuName == 'Search Vehicle'">
+                    <a class="nav-link" routerLink="/home/search"> 
+                    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="mobile-svg">
+                    <path fill-rule="evenodd" d="M12.442 12.442a1 1 0 011.415 0l3.85 3.85a1 1 0 01-1.414 1.415l-3.85-3.85a1 1 0 010-1.415z" clip-rule="evenodd" fill="#fff" stroke="#fff" stroke-width="1"/>
+                    <path fill-rule="evenodd" d="M8.5 14a5.5 5.5 0 100-11 5.5 5.5 0 000 11zM15 8.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z" clip-rule="evenodd" fill="#fff" stroke="#fff" stroke-width="1"/>
+                    </svg>Search</a>
+                </li>
+                <li class="nav-item dropdown" *ngIf="menu.menuName == 'Masters'">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="mobile-svg">
+                    <path fill-rule="evenodd" d="M5 1h14a1 1 0 011 1v20a1 1 0 01-1 1H5a1 1 0 01-1-1V2a1 1 0 011-1zm1.5 6a.5.5 0 00-.5.5v1a.5.5 0 00.5.5h11a.5.5 0 00.5-.5v-1a.5.5 0 00-.5-.5h-11zm0 3a.5.5 0 00-.5.5v1a.5.5 0 00.5.5h11a.5.5 0 00.5-.5v-1a.5.5 0 00-.5-.5h-11zm0 3a.5.5 0 00-.5.5v2a.5.5 0 00.5.5h11a.5.5 0 00.5-.5v-2a.5.5 0 00-.5-.5h-11zm3 6a.5.5 0 100 1h5a.5.5 0 100-1h-5zm-3-16a.5.5 0 000 1h6a.5.5 0 100-1h-6z" fill="#fff" stroke="#fff" stroke-width="1"></path>
+                    </svg>Masters</a>
+                    <ul class="dropdown-menu">
+                      <ng-container *ngFor="let menu of processedMenu">
+                        <ng-container *ngIf="menu.menuName == 'Masters'">
+                        <ng-container *ngFor="let submenu of menu.subMenu">
+                        <div  class="style-module-listGroup-UF9X">
+                          <a aria-current="page" class="style-module-listGroupItem-dDJi" [innerHTML]="this.sanitizer.bypassSecurityTrustHtml(submenu.menuIcon + submenu.menuName)" routerLink="{{submenu.menuLink}}" routerLinkActive="style-module-listGroupItem_active-ri2K" data-suppress-active="false"></a>
+                        </div>
+                        </ng-container>
+                        </ng-container>
+                        </ng-container>                        
+                    </ul>
+                </li>
+                <li class="nav-item dropdown" *ngIf="menu.menuName == 'Admin Tools'">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="mobile-svg">
+                    <path d="M0 23a1 1 0 011-1h22a1 1 0 110 2H1a1 1 0 01-1-1zM18 7.5A1.5 1.5 0 0119.5 6h3A1.5 1.5 0 0124 7.5v11a1.5 1.5 0 01-1.5 1.5h-3a1.5 1.5 0 01-1.5-1.5v-11z" fill="#95B2D8">
+                    </path>
+                    <path d="M0 14.5A1.5 1.5 0 011.5 13h3A1.5 1.5 0 016 14.5v4A1.5 1.5 0 014.5 20h-3A1.5 1.5 0 010 18.5v-4zM9 1.5A1.5 1.5 0 0110.5 0h3A1.5 1.5 0 0115 1.5v17a1.5 1.5 0 01-1.5 1.5h-3A1.5 1.5 0 019 18.5v-17z" fill="#fff" stroke="#fff" stroke-width="1">
+                    </path>
+                    </svg>Admin Tools</a>
+                    <ul class="dropdown-menu">
+                        <ng-container *ngFor="let menu of processedMenu">
+                          <ng-container *ngIf="menu.menuName == 'Admin Tools'">
+                          <ng-container *ngFor="let submenu of menu.subMenu">
+                          <div  class="style-module-listGroup-UF9X">
+                            <a aria-current="page" class="style-module-listGroupItem-dDJi" [innerHTML]="this.sanitizer.bypassSecurityTrustHtml(submenu.menuIcon + submenu.menuName)" routerLink="{{submenu.menuLink}}" routerLinkActive="style-module-listGroupItem_active-ri2K" data-suppress-active="false"></a>
+                          </div>
+                          </ng-container>
+                          </ng-container>
+                          </ng-container>
+                      </ul>
+                </li>
+                <li class="nav-item" *ngIf="menu.menuName == 'Member Benefits'">
+                    <a class="nav-link" routerLink="/home/memberbenefits" data-bs-toggle="dropdown">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="mobile-svg"> <path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z" fill="#fff" stroke="#fff" stroke-width="1"/> <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z" fill="#fff" stroke="#fff" stroke-width="1"/> </svg>
+                    Member Benefits</a>
+                </li>
+                <li class="nav-item" *ngIf="menu.menuName == 'Register'">
+                  <a class="nav-link" routerLink="/home/register">
+                    <svg fill="#ffffff" class="mobile-svg" viewBox="0 0 16 16" id="register-16px" xmlns="
+  http://www.w3.org/2000/svg"
+  stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path id="Path_184" data-name="Path 184" d="M57.5,41a.5.5,0,0,0-.5.5V43H47V31h2v.5a.5.5,0,0,0,.5.5h5a.5.5,0,0,0,.5-.5V31h2v.5a.5.5,0,0,0,1,0v-1a.5.5,0,0,0-.5-.5H55v-.5A1.5,1.5,0,0,0,53.5,28h-3A1.5,1.5,0,0,0,49,29.5V30H46.5a.5.5,0,0,0-.5.5v13a.5.5,0,0,0,.5.5h11a.5.5,0,0,0,.5-.5v-2A.5.5,0,0,0,57.5,41ZM50,29.5a.5.5,0,0,1,.5-.5h3a.5.5,0,0,1,.5.5V31H50Zm11.854,4.646-2-2a.5.5,0,0,0-.708,0l-6,6A.5.5,0,0,0,53,38.5v2a.5.5,0,0,0,.5.5h2a.5.5,0,0,0,.354-.146l6-6A.5.5,0,0,0,61.854,34.146ZM54,40V38.707l5.5-5.5L60.793,34.5l-5.5,5.5Zm-2,.5a.5.5,0,0,1-.5.5h-2a.5.5,0,0,1,0-1h2A.5.5,0,0,1,52,40.5Zm0-3a.5.5,0,0,1-.5.5h-2a.5.5,0,0,1,0-1h2A.5.5,0,0,1,52,37.5ZM54.5,35h-5a.5.5,0,0,1,0-1h5a.5.5,0,0,1,0,1Z" transform="translate(-46 -28)"></path> </g></svg>
+                    Register</a>
+                </li>
+                <li class="nav-item" *ngIf="menu.menuName == 'Vehicle Checkin'">
+                  <a class="nav-link" target="_blank" href="{{menu.menuLink}}">
+                    <svg fill="#fff" stroke="#fff" stroke-width="20" version="1.0" xmlns="http://www.w3.org/2000/svg" width="40pt" height="40pt" viewBox="0 0 280.000000 140.000000" preserveAspectRatio="xMidYMid meet" style="margin-left: -11px;margin-top: -3px;display: inline-block;margin-right: -12px;vertical-align:middle;">
+                      <g transform="translate(0.000000,120.000000) scale(0.100000,-0.100000)" fill="#fffff" stroke="#fff" stroke-width="20">
+                      <path d="M1320 1153 c-38 -15 -50 -36 -50 -90 l0 -53 -66 2 c-78 4 -94 -10 -94 -79 l0 -43 260 0 260 0 0 49 c0 64 -16 77 -92 74 l-58 -2 0 44 c0 64 -31 96 -96 101 -27 2 -56 1 -64 -3z m90 -88 c0 -14 -26 -45 -39 -45 -30 0 -41 54 -14 69 21 11 53 -3 53 -24z"></path>
+                      <path d="M1583 1073 c-117 -5 -104 -23 16 -23 l98 0 7 -52 c12 -105 15 -100 -108 -234 -63 -69 -136 -154 -163 -189 -26 -35 -51 -64 -55 -65 -4 0 -28 18 -54 41 -26 22 -65 52 -87 66 l-39 25 -29 -28 -29 -28 49 -51 c52 -54 131 -160 176 -238 l28 -49 53 103 c71 135 236 378 257 379 4 0 6 -134 5 -297 l-3 -298 -330 0 -330 0 -3 61 c-3 58 -2 62 22 68 33 8 83 52 103 89 21 42 20 129 -4 170 -10 17 -42 46 -71 62 l-52 30 3 215 2 215 98 3 c137 4 123 22 -18 22 -112 0 -115 -1 -116 -22 0 -13 0 -114 1 -224 l2 -201 -38 -8 c-83 -15 -135 -65 -153 -147 -8 -35 -7 -57 4 -94 l14 -48 -55 -54 c-61 -59 -69 -94 -24 -100 19 -3 35 8 75 53 l50 57 60 -20 60 -20 5 -69 5 -68 354 -3 c277 -2 356 1 363 10 4 7 8 161 8 342 l0 329 40 51 c21 29 51 62 65 76 35 33 32 40 -17 40 -29 0 -49 -7 -65 -22 l-23 -21 0 76 c0 65 -3 78 -19 87 -11 5 -28 9 -38 8 -10 -1 -55 -4 -100 -5z m-496 -509 c69 -52 88 -121 55 -198 -17 -37 -30 -51 -64 -66 -56 -25 -119 -25 -168 0 -55 28 -73 68 -68 146 4 70 26 104 83 130 41 20 129 13 162 -12z"></path>
+                      <path d="M905 529 c-28 -25 -35 -38 -35 -67 l0 -36 23 44 c14 29 34 51 55 62 46 22 50 28 19 28 -15 0 -41 -13 -62 -31z"></path>
+                      </g>
+                    </svg>Vehicle Checkin</a>
+              </li>
+                <li class="nav-item" *ngIf="menu.menuName == 'Terms of Use'">
+                    <a class="nav-link" routerLink="/home/termsofuse"> 
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="mobile-svg"> <path d="M13 6.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5zm0 3a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5zm-.5 2.5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1h5z" fill="#fff" stroke="#fff" stroke-width="1"/> <path d="M14 0a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12zM2 1a1 1 0 0 0-1 1v1h14V2a1 1 0 0 0-1-1H2zM1 4v10a1 1 0 0 0 1 1h2V4H1zm4 0v11h9a1 1 0 0 0 1-1V4H5z" fill="#fff" stroke="#fff" stroke-width="1"/> </svg>
+                    Terms Of Use</a>
+                </li>
+                <li class="nav-item dropdown" *ngIf="menu.menuName == 'Configure'">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="mobile-svg">
+                    <circle cx="12" cy="12" r="3" fill="#95B2D8"></circle>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M10.75 0a1 1 0 00-1 1v1.51A9.693 9.693 0 006.882 3.7l-1.07-1.07a1 1 0 00-1.413 0L2.63 4.4a1 1 0 000 1.414L3.7 6.882A9.693 9.693 0 002.51 9.75H1a1 1 0 00-1 1v2.5a1 1 0 001 1h1.51a9.693 9.693 0 001.19 2.868l-1.07 1.07a1 1 0 000 1.413L4.4 21.37a1 1 0 001.414 0L6.882 20.3c.874.54 1.84.946 2.868 1.19V23a1 1 0 001 1h2.5a1 1 0 001-1v-1.51a9.694 9.694 0 002.868-1.19l1.07 1.07a1 1 0 001.413 0L21.37 19.6a1 1 0 000-1.414L20.3 17.118c.54-.874.946-1.84 1.19-2.868H23a1 1 0 001-1v-2.5a1 1 0 00-1-1h-1.51a9.692 9.692 0 00-1.19-2.868l1.07-1.07a1 1 0 000-1.413L19.6 2.63a1 1 0 00-1.414 0L17.118 3.7a9.692 9.692 0 00-2.868-1.19V1a1 1 0 00-1-1h-2.5zm6.5 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z" fill="#fff">
+                    </path>
+                    </svg>Configure</a>
+                    <ul class="dropdown-menu">
+                        <ng-container *ngFor="let menu of processedMenu">
+                          <ng-container *ngIf="menu.menuName == 'Configure'">
+                          <ng-container *ngFor="let submenu of menu.subMenu">
+                          <div  class="style-module-listGroup-UF9X">
+                            <a aria-current="page" class="style-module-listGroupItem-dDJi" [innerHTML]="this.sanitizer.bypassSecurityTrustHtml(submenu.menuIcon + submenu.menuName)" routerLink="{{submenu.menuLink}}" routerLinkActive="style-module-listGroupItem_active-ri2K" data-suppress-active="false"></a>
+                          </div>
+                          </ng-container>
+                          </ng-container>
+                          </ng-container>
+                      </ul>
+                </li>                
+              </ng-container>
+              </ul>
+              </div>  
+            </div>
+        </nav>
+    </div>
+<!---Mobile menu end---->
+<!-- ========== Left Sidebar Start ========== -->
+<div class="left-side-menu">
+<div class="h-100" >
+<div class="sidebar-content">
+<div class="style-module-bar-TFAQ  style-module-appNav-bfwV">
+			<a><img src="assets/images/newlogo.png" class="icon style-module-icon-REUm icon-_deprecated/new-logo-mobile style-module-logo-ODxJ"></a>
+      <!--svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="icon style-module-icon-REUm icon-_deprecated/new-logo-mobile style-module-logo-ODxJ">
+        <path d="M3.262 14.865v2.478c0 .214.118.417.31.535l1.754 1.014v-5.554l-1.754 1.015a.573.573 0 00-.31.512zm23.177-.523l-1.755-1.015v5.555l1.755-1.015a.606.606 0 00.31-.534v-2.478a.598.598 0 00-.31-.513zm2.042-2.66l-2.16-1.239-.321-.181V4.91a1.788 1.788 0 00-2.674-1.549l-1.497.855-.963.555V1.91c0-.48-.203-.95-.545-1.282a1.761 1.761 0 00-2.075-.288L5.401 7.175a2.602 2.602 0 00-1.38 2.307v.78l-.32.181-2.172 1.24A3.055 3.055 0 000 14.32v3.738c0 1.09.588 2.094 1.53 2.638l2.16 1.25.32.182v.363c.011.972.535 1.87 1.38 2.36l7.872 4.561c.524.3 1.112.46 1.722.46.599 0 1.187-.16 1.711-.46l7.915-4.56a2.756 2.756 0 001.38-2.361v-.363l.32-.182 2.16-1.25A3.054 3.054 0 0030 18.06v-3.738c0-1.09-.578-2.094-1.519-2.639zm.214 6.377c0 .62-.331 1.196-.877 1.506l-3.134 1.805v1.08c0 .523-.278 1.003-.727 1.26l-7.914 4.56a2.14 2.14 0 01-2.118 0l-7.872-4.56a1.449 1.449 0 01-.727-1.26v-1.08l-3.133-1.805a1.754 1.754 0 01-.877-1.506v-3.738c0-.62.331-1.197.866-1.506l3.134-1.816V9.46c0-.481.267-.93.695-1.154l12.845-6.836c.32-.171.705.064.695.416v4.38a.43.43 0 00.642.374l3.775-2.169a.477.477 0 01.716.417v6.11l3.134 1.805c.546.31.877.886.877 1.506v3.75zm-8.438-7.285a2.371 2.371 0 00-2.353 0l-2.899 1.677-2.898-1.677a2.371 2.371 0 00-2.353 0l-2.417 1.389v5.266l2.15 1.26v4.71l4.15 2.383c.844.48 1.871.48 2.716 0L20.47 23.4v-4.71l2.224-1.272-.021-5.266-2.417-1.378zm-9.808 4.294c0-.758.61-1.367 1.37-1.367.758 0 1.368.609 1.368 1.367 0 .759-.61 1.368-1.369 1.368a1.37 1.37 0 01-1.369-1.368zm8.043 6.815l-.546.32a5.844 5.844 0 01-5.893.011l-.534-.32v-1.132a.47.47 0 01.706-.406 5.466 5.466 0 005.55-.011l.011-.01a.47.47 0 01.706.405v1.143zm-.3-5.447c-.759 0-1.369-.61-1.369-1.368 0-.758.61-1.367 1.37-1.367.759 0 1.368.609 1.368 1.367a1.37 1.37 0 01-1.369 1.368z" fill="#fff">
+        </path>
+      </svg-->
+      <ul class="style-module-primaryMenu-ZO07 " data-e2e="appNavList">
+        <ng-container *ngFor="let menu of processedMenu">
+        <li class="style-module-menuItem-JiAF" *ngIf="menu.menuName == 'Dashboard'">
+          <span>
+            <a class="style-module-menuItem__button-B_tB" routerLink="/home/dashboard" routerLinkActive="style-module-menuItem__button_active-Srrb" data-suppress-active="false" data-e2e="dashboard" aria-current="page" data-toggle="tooltip" data-placement="right" title="Dashboard">
+              <!--svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon style-module-icon-REUm icon-_deprecated/navigation/dashboard">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M10.889 4.57c.74-.088 1.482-.093 2.214-.017a1 1 0 11-.206 1.99A8.056 8.056 0 006.23 9.017a8.153 8.153 0 00-1.813 8.169 1 1 0 11-1.898.63A10.154 10.154 0 014.778 7.64a10.056 10.056 0 016.11-3.07z" fill="#95B2D8">
+                </path>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M24 14.717c0-6.765-5.373-12.25-12-12.25S0 7.953 0 14.718c0 1.952.447 3.798 1.243 5.436.554 1.141 1.896 1.58 3.134 1.3 1.92-.434 4.895-.985 7.623-.985 2.728 0 5.703.55 7.623.985 1.238.28 2.58-.159 3.134-1.3A12.409 12.409 0 0024 14.718zm-14.916.82a1.986 1.986 0 01.178-2.967l7.154-5.614a.85.85 0 011.197 1.187l-5.551 7.202a1.986 1.986 0 01-2.978.192zm4.019-10.984A10.056 10.056 0 004.778 7.64a10.154 10.154 0 00-2.26 10.175 1 1 0 001.898-.63 8.153 8.153 0 011.813-8.169 8.056 8.056 0 016.668-2.473 1 1 0 00.206-1.99z" fill="#fff">
+                </path>
+              </svg-->
+			 <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon style-module-icon-REUm icon-_deprecated/navigation/dashboard">
+			 <path fill-rule="evenodd" d="M8 3H3v3h5V3zM3 2a1 1 0 00-1 1v3a1 1 0 001 1h5a1 1 0 001-1V3a1 1 0 00-1-1H3zm14 12h-5v3h5v-3zm-5-1a1 1 0 00-1 1v3a1 1 0 001 1h5a1 1 0 001-1v-3a1 1 0 00-1-1h-5zm-4-3H3v7h5v-7zM3 9a1 1 0 00-1 1v7a1 1 0 001 1h5a1 1 0 001-1v-7a1 1 0 00-1-1H3zm14-6h-5v7h5V3zm-5-1a1 1 0 00-1 1v7a1 1 0 001 1h5a1 1 0 001-1V3a1 1 0 00-1-1h-5z" clip-rule="evenodd" fill="#fff" stroke="#fff" stroke-width="1"/>
+				</svg>
+			  
+            </a>
+          </span>
+          <!-- <span>
+            <a class="style-module-menuItem__button-B_tB" routerLink="/home/dashboard" routerLinkActive="style-module-menuItem__button_active-Srrb" data-suppress-active="false" data-e2e="dashboard" aria-current="page" data-toggle="tooltip" data-placement="right" title="Dashboard">
+			 <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon style-module-icon-REUm icon-_deprecated/navigation/dashboard">
+			 <path fill-rule="evenodd" d="M8 3H3v3h5V3zM3 2a1 1 0 00-1 1v3a1 1 0 001 1h5a1 1 0 001-1V3a1 1 0 00-1-1H3zm14 12h-5v3h5v-3zm-5-1a1 1 0 00-1 1v3a1 1 0 001 1h5a1 1 0 001-1v-3a1 1 0 00-1-1h-5zm-4-3H3v7h5v-7zM3 9a1 1 0 00-1 1v7a1 1 0 001 1h5a1 1 0 001-1v-7a1 1 0 00-1-1H3zm14-6h-5v7h5V3zm-5-1a1 1 0 00-1 1v7a1 1 0 001 1h5a1 1 0 001-1V3a1 1 0 00-1-1h-5z" clip-rule="evenodd" fill="#fff" stroke="#fff" stroke-width="1"/>
+				</svg>
+			  
+            </a>
+          </span> -->
+        </li>
+        <li class="style-module-menuItem-JiAF" *ngIf="menu.menuName == 'Search Vehicle'">
+          <span>
+            <a class="style-module-menuItem__button-B_tB" data-suppress-active="false" data-e2e="search" routerLink="/home/search" routerLinkActive="style-module-menuItem__button_active-Srrb" data-toggle="tooltip" data-placement="right" title="Search">
+              <!--svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon style-module-icon-REUm icon-_deprecated/navigation/columns">
+                <path d="M13.5 2a2 2 0 012-2h5a2 2 0 012 2v13a2 2 0 01-2 2h-5a2 2 0 01-2-2V2z" fill="#95B2D8">
+                </path>
+                <path d="M1.5 2a2 2 0 012-2h5a2 2 0 012 2v20a2 2 0 01-2 2h-5a2 2 0 01-2-2V2z" fill="#fff">
+                </path>
+              </svg-->
+			   <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon style-module-icon-REUm icon-_deprecated/navigation/dashboard">
+			   <path fill-rule="evenodd" d="M12.442 12.442a1 1 0 011.415 0l3.85 3.85a1 1 0 01-1.414 1.415l-3.85-3.85a1 1 0 010-1.415z" clip-rule="evenodd" fill="#fff" stroke="#fff" stroke-width="1"/>
+				<path fill-rule="evenodd" d="M8.5 14a5.5 5.5 0 100-11 5.5 5.5 0 000 11zM15 8.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z" clip-rule="evenodd" fill="#fff" stroke="#fff" stroke-width="1"/>
+				</svg>
+            </a>
+          </span>
+        </li>
+        <li class="style-module-menuItem-JiAF" *ngIf="menu.menuName == 'Masters'">
+          <span>
+            <a class="style-module-menuItem__button-B_tB" data-suppress-active="false" data-e2e="master" routerLink="/home/sectionmaster" data-toggle="tooltip" data-placement="right" title="Master">
+              <!--svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon style-module-icon-REUm icon-_deprecated/navigation/calendar">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M3 8.5h18V5.248H3V8.5zm-2 0V5.248a2 2 0 012-2h18a2 2 0 012 2V21a2 2 0 01-2 2H3a2 2 0 01-2-2V8.5zM3 11v10h18V11H3z" fill="#95B2D8">
+                </path>
+                <path d="M3 11h18v10H3V11z" fill="#fff">
+                </path>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M7 1c.69 0 1.25.56 1.25 1.25v4a1.25 1.25 0 01-2.5 0v-4C5.75 1.56 6.31 1 7 1zm10 0c.69 0 1.25.56 1.25 1.25v4a1.25 1.25 0 11-2.5 0v-4c0-.69.56-1.25 1.25-1.25z" fill="#fff">
+                </path>
+              </svg-->
+			            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon style-module-icon-REUm icon-_deprecated/web-forms-24">
+                    <path fill-rule="evenodd" d="M5 1h14a1 1 0 011 1v20a1 1 0 01-1 1H5a1 1 0 01-1-1V2a1 1 0 011-1zm1.5 6a.5.5 0 00-.5.5v1a.5.5 0 00.5.5h11a.5.5 0 00.5-.5v-1a.5.5 0 00-.5-.5h-11zm0 3a.5.5 0 00-.5.5v1a.5.5 0 00.5.5h11a.5.5 0 00.5-.5v-1a.5.5 0 00-.5-.5h-11zm0 3a.5.5 0 00-.5.5v2a.5.5 0 00.5.5h11a.5.5 0 00.5-.5v-2a.5.5 0 00-.5-.5h-11zm3 6a.5.5 0 100 1h5a.5.5 0 100-1h-5zm-3-16a.5.5 0 000 1h6a.5.5 0 100-1h-6z" fill="#fff" stroke="#fff" stroke-width="1">
+                    </path>
+                  </svg>
+			        </a>
+          </span>
+        </li>
+      
+		    <li class="style-module-menuItem-JiAF" *ngIf="menu.menuName == 'Admin Tools'">
+          <span>
+            <a *ngIf="roleName==='Store Admin'" class="style-module-menuItem__button-B_tB" data-suppress-active="false" data-e2e="Admin" routerLink="/home/storeAnnouncement" data-toggle="tooltip" data-placement="right" title="Admin Tools">
+              <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon style-module-icon-REUm icon-_deprecated/navigation/bars">
+                <path d="M0 23a1 1 0 011-1h22a1 1 0 110 2H1a1 1 0 01-1-1zM18 7.5A1.5 1.5 0 0119.5 6h3A1.5 1.5 0 0124 7.5v11a1.5 1.5 0 01-1.5 1.5h-3a1.5 1.5 0 01-1.5-1.5v-11z" fill="#95B2D8">
+                </path>
+                <path d="M0 14.5A1.5 1.5 0 011.5 13h3A1.5 1.5 0 016 14.5v4A1.5 1.5 0 014.5 20h-3A1.5 1.5 0 010 18.5v-4zM9 1.5A1.5 1.5 0 0110.5 0h3A1.5 1.5 0 0115 1.5v17a1.5 1.5 0 01-1.5 1.5h-3A1.5 1.5 0 019 18.5v-17z" fill="#fff" stroke="#fff" stroke-width="1">
+                </path>
+              </svg>
+            </a>
+            <a *ngIf="roleName==='Company'"  class="style-module-menuItem__button-B_tB" data-suppress-active="false" data-e2e="Admin" routerLink="/home/companyAnnouncement" data-toggle="tooltip" data-placement="right" title="Admin Tools">
+              <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon style-module-icon-REUm icon-_deprecated/navigation/bars">
+                <path d="M0 23a1 1 0 011-1h22a1 1 0 110 2H1a1 1 0 01-1-1zM18 7.5A1.5 1.5 0 0119.5 6h3A1.5 1.5 0 0124 7.5v11a1.5 1.5 0 01-1.5 1.5h-3a1.5 1.5 0 01-1.5-1.5v-11z" fill="#95B2D8">
+                </path>
+                <path d="M0 14.5A1.5 1.5 0 011.5 13h3A1.5 1.5 0 016 14.5v4A1.5 1.5 0 014.5 20h-3A1.5 1.5 0 010 18.5v-4zM9 1.5A1.5 1.5 0 0110.5 0h3A1.5 1.5 0 0115 1.5v17a1.5 1.5 0 01-1.5 1.5h-3A1.5 1.5 0 019 18.5v-17z" fill="#fff" stroke="#fff" stroke-width="1">
+                </path>
+              </svg>
+            </a>
+            <a *ngIf="roleName!=='Company' && roleName!=='Store Admin' " class="style-module-menuItem__button-B_tB" data-suppress-active="false" data-e2e="Admin" routerLink="/home/userlog" data-toggle="tooltip" data-placement="right" title="Admin Tools">
+              <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon style-module-icon-REUm icon-_deprecated/navigation/bars">
+                <path d="M0 23a1 1 0 011-1h22a1 1 0 110 2H1a1 1 0 01-1-1zM18 7.5A1.5 1.5 0 0119.5 6h3A1.5 1.5 0 0124 7.5v11a1.5 1.5 0 01-1.5 1.5h-3a1.5 1.5 0 01-1.5-1.5v-11z" fill="#95B2D8">
+                </path>
+                <path d="M0 14.5A1.5 1.5 0 011.5 13h3A1.5 1.5 0 016 14.5v4A1.5 1.5 0 014.5 20h-3A1.5 1.5 0 010 18.5v-4zM9 1.5A1.5 1.5 0 0110.5 0h3A1.5 1.5 0 0115 1.5v17a1.5 1.5 0 01-1.5 1.5h-3A1.5 1.5 0 019 18.5v-17z" fill="#fff" stroke="#fff" stroke-width="1">
+                </path>
+              </svg>
+            </a>
+          </span>
+        </li>
+        <li class="style-module-menuItem-JiAF" *ngIf="menu.menuName == 'Member Benefits'">
+          <span>
+            <a class="style-module-menuItem__button-B_tB" data-suppress-active="false" data-e2e="links" routerLink="/home/memberbenefits" routerLinkActive="style-module-menuItem__button_active-Srrb" data-toggle="tooltip" data-placement="right" title="Member Benefits">
+              <!--svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon style-module-icon-REUm icon-_deprecated/navigation/inventory">
+                <path d="M7 3a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H9a2 2 0 01-2-2V3z" fill="#95B2D8">
+                </path>
+                <path d="M1 15a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H3a2 2 0 01-2-2v-6zM13 15a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2h-6a2 2 0 01-2-2v-6z" fill="#fff">
+                </path>
+              </svg-->
+			  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16"> <path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z" fill="#fff" stroke="#fff" stroke-width="1"/> <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z" fill="#fff" stroke="#fff" stroke-width="1"/> </svg>
+            </a>
+          </span>
+        </li>
+        <li class="style-module-menuItem-JiAF" *ngIf="menu.menuName == 'Terms of Use'"> 
+          <span>
+            <a class="style-module-menuItem__button-B_tB" data-suppress-active="false" data-e2e="terms" routerLink="/home/termsofuse" routerLinkActive="style-module-menuItem__button_active-Srrb" data-toggle="tooltip" data-placement="right" title="Terms of Use">
+              <!--svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon style-module-icon-REUm icon-_deprecated/purchase-truck">
+                <path d="M0 3.75a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H2a2 2 0 01-2-2v-6z" fill="#95B2D8">
+                </path>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M9.5 13.25a2 2 0 002-2v-6.5a2.5 2.5 0 012.5-2.5h4.212a2.5 2.5 0 012.449 1.996l1.03 5.004H22a2 2 0 012 2v6a2 2 0 01-2 2h-1a4 4 0 00-8 0h-3a4 4 0 00-8 0 2 2 0 01-2-2v-2a2 2 0 012-2h7.5zm6.5-9h2.212a.5.5 0 01.49.4l.947 4.6H16v-5z" fill="#fff">
+                </path>
+                <path d="M8.5 19.75a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0zM19.5 19.75a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" fill="#fff">
+                </path>
+              </svg-->
+			  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16"> <path d="M13 6.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5zm0 3a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5zm-.5 2.5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1h5z" fill="#fff" stroke="#fff" stroke-width="1"/> <path d="M14 0a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12zM2 1a1 1 0 0 0-1 1v1h14V2a1 1 0 0 0-1-1H2zM1 4v10a1 1 0 0 0 1 1h2V4H1zm4 0v11h9a1 1 0 0 0 1-1V4H5z" fill="#fff" stroke="#fff" stroke-width="1"/> </svg>
+            </a>
+          </span>
+        </li>
+        <li class="style-module-menuItem-JiAF" *ngIf="menu.menuName == 'Register'">
+          <span>
+            <a class="style-module-menuItem__button-B_tB" data-suppress-active="false" data-e2e="register"
+              routerLink="/home/register" routerLinkActive="style-module-menuItem__button_active-Srrb"
+              data-toggle="tooltip" data-placement="right" title="Register">
+        <svg fill="#ffffff" viewBox="0 0 16 16" id="register-16px" xmlns="
+        http://www.w3.org/2000/svg"
+        stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path id="Path_184" data-name="Path 184" d="M57.5,41a.5.5,0,0,0-.5.5V43H47V31h2v.5a.5.5,0,0,0,.5.5h5a.5.5,0,0,0,.5-.5V31h2v.5a.5.5,0,0,0,1,0v-1a.5.5,0,0,0-.5-.5H55v-.5A1.5,1.5,0,0,0,53.5,28h-3A1.5,1.5,0,0,0,49,29.5V30H46.5a.5.5,0,0,0-.5.5v13a.5.5,0,0,0,.5.5h11a.5.5,0,0,0,.5-.5v-2A.5.5,0,0,0,57.5,41ZM50,29.5a.5.5,0,0,1,.5-.5h3a.5.5,0,0,1,.5.5V31H50Zm11.854,4.646-2-2a.5.5,0,0,0-.708,0l-6,6A.5.5,0,0,0,53,38.5v2a.5.5,0,0,0,.5.5h2a.5.5,0,0,0,.354-.146l6-6A.5.5,0,0,0,61.854,34.146ZM54,40V38.707l5.5-5.5L60.793,34.5l-5.5,5.5Zm-2,.5a.5.5,0,0,1-.5.5h-2a.5.5,0,0,1,0-1h2A.5.5,0,0,1,52,40.5Zm0-3a.5.5,0,0,1-.5.5h-2a.5.5,0,0,1,0-1h2A.5.5,0,0,1,52,37.5ZM54.5,35h-5a.5.5,0,0,1,0-1h5a.5.5,0,0,1,0,1Z" transform="translate(-46 -28)"></path> </g></svg>
+            </a>
+          </span>
+        </li>
+        <li class="style-module-menuItem-JiAF" *ngIf="menu.menuName == 'Vehicle Checkin'">
+          <span>
+            <a class="style-module-menuItem__button-B_tB1" target="_blank" data-suppress-active="false" data-e2e="vehicle" href="{{menu.menuLink}}" routerLinkActive="style-module-menuItem__button_active-Srrb" data-toggle="tooltip" data-placement="right" title="Vehicle Checkin">
+              <!--<svg viewBox="0 0 32 32" enable-background="new 0 0 32 32" id="_x3C_Layer_x3E_" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#ffffff" stroke="#fff" stroke-width="2"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="car_x2C__salesman_x2C__service_x2C__manager_x2C__person"> <g id="XMLID_339_"> <path d=" M12.5,27.5v2c0,0.553-0.447,1-1,1h-2" fill="none" id="XMLID_336_" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"></path> <path d=" M29.5,27.5v2c0,0.553-0.447,1-1,1h-1c-0.553,0-1-0.447-1-1v-2" fill="none" id="XMLID_6229_" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"></path> <line fill="none" id="XMLID_5901_" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="30.5" x2="11.5" y1="27.5" y2="27.5"></line> <path d=" M11.496,20.926c1.715-0.323,4.285-0.426,8.004-0.426c8.5,0,11,0.583,11,3v1.188" fill="none" id="XMLID_5891_" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"></path> <path d=" M26.5,25.5v-1c0-0.55,0.45-1,1-1h3v2H26.5z" fill="none" id="XMLID_351_" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"></path> <path d=" M11,23.5h0.5c0.55,0,1,0.45,1,1v1h-3" fill="none" id="XMLID_337_" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"></path> <path d=" M14.5,25.5L14.5,25.5c0-1.104,0.896-2,2-2h6c1.104,0,2,0.896,2,2l0,0" fill="none" id="XMLID_5872_" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"></path> <path d=" M28.569,21.206L26.82,15.95c-0.181-0.53-0.761-1.02-1.311-1.09c-1.189-0.15-3.37-0.36-6.01-0.36s-4.82,0.21-6.01,0.36 c-0.55,0.07-1.13,0.56-1.311,1.09L11.331,18.5" fill="none" id="XMLID_341_" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"></path> <path d=" M9.5,30.5v-16l0,0c0.739,0,1.385-0.401,1.731-0.998c0.171-0.295,0.269-0.637,0.269-1.002V11c0-1.375-1.125-2.5-2.5-2.5H4 c-1.381,0-2.5,1.119-2.5,2.5v1.5c0,1.104,0.896,2,2,2l0,0v5l-2,11" fill="none" id="XMLID_6327_" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"></path> <circle cx="6.5" cy="4" fill="none" id="XMLID_6326_" r="2.5" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"></circle> <g id="XMLID_6270_"> <path d=" M9.5,13v-0.319c0-0.618-0.555-1.089-1.164-0.986l-3.672,0.611C4.055,12.407,3.5,11.938,3.5,11.319" fill="none" id="XMLID_6276_" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"></path> <polyline fill="none" id="XMLID_6274_" points=" 7.5,30.5 6.5,19 3.5,30.5 " stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"></polyline> <line fill="none" id="XMLID_6271_" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="5.5" x2="9.5" y1="14.5" y2="14.5"></line> </g> </g> </g> </g></svg>-->
+              <svg style="margin-left:-9px;" fill="#fff" stroke="#fff"  stroke-width="20" version="1.0" xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 260.000000 120.000000" preserveAspectRatio="xMidYMid meet">
+                <g transform="translate(0.000000,120.000000) scale(0.100000,-0.100000)" fill="#fffff" stroke="#fff" stroke-width="20">
+                  <path d="M1320 1153 c-38 -15 -50 -36 -50 -90 l0 -53 -66 2 c-78 4 -94 -10 -94 -79 l0 -43 260 0 260 0 0 49 c0 64 -16 77 -92 74 l-58 -2 0 44 c0 64 -31 96 -96 101 -27 2 -56 1 -64 -3z m90 -88 c0 -14 -26 -45 -39 -45 -30 0 -41 54 -14 69 21 11 53 -3 53 -24z" />
+                  <path d="M1583 1073 c-117 -5 -104 -23 16 -23 l98 0 7 -52 c12 -105 15 -100 -108 -234 -63 -69 -136 -154 -163 -189 -26 -35 -51 -64 -55 -65 -4 0 -28 18 -54 41 -26 22 -65 52 -87 66 l-39 25 -29 -28 -29 -28 49 -51 c52 -54 131 -160 176 -238 l28 -49 53 103 c71 135 236 378 257 379 4 0 6 -134 5 -297 l-3 -298 -330 0 -330 0 -3 61 c-3 58 -2 62 22 68 33 8 83 52 103 89 21 42 20 129 -4 170 -10 17 -42 46 -71 62 l-52 30 3 215 2 215 98 3 c137 4 123 22 -18 22 -112 0 -115 -1 -116 -22 0 -13 0 -114 1 -224 l2 -201 -38 -8 c-83 -15 -135 -65 -153 -147 -8 -35 -7 -57 4 -94 l14 -48 -55 -54 c-61 -59 -69 -94 -24 -100 19 -3 35 8 75 53 l50 57 60 -20 60 -20 5 -69 5 -68 354 -3 c277 -2 356 1 363 10 4 7 8 161 8 342 l0 329 40 51 c21 29 51 62 65 76 35 33 32 40 -17 40 -29 0 -49 -7 -65 -22 l-23 -21 0 76 c0 65 -3 78 -19 87 -11 5 -28 9 -38 8 -10 -1 -55 -4 -100 -5z m-496 -509 c69 -52 88 -121 55 -198 -17 -37 -30 -51 -64 -66 -56 -25 -119 -25 -168 0 -55 28 -73 68 -68 146 4 70 26 104 83 130 41 20 129 13 162 -12z" />
+                  <path d="M905 529 c-28 -25 -35 -38 -35 -67 l0 -36 23 44 c14 29 34 51 55 62 46 22 50 28 19 28 -15 0 -41 -13 -62 -31z" />
+                </g>
+              </svg>
+            </a>
+          </span>
+        </li>       
+        </ng-container>
+      </ul>
+      <ul class="style-module-secondaryMenu-tzGw" data-e2e="settingsBtn">
+        <div data-trigger-visible="false">
+          <ng-container *ngFor="let menu of processedMenu">
+          <li class="style-module-menuItem-JiAF">
+            <span *ngIf="menu.menuName == 'Configure'">
+              <a class="style-module-menuItem__button-B_tB" data-suppress-active="false" data-e2e="settings" routerLink="/home/managecontent" data-toggle="tooltip" data-placement="right" title="Configure">
+                <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon style-module-icon-REUm icon-_deprecated/navigation/gear">
+                  <circle cx="12" cy="12" r="3" fill="#95B2D8">
+                  </circle>
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M10.75 0a1 1 0 00-1 1v1.51A9.693 9.693 0 006.882 3.7l-1.07-1.07a1 1 0 00-1.413 0L2.63 4.4a1 1 0 000 1.414L3.7 6.882A9.693 9.693 0 002.51 9.75H1a1 1 0 00-1 1v2.5a1 1 0 001 1h1.51a9.693 9.693 0 001.19 2.868l-1.07 1.07a1 1 0 000 1.413L4.4 21.37a1 1 0 001.414 0L6.882 20.3c.874.54 1.84.946 2.868 1.19V23a1 1 0 001 1h2.5a1 1 0 001-1v-1.51a9.694 9.694 0 002.868-1.19l1.07 1.07a1 1 0 001.413 0L21.37 19.6a1 1 0 000-1.414L20.3 17.118c.54-.874.946-1.84 1.19-2.868H23a1 1 0 001-1v-2.5a1 1 0 00-1-1h-1.51a9.692 9.692 0 00-1.19-2.868l1.07-1.07a1 1 0 000-1.413L19.6 2.63a1 1 0 00-1.414 0L17.118 3.7a9.692 9.692 0 00-2.868-1.19V1a1 1 0 00-1-1h-2.5zm6.5 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z" fill="#fff">
+                  </path>
+                </svg>
+              </a>
+            </span>
+          </li>
+          </ng-container>
+        </div>
+      </ul>
+    </div>
+  <!--- Sidemenu -->
+  
+  <div #sidebarMainMenu class="sidebar-main-menu">
+    <div id="two-col-menu" class="h-100" data-simplebar>
+      <div class="style-module-wrap-_tbq  style-module-secondaryNav-uZ02">
+        <div class="scrollbar-container ps">          
+          <ul class="style-module-list-jac6" data-e2e="settingsTabsList">
+            <li class="style-module-section-GJ10" style="display: none;" data-e2e="MasterMenu">
+              <h3 class="style-module-sectionName-Dx_h">Masters
+              </h3>
+                  <ng-container *ngFor="let menu of processedMenu">
+                  <ng-container *ngIf="menu.menuName == 'Masters'">
+                  <ng-container *ngFor="let submenu of menu.subMenu">
+                  <div  class="style-module-listGroup-UF9X">
+                    <a aria-current="page" class="style-module-listGroupItem-dDJi" [innerHTML]="this.sanitizer.bypassSecurityTrustHtml(submenu.menuIcon + submenu.menuName)" routerLink="{{submenu.menuLink}}" routerLinkActive="style-module-listGroupItem_active-ri2K" data-suppress-active="false"></a>
+                  </div>
+                  </ng-container>
+                  </ng-container>
+                  </ng-container>
+            </li>            
+            <li class="style-module-section-GJ10" style="display: none;" data-e2e="AdminTools">
+                <h3 class="style-module-sectionName-Dx_h">Admin Tools
+                </h3>
+                <ng-container *ngFor="let menu of processedMenu">
+                <ng-container *ngIf="menu.menuName == 'Admin Tools'">
+                <ng-container *ngFor="let submenu of menu.subMenu">
+                <div  class="style-module-listGroup-UF9X">
+                  <a aria-current="page" class="style-module-listGroupItem-dDJi" [innerHTML]="this.sanitizer.bypassSecurityTrustHtml(submenu.menuIcon + submenu.menuName)" routerLink="{{submenu.menuLink}}" routerLinkActive="style-module-listGroupItem_active-ri2K" data-suppress-active="false"></a>
+                </div>
+                </ng-container>
+                </ng-container>
+                </ng-container>
+            </li>
+            <li class="style-module-section-GJ10" style="display: none;" data-e2e="SettingsMenu">
+                <h3 class="style-module-sectionName-Dx_h">Configure
+                </h3>
+                <ng-container *ngFor="let menu of processedMenu">
+                <ng-container *ngIf="menu.menuName == 'Configure'">
+                <ng-container *ngFor="let submenu of menu.subMenu">
+                <div  class="style-module-listGroup-UF9X">
+                  <a aria-current="page" class="style-module-listGroupItem-dDJi" [innerHTML]="this.sanitizer.bypassSecurityTrustHtml(submenu.menuIcon + submenu.menuName)" routerLink="{{submenu.menuLink}}" routerLinkActive="style-module-listGroupItem_active-ri2K" data-suppress-active="false"></a>
+                </div>
+                </ng-container>
+                </ng-container>
+                </ng-container>
+            </li> 
+            <!-- Menu Works Role based End -->
+
+
+          <!-- </div>  -->   
+           <!-- Menu Icon Works End -->     
+          </ul>
+          <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
+            <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;">
+            </div>
+          </div>
+          <div class="ps__rail-y" style="top: 0px; right: 0px;">
+            <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+ </div>
+
+<div class="clearfix"></div>
+ </div>
+ <!-- End Sidebar -->
+</div>
+<!-- Sidebar -left -->
+</div>
+<!-- Left Sidebar End -->
+<div class="content-page resolution">
+<div class="content">
+<div class="page-content">
+    <router-outlet></router-outlet>
+
+    	 <!-- Footer Start -->
+       <footer class="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    {{year}} © The12vDashboard.com Inc.  All Rights Reserved.
+                </div>
+               
+            </div>
+        </div>
+    </footer>
+    <!-- end Footer -->
+</div>
+</div>
+</div>
+<script>
+	function darken_screen(yesno){
+  if( yesno == true ){
+    document.querySelector('.screen-darken').classList.add('active');
+  }
+  else if(yesno == false){
+    document.querySelector('.screen-darken').classList.remove('active');
+  }
+}
+function close_offcanvas(){
+  darken_screen(false);
+  document.querySelector('.mobile-offcanvas.show').classList.remove('show');
+  document.body.classList.remove('offcanvas-active');
+}
+function show_offcanvas(offcanvas_id){
+  darken_screen(true);
+  document.getElementById(offcanvas_id).classList.add('show');
+  document.body.classList.add('offcanvas-active');
+}
+		document.addEventListener("DOMContentLoaded", function(){
+  document.querySelectorAll('[data-trigger]').forEach(function(everyelement){
+    let offcanvas_id = everyelement.getAttribute('data-trigger');
+    everyelement.addEventListener('click', function (e) {
+      e.preventDefault();
+      show_offcanvas(offcanvas_id);
+    });
+  });
+  document.querySelectorAll('.btn-close').forEach(function(everybutton){
+    everybutton.addEventListener('click', function (e) {
+      e.preventDefault();
+      close_offcanvas();
+      });
+  });
+  document.querySelector('.screen-darken').addEventListener('click', function(event){
+    close_offcanvas();
+  });
+});
+	</script>
+</div>
+<!-- END wrapper -->

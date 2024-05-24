@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Admintemplate</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="icon" type="image/x-icon" href="assets/img/fav.jpg">
+  <link rel="stylesheet" href="assets/css/bootstrap.css" type="text/css">
+  <link rel="stylesheet" href="assets/css/plugins.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/themes/deepblue.css">
+  <style>
+    .smart-data-view-filter-button
+    {
+      visibility: hidden !important;
+    }
+    .smart-data-view-sort-button
+    {
+      visibility: hidden !important;
+    }
+    .smart-data-view-group-button
+    {
+      visibility: hidden !important;
+    }
+  </style>
+</head>
+<body>
+  <app-root></app-root>
+  <script src="assets/js/vendor/modernizr-respond.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(decodeURI('%3Cscript src="assets/js/vendor/jquery-1.11.1.min.js"%3E%3C/script%3E'));</script>
+  <script src="assets/js/vendor/bootstrap.min.js"></script>
+  <script src="assets/js/plugins.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js" integrity="sha512-xQBQYt9UcgblF6aCMrwU1NkVA7HCXaSN2oq0so80KO+y68M+n64FOcqgav4igHe6D5ObBLIf68DWv+gfBowczg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    var formComponent = null;
+    function loadTakeinwards(x) {    
+      formComponent.takeinwards(x);
+    }
+    function loadEnteranalysis(x) {    
+      formComponent.enteranalysis(x);
+    }
+    function loadunjustified(x) {
+      formComponent.loadUnjustified(x);
+    }
+    function loadViewdetails(x){
+      formComponent.viewDetails(x);
+    }
+    function courierDetails(x){
+      formComponent.openCourier(x);
+    }
+    function SerialNo(x){
+      formComponent.openSerialNo(x);
+    }
+    function BulkSerialNo(x){
+      formComponent.openBulkSerialNo(x);
+    }
+    function getSerialNo(x) {
+    var checkBox = document.getElementById("S_"+x);
+    if (checkBox.checked == true){
+    formComponent.addSerialNo(x);
+    } 
+    else {
+    formComponent.removeSerialNo(x);
+    }
+  }
+  function getRetailSerialNo(x) {
+    var radioBox = document.getElementById("S_"+x);
+    if (radioBox.checked == true){
+      formComponent.addRetailSerialNo(x, "add");
+    } else {
+      formComponent.addRetailSerialNo(x, "remove");
+    }
+  }
+  </script>
+</body>
+</html>

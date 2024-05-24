@@ -1,0 +1,7 @@
+<div>
+    <i (click)="edit()" class="ri-file-edit-fill" title="Edit Company" style="cursor:pointer;font-size:20px;color: #026680; margin-right: 6px;"></i>
+    <i *ngIf="params.data.ArchStatus != '1'"  class="ri-archive-fill" (click)="archive()" style="cursor:pointer;font-size:20px;color: #026680; margin-right: 6px;" title="Archive"></i>
+    <i *ngIf="params.data.ArchStatus == '1'" class='fa fa-window-restore' (click)="restore()" style="cursor:pointer; font-size: 20px; color: #026680;" title="Restore"></i>
+</div>
+
+

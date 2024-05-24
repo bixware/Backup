@@ -1,0 +1,188 @@
+ [{
+    "serialNo": "145028",
+    "date": "22/02/2022",
+    "store": "0000101726-Aditya Birla Fashion and Retail Ltd",
+    "raisedby": "Brand Value Retail",
+    "customerName": "SAMEER",
+    "mobile": "8921603351",
+    "stylesize": "LRSFDSLH625284/039",
+    "status": "Complaint submitted, QC inwards pending",
+    "action": "Take Inwards"
+    }, 
+    {
+    "serialNo": "145027",
+    "date": "22/02/2022",
+    "store": "0000101726-Aditya Birla Fashion and Retail Ltd",
+    "raisedby": "Brand Value Retail",
+    "customerName": "HAMDAN",
+    "mobile": "9895928806",
+    "stylesize": "VDTFUPOFS66612/082",
+    "status": "QC Inwarded, Analysis Pending",
+    "action": "Enter Analysis"
+    },
+    {
+    "serialNo": "145026",
+    "date": "22/02/2022",
+    "store": "0000101721-Aditya Birla Fashion and Retail Ltd",
+    "raisedby": "Liberty Group",
+    "customerName": "THOUFEEK",
+    "mobile": "9497050503",
+    "stylesize": "LRSFCSLFP11730/042",
+    "status": "Complaint submitted, QC inwards pending",
+    "action": "Take Inwards"    
+    },
+    {
+    "serialNo": "145025",
+    "date": "22/02/2022",
+    "store": "0000101721-Aditya Birla Fashion and Retail Ltd",
+    "raisedby": "Liberty Group",
+    "customerName": "SAFEER",
+    "mobile": "8113962295",
+    "stylesize": "LYSFCSLB746417/044",
+    "status": "Complaint submitted, QC inwards pending",
+    "action": "Take Inwards"    
+    },
+    {
+    "serialNo": "145024",
+    "date": "22/02/2022",
+    "store": "0000101658-Aditya Birla Fashion and Retail Ltd",
+    "raisedby": "Van Heusen CP",
+    "customerName": "tuba naz",
+    "mobile": "9654051946",
+    "stylesize": "VWTFWRGB716997/076",
+    "status": "Complaint submitted, QC inwards pending",
+    "action": "Take Inwards"    
+    },
+    {
+    "serialNo": "145020",
+    "date": "21/02/2022",
+    "store": "0000101359-Aditya Birla Fashion and Retail Ltd",
+    "raisedby": "LP - Varanasi",
+    "customerName": "namrata agrawal",
+    "mobile": "9621110026",
+    "stylesize": "LYSTCRGP187679/M",
+    "status": "Complaint submitted, QC inwards pending",
+    "action": "Take Inwards"    
+    },
+    {
+    "serialNo": "145015",
+    "date": "21/02/2022",
+    "store": "0000101359-Aditya Birla Fashion and Retail Ltd",
+    "raisedby": "LP - Varanasi",
+    "customerName": "jitendra singh",
+    "mobile": "7791042186",
+    "stylesize": "LYTFASSPS91939/092",
+    "status": "Complaint submitted, QC inwards pending",
+    "action": "Take Inwards"    
+    },
+    {
+    "serialNo": "145014",
+    "date": "21/02/2022",
+    "store": "0000102405-Aditya Birla Fashion and Retail Ltd",
+    "raisedby": "Classy Style",
+    "customerName": "SATHEESH",
+    "mobile": "9488016732",
+    "stylesize": "PRDNJSKBV68023/096",
+    "status": "Complaint submitted, QC inwards pending",
+    "action": "Take Inwards"    
+    },
+    {
+    "serialNo": "145013",
+    "date": "21/02/2022",
+    "store": "0009000007-Aditya Birla Fashion and Retail Lim",
+    "raisedby": "LP - Surat",
+    "customerName": "jagdish patel",
+    "mobile": "9824115321",
+    "stylesize": "LYKPCSLPC13362/L",
+    "status": "Complaint submitted, QC inwards pending",
+    "action": "Take Inwards"    
+    },
+    {
+    "serialNo": "145011",
+    "date": "21/02/2022",
+    "store": "0000102680-Aditya Birla Fashion and Retail Lim",
+    "raisedby": "PE Red - Pattukottai",
+    "customerName": "DANIEL",
+    "mobile": "9629815077",
+    "stylesize": "PFFO52198097/09",
+    "status": "Complaint submitted, QC inwards pending",
+    "action": "Take Inwards"    
+    },
+    {
+    "serialNo": "145007",
+    "date": "21/02/2022",
+    "store": "0009000406-Aditya Birla Fashion and Retail Ltd",
+    "raisedby": "VH - DWARKA",
+    "customerName": "MANISH SETHI",
+    "mobile": "9717411388",
+    "stylesize": "VHBLDRGFF000018/L",
+    "status": "Complaint submitted, QC inwards pending",
+    "action": "Take Inwards"  
+    },
+    {
+    "serialNo": "145006",
+    "date": "21/02/2022",
+    "store": "0000102426-Aditya Birla Fashion and Retail Lim",
+    "raisedby": "Ashok Kumar",
+    "customerName": "Abhishek",
+    "mobile": "9413119031",
+    "stylesize": "PCKPPSGFA10247/L",
+    "status": "Complaint submitted, QC inwards pending",
+    "action": "Take Inwards"  
+    },
+    {
+    "serialNo": "145000",
+    "date": "21/02/2022",
+    "store": "0000103430-Aditya Birla Fashion and Retail Ltd",
+    "raisedby": "VHW Mahagun Metro Mall Gazibad",
+    "customerName": "KHUSHBOO",
+    "mobile": "9871475812",
+    "stylesize": "VWSWURGPP54127/M",
+    "status": "Complaint submitted, QC inwards pending",
+    "action": "Take Inwards"    
+    },
+    {
+    "serialNo": "144998",
+    "date": "21/02/2022",
+    "store": "0000103430-Aditya Birla Fashion and Retail Ltd",
+    "raisedby": "VHW Mahagun Metro Mall Gazibad",
+    "customerName": "PRIYA",
+    "mobile": "8826540223",
+    "stylesize": "VWSWURGBP29646/M",
+    "status": "Complaint submitted, QC inwards pending",
+    "action": "Take Inwards"    
+    },
+    {
+    "serialNo": "144995",
+    "date": "21/02/2022",
+    "store": "0000103430-Aditya Birla Fashion and Retail Ltd",
+    "raisedby": "VHW Mahagun Metro Mall Gazibad",
+    "customerName": "DR RUCHI YADAV",
+    "mobile": "9891521512",
+    "stylesize": "VWTSFRGF305399/L",
+    "status": "Complaint submitted, QC inwards pending",
+    "action": "Take Inwards"   
+    },
+    {
+    "serialNo": "144994",
+    "date": "21/02/2022",
+    "store": "0000102198-Aditya Birla Fashion and Retail Ltd",
+    "raisedby": "VH Model Town",
+    "customerName": "Mayank",
+    "mobile": "9888490419",
+    "stylesize": "VHWA517A00029/000",
+    "status": "Complaint submitted, QC inwards pending",
+    "action": "Take Inwards"    
+    },
+    {
+    "serialNo": "144993",
+    "date": "21/02/2022",
+    "store": "0000102198-Aditya Birla Fashion and Retail Ltd",
+    "raisedby": "VH Model Town",
+    "customerName": "Sunny",
+    "mobile": "9855261755",
+    "stylesize": "VDJKERGF864272/XL",
+    "status": "Complaint submitted, QC inwards pending",
+    "action": "Take Inwards"    
+    }
+]

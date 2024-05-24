@@ -1,0 +1,358 @@
+<div id="page-content" style="min-height: 89vh !important;">
+    <!-- Navigation info -->
+    
+    <form id="form-validation" [formGroup]="form"  class="form-horizontal form-box remove-margin">
+        <!-- Form Header -->
+        <div class="form"> 
+        <div class="form-box-content">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="val_date">Receipt Date  <span class="red">* </span> : &nbsp;</label>
+                         <div class="input-group date input-datepicker">
+                            <input type="date" formControlName="ReceiptDate" class="form-control" style="height:30px;" [ngClass]="{ 'is-invalid': submitted && f.ReceiptDate.invalid }" required>
+                            <div *ngIf="submitted && f.ReceiptDate.invalid" class="invalid-feedback">
+                                <div *ngIf="f.ReceiptDate.errors.required">Receipt date is required</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+              <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label col-md-2" >Stylecode  : &nbsp;</label>
+                            <div class="input-group">
+                                <input type="text" style="width: 130px;" formControlName="StyleCode" class="form-control">
+                            </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group" style="margin-left: 40px;">
+                        <label class="control-label col-md-2">Size : &nbsp;</label>
+                            <div class="input-group" style="width: 50px;">
+                                <input type="text" formControlName="Size" class="form-control">
+                            </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Product Category : &nbsp;</label>
+                            <div class="input-group">
+                                <select id="val_year" name="ProductCategory" class="form-control"  formControlName="ProductCategory">
+                                    <option value="">Category</option>
+                                    <option value="{{product.Prodcode}}" *ngFor="let product of productList">{{product.ProdDescription}}</option>
+                                </select>
+                            </div>
+                    </div>
+                </div> 
+            </div>
+        
+        
+          <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-2" style="padding-top:10px;width:50px"><label class="control-label">Fabric :</label></div>
+                        <div class="col-lg-4">
+                            <div class="input-group">
+                               <input type="text" class="form-control"  formControlName="Fabric" name="Fabric">
+                            </div>
+                       </div>
+                   </div>
+                </div>
+            </div> 
+                 
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-5"  style="padding-top:5px;padding-left:37px;" >
+                             <label class="control-label">Manufacture Month&Year<span class="red">*</span>:&nbsp;</label></div>
+                                 <div class="col-lg-3">
+                                     <div class="input-group">
+                                        <select id="val_month" style="width:50px" class="form-control" formControlName="ManufactureMonth"  [ngClass]="{ 'is-invalid': submitted && f.ManufactureMonth.invalid }" required>                 
+                                             <option value="" selected>Month</option>
+                                             <option value="1">January</option>
+                                             <option value="2">February</option>
+                                             <option value="3">March</option>
+                                             <option value="4">April</option>
+                                             <option value="5">May</option>
+                                             <option value="6">June</option>
+                                             <option value="7">July</option>
+                                             <option value="8">August</option>
+                                             <option value="9">September</option>
+                                             <option value="10">October</option>
+                                             <option value="11">November</option>
+                                             <option value="12">December</option>
+                                        </select>
+                                    <div *ngIf=" submitted && f.ManufactureMonth.invalid"  class="invalid-feedback">
+                                <div *ngIf="f.ManufactureMonth.errors.required">Month is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                    <div class="input-group" style="margin-left:25px;">
+                        <select id="val_year" style="width:60px" class="form-control" formControlName="ManufactureYear" [ngClass]="{ 'is-invalid': submitted && f.ManufactureYear.invalid }" required>
+                            <option value="">Year</option>
+                            <option value="2015">2015</option>
+                            <option value="2016">2016</option>
+                            <option value="2017">2017</option>
+                            <option value="2018">2018</option>
+                            <option value="2019">2019</option>
+                            <option value="2020">2020</option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                        </select>
+                        <div *ngIf=" submitted && f.ManufactureYear.invalid"  class="invalid-feedback">
+                            <div *ngIf="f.ManufactureYear.errors.required">Year required</div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                
+                <div class="form-group">
+
+                <div class="row">
+                    <div class="col-lg-2" style="padding-top:7px;"><label class="control-label">Vendor<span class="red">*</span>:&nbsp;</label></div>
+                    <div class="col-lg-3">
+                        <div class="input-group" style="margin-left:-30px;">
+                            <select (change)="vendorlist($event)" id="val_vendorcode" name="val_vendorcode" class="form-control" formControlName="VendorCode" [ngClass]="{ 'is-invalid': submitted && f.VendorCode.invalid }" required >
+                                <option [value]="vendor" *ngFor="let vendor of vendorCodeList">{{vendor}}</option>
+                            </select>
+                            <div *ngIf="submitted && customFlag1"  class="invalid-feedback">
+                                <div>Vendor Code is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                    <div class="input-group">
+                        <select (change)="vendorname($event)"id="val_vendorname" name="val_vendor" class="form-control" style="width:75px" formControlName="VendorName" [ngClass]="{ 'is-invalid': submitted && f.VendorName.invalid }" required >
+                            <option [value]="vendor" *ngFor="let vendor of vendorNameList">{{vendor}}</option>
+                        </select>
+                        <div *ngIf="submitted && customFlag1"  class="invalid-feedback">
+                            <div>Vendor Name is required</div>
+                        </div>
+                    </div>
+                    </div>
+                 </div>
+                 </div>
+                 </div>
+
+                 <div class="col-lg-6">
+                 <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-2" style="padding-top:7px;"><label class="control-label">Factory<span class="red">*</span>:&nbsp;</label></div>
+                    <div class="col-lg-3">
+                    <div class="input-group" style="margin-left:-30px;">
+                        <select  id="val_factorycode" (change)="getfactorycode($event)"  name="val_code" class="form-control" formControlName="FactoryCode" [ngClass]="{ 'is-invalid': submitted && f.FactoryCode.invalid }" required>
+                            <option [value]="factory" *ngFor="let factory of factoryCodeList">{{factory}}</option>
+                        </select>
+                        <div *ngIf="submitted && customFlag2"  class="invalid-feedback">
+                            <div>Factory Code is required</div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="col-lg-6">
+                    <div class="input-group" style="padding-left:5px;">
+                        <select id="val_factoryname" (change)="getfactoryname($event)" name="FactoryName" class="form-control" style="width:102px" formControlName="FactoryName" [ngClass]="{ 'is-invalid': submitted && f.FactoryName.invalid }" required>
+                            <option [value]="factory" *ngFor="let factory of factoryNameList">{{factory}}</option> 
+                        </select>
+                        <div *ngIf="submitted && customFlag2"  class="invalid-feedback">
+                            <div>Factory Name is required</div>
+                        </div>
+                    </div>
+                    </div>
+                 </div>
+                 </div>
+                 </div>
+            </div>
+           
+
+            <div class="row">
+            <div class="col-lg-8">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-4" style="padding-top:5px;"><label class="control-label">Garment Type and Condition<span class="red">*</span>:&nbsp;</label></div>
+                        <div class="col-lg-3" style="margin-left:-51px;">
+                    <div class="input-group" style="padding-left:5px;">
+                        <select id="val_type" style="width:150px;"  formControlName="GarmentType" name="GarmentType" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.GarmentType.invalid }" required>
+                            <option value="">Type</option>
+                            <option value="Casual">Casual</option>
+                            <option value="Formal">Formal</option>
+                            <option value="Accessory">Accessory</option>
+                            <option value="Accessory">Footwear</option>
+                        </select> 
+                        <div *ngIf=" submitted && f.GarmentType.invalid"  class="invalid-feedback">
+                            <div *ngIf="f.GarmentType.errors.required">Garment type required</div>
+                        </div>
+                    </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="input-group" style="padding-left:5px;">
+                                <select id="val_condition" (change)="getdropdownlist()" style="width:250px; margin-left:20px" formControlName="GarmentCondition" name="GarmentCondition" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.GarmentCondition.invalid }" required>
+                                    <option value="">Condition</option>
+                                    <option value="Used">Used</option>
+                                    <option value="Unused">Unused</option>
+                                </select>
+                                <div *ngIf=" submitted && f.GarmentCondition.invalid"  class="invalid-feedback" style="margin-left:25px">
+                                    <div *ngIf="f.GarmentCondition.errors.required">Garment Condition required</div>
+                                </div>
+                            </div>
+                                </div>
+                </div>
+                </div> 
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-2" style="padding-top:7px;">
+                            <label class="control-label">Sold/Unsold<span class="red">*</span>:&nbsp;</label>
+                        </div>
+                        <div class="col-lg-8">
+                    <div class="input-group" >
+                        <select id="val_su" style="width:120px; margin-left:33px" formControlName="SoldUnsold" name="SoldUnsold" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.SoldUnsold.invalid }" required>
+                            <option value="">SU</option>
+                            <option value="Sold">Sold</option>
+                            <option value="Unsold">Unsold</option>
+                        </select>
+                        <div *ngIf=" submitted && f.SoldUnsold.invalid"  class="invalid-feedback" style="margin-left: 35px;">
+                            <div *ngIf="f.SoldUnsold.errors.required">select sold or unsold</div>
+                        </div>
+                    </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <div class="row">
+            <div class="col-lg-5">
+                <div class="form-group">
+                    <label class="control-label col-md-6">Saleable/Unsaleable<span class="red">*</span>:&nbsp;</label>
+                    <div class="input-group" style= width:213px;>
+                        <select id="val_SaleableUnsaleable" style="width:90px" formControlName="SaleableUnsaleable" name="SaleableUnsaleable" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.SaleableUnsaleable.invalid }" required>
+                            <option value="">SU</option>
+                            <option value="Saleable">Saleable</option>
+                            <option value="Unsaleable">Unsaleable</option>
+                        </select>
+                        <div *ngIf=" submitted && f.SaleableUnsaleable.invalid"  class="invalid-feedback">
+                            <div *ngIf="f.SaleableUnsaleable.errors.required">select saleable or unsaleable</div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+            <div class="col-lg-6">
+                <div class="form-group">
+                <label class="control-label col-md-6">Quality<span class="red">*</span>:&nbsp;</label>
+                <div class="input-group" style=" width:250px;">
+                    <select id="val_quality" style="width:150px" input type="text" formControlName="Quality" name="Quality" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.Quality.invalid }" required>
+                        <option value="">Quality</option>
+                        <option value="Second">Second</option>
+                        <option value="Third">Third</option>
+                    </select>
+                    <div *ngIf=" submitted && f.Quality.invalid"  class="invalid-feedback">
+                        <div *ngIf="f.Quality.errors.required">Quality is required</div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+
+            <div class="row">
+            <div class="col-lg-4">
+            <div class="form-group">
+                <label class="control-label col-md-6" >Justification<span class="red">* </span>:&nbsp;</label>
+                <div class="input-group">
+                    <select id="val_justification" style="width: 250px;" formControlName="Justification" name="Justification" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.Justification.invalid }" required>
+                        <option value="">Justification</option>
+                        <option value="Justified">Justified</option>
+                        <option value="Un-Justified">Un-justified</option>
+                    </select>
+                    <div *ngIf=" submitted && f.Justification.invalid"  class="invalid-feedback">
+                        <div *ngIf="f.Justification.errors.required">select Justified or Un-justified</div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="col-lg-8">
+            <div class="form-group">
+            <label class="control-label col-md-6">Defect<span class="red">*</span>:&nbsp;</label>
+                <div class="input-group" style="width:290px;">
+                    <select id="val_defect" (change)="getdefect()" style="width: 250px;" formControlName="Defect" name="Defect" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.Defect.invalid }" required>
+                        <option value="">Defect</option>
+                        <option value="{{defect.DefectCode}}" *ngFor="let defect of defectList">{{defect.DefectDesc}}</option>
+                    </select>
+                    <div *ngIf=" submitted && f.Defect.invalid"  class="invalid-feedback">
+                        <div *ngIf="f.Defect.errors.required">Mode of Defect required</div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            </div>
+
+            <div class="row">          
+                <div class="col-lg-12">
+                <div class="form-group">
+                    <label class="control-label col-md-6" >Defect Type<span class="red">*</span>:&nbsp;</label>
+                    <div class="input-group" style="width: 250px;" >
+                        <select id="val_type" (change)="getdefecttype()" style="width: 250px;" formControlName="DefectType" name="DefectType" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.DefectType.invalid }" required>
+                            <option value="">Type</option>
+                            <option value="{{defect.DefectTypeCode}}" *ngFor="let defect of defectTypeList">{{defect.DefectType}}</option>
+                        </select>
+                        <div *ngIf=" submitted && f.DefectType.invalid"  class="invalid-feedback">
+                            <div *ngIf="f.DefectType.errors.required">select defect type</div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div> 
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                    <label class="control-label col-md-6" >Remarks :&nbsp;</label>
+                    <div class="input-group" style="width: 600px;">
+                        <input type="text"  formControlName="Remarks" class="form-control">
+                    </div>
+                    </div>
+                </div>
+           </div>
+
+            <div class="row">
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <div class="input-group" style="width: 600px;">
+                        <label class="control-label col-md-12" >Defect Analysis<span class="red">*</span>:&nbsp;</label>
+                        <input type="text" formControlName="DefectAnalysis" name="DefectAnalysis" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.DefectAnalysis.invalid }" required>
+                        <div *ngIf=" submitted && f.DefectAnalysis.invalid"  class="invalid-feedback">
+                            <div *ngIf="f.DefectAnalysis.errors.required">Defect analysis required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div> 
+
+            <div class="form-group form-actions"style= "padding-bottom:5px; margin-top:15px;">
+                <span style="float:left;" class="red">* Mandatory fields</span>
+                <button type="button" (click)="confirm()" class="btn btn-success"> Confirm</button> 
+                <button type="button" (click)="back()" class="btn btn-success" style="margin-right: 15px;">Back</button>
+            </div>
+
+        </div>
+    </div>
+    </form>
+</div>
+            <footer>
+                <div class="footer">
+                    <p>Copyrights &copy;2022. ABFRL Customer Complaints</p>
+                </div>
+            </footer>
+
+
+

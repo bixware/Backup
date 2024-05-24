@@ -1,0 +1,675 @@
+<!--Normal Modal box-->
+<div id="Modal" class="modal">
+    <!-- Modal content -->
+  <div class="modals-content">
+    <div class="modal-header">
+        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" id="color" (click)="forPrint('print')"
+        style="cursor: pointer;margin-top: 27px;font-size: 23px;margin-bottom: 10px;"><i class="fa fa-print"></i></a>
+    <h2 id="compdetails">Customer Complaint # {{courier.SerialNo}} Details</h2>
+    </div>
+    <div class="modal-body" style="margin-top: 10px;margin-bottom: 10px;">
+        <form class="form-horizontal form-box remove-margin">
+            <div class="form-box-content">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <label class="control-label">Style Code :&nbsp;</label><br>
+                        <span id="cStylecode">{{SerialNoDetails.cStylecode}}</span>
+                    </div>
+                    <div class="col-lg-2">
+                        <label class="control-label">Reciept Date :&nbsp;</label><br>
+                        <span id="cReceiptDate">{{SerialNoDetails.cReceiptDate}}</span>
+                    </div>
+                    <div class="col-lg-2">
+                        <label class="control-label">From :&nbsp;</label><br>
+                        <span id="cfromtype">{{SerialNoDetails.cfromtype}}</span>
+                    </div>
+                    <div class="col-lg-2">
+                        <label class="control-label">Sleeve :&nbsp;</label><br>
+                        <span id="cSleeve">{{SerialNoDetails.cSleeve}}</span>
+                    </div>
+                    <div class="col-lg-2">
+                        <label class="control-label">Size :&nbsp;</label><br>
+                        <span id="cSizeCode">{{SerialNoDetails.cSizeCode}}</span> 
+                </div>
+                </div>
+                <div class="row">
+                   
+                    <!--<div class="col-lg-3">
+                        <label class="control-label">GarmentColor :&nbsp;</label><br>
+                        <span id="cGarmentColor">{{SerialNoDetails.cGarmentColor}}</span>
+                    </div>-->
+                    <div class="col-lg-3">
+                        <label class="control-label">Fabric Code :&nbsp;</label><br>
+                        <span id="cFabricCode">{{SerialNoDetails.cFabricCode}}</span>
+                    </div>
+                    <div class="col-lg-2">
+                        <label class="control-label">Customer Name :&nbsp;</label><br>
+                        <span id="cCustomerName">{{SerialNoDetails.cCustomerName}}</span>
+                    </div>
+                    <div class="col-lg-2">
+                        <label class="control-label">Address :&nbsp;</label><br>
+                        <span id="cCustomerAddress">{{SerialNoDetails.cCustomerAddress}} </span>
+                    </div>
+                    <div class="col-lg-2">
+                        <label class="control-label">City :&nbsp;</label><br> 
+                        <span id="cCustCity">{{SerialNoDetails.cCustCity}}</span>
+                   </div>
+                   <div class="col-lg-2">
+                    <label class="control-label">Pincode :&nbsp;</label><br>
+                    <span id="cCustPin">{{SerialNoDetails.cCustPin}}</span>
+                </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <label class="control-label">Mobile :&nbsp;</label><br>
+                        <span id="cCustomerMobile">{{SerialNoDetails.cCustomerMobile}}</span>
+                    </div>
+                    <div class="col-lg-2">
+                        <label class="control-label">Email :&nbsp;</label><br>
+                        <span id="cCustomerEmail">{{SerialNoDetails.cCustomerEmail}}</span>
+                    </div>
+                    <div class="col-lg-2">
+                        <label class="control-label">Bill No :&nbsp;</label><br>
+                        <span id="cBillNo">{{SerialNoDetails.cBillNo}}</span>  
+                    </div>
+                    <div class="col-lg-3">
+                        <label class="control-label">Bill Date :&nbsp;</label><br>
+                        <span id="cBillDate">{{SerialNoDetails.cBillDate}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <label class="control-label">Garment MRP :&nbsp;</label><br>
+                        <span id="cGarmentMRP">{{SerialNoDetails.cGarmentMRP}}</span>
+                    </div>
+                    <div class="col-lg-2">
+                        <label class="control-label">No Of Wash :&nbsp;</label><br>
+                        <span id="cNoofWashes">{{SerialNoDetails.cNoofWashes}}</span>
+                    </div>
+                    <div class="col-lg-2">
+                        <label class="control-label">Store contact person name :&nbsp;</label><br>
+                        <span id="cStoreContact">{{SerialNoDetails.cStoreContact}}</span>
+                    </div>
+                    <div class="col-lg-2">
+                        <label class="control-label">Store contact No :&nbsp;</label><br>
+                        <span id="cStorePhNo">{{SerialNoDetails.cStorePhNo}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-2">
+                        <label class="control-label">CustomerComments:&nbsp;</label><br>
+                        <span id="cReturnReason">{{SerialNoDetails.cReturnReason}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-2">
+                        <label class="control-label">CCA Comments :&nbsp;</label><br>
+                        <span id="cUserComments">{{SerialNoDetails.cUserComments}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button type="button" (click)="closeModals()" class="close" class="btn btn-success" style="float:right;margin-bottom: 10px;">close</button>
+                    </div>
+                </div>
+            </div>
+    </form>
+    </div>
+    </div>
+</div>
+<!--Bulk Modal box-->
+<div id="Bulk" class="modal"> 
+    <div class="modals-content">
+      <div class="modal-header">
+        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" id="color" (click)="forqcPrint('print')"
+        style="cursor: pointer;margin-top: 27px;font-size: 23px;margin-bottom: 10px;"><i class="fa fa-print"></i></a>
+      <h2 id="compdetails">Customer Complaint # {{courier.SerialNo}} Details</h2>
+      </div>
+      <div class="modal-body" style="margin-top: 10px;margin-bottom: 10px;">
+          <form class="form-horizontal form-box remove-margin">
+            <div class="form-box-content">
+                <div class="row">
+                   <div class="col-lg-3">
+                     <label class="control-label">Style Code :&nbsp;</label><br>
+                     <span id="rStylecode">{{SerialNoDetails.rStylecode}}</span>
+                   </div>
+                   <div class="col-lg-2">
+                       <label class="control-label">LR No:&nbsp;</label><br>
+                       <span id="rLRNo">{{SerialNoDetails.rLRNo}}</span>
+                   </div>
+                   <div class="col-lg-2">
+                       <label class="control-label">Sleeve :&nbsp;</label><br>
+                       <span id="rSleeve">{{SerialNoDetails.rSleeve}}</span>
+                   </div>
+                   <div class="col-lg-2">
+                       <label class="control-label">Size :&nbsp;</label><br>
+                       <span id="rSizeCode">{{SerialNoDetails.rSizeCode}}</span> 
+                   </div>
+                   <div class="col-lg-3">
+                       <label class="control-label">Manufacture Month :&nbsp;</label><br>
+                       <span id="rMfgMonth">{{SerialNoDetails.rMfgMonth}}</span> 
+                   </div>
+                   
+               </div>
+               <div class="row">
+                 <div class="col-lg-3">
+                     <label class="control-label">Manufacture Year :&nbsp;</label><br>
+                     <span id="rMfgYear">{{SerialNoDetails.rMfgYear}}</span> 
+                 </div>
+                   <div class="col-lg-2">
+                       <label class="control-label">Store Code :&nbsp;</label><br>
+                       <span id="rShroomNo">{{SerialNoDetails.rShroomNo}}</span>
+                   </div>
+                   <div class="col-lg-2">
+                       <label class="control-label">Store Name :&nbsp;</label><br>
+                       <span id="ShroomName">{{SerialNoDetails.ShroomName}}</span>
+                   </div>
+                   <div class="col-lg-2">
+                       <label class="control-label">Fabric Code :&nbsp;</label><br>
+                       <span id="rFabricCode">{{SerialNoDetails.rFabricCode}}</span>
+                   </div>
+                   <div class="col-lg-2">
+                       <label class="control-label">Product Category :&nbsp;</label><br>
+                       <span id="rProdCategory">{{SerialNoDetails.rProdCategory}} </span>
+                   </div>
+                   
+               </div>
+               <div class="row">
+                 <div class="col-lg-3">
+                     <label class="control-label">Vendor Code :&nbsp;</label><br> 
+                     <span id="rVendorCode">{{SerialNoDetails.rVendorCode}}</span>
+                </div>
+                   <div class="col-lg-2">
+                       <label class="control-label">Factory Code :&nbsp;</label><br>
+                       <span id="rFactoryCode">{{SerialNoDetails.rFactoryCode}}</span>
+                   </div>
+                   <div class="col-lg-2">
+                       <label class="control-label">Garment Type :&nbsp;</label><br>
+                       <span id="rGarmentType">{{SerialNoDetails.rGarmentType}}</span>
+                   </div>
+                   <div class="col-lg-3">
+                       <label class="control-label">Garment Condition :&nbsp;</label><br>
+                       <span id="rGarmentCond">{{SerialNoDetails.rGarmentCond}}</span>
+                   </div>
+                   <div class="col-lg-2">
+                       <label class="control-label">Sold/Unsold :&nbsp;</label><br>
+                       <span id="rGarmentSU">{{SerialNoDetails.rGarmentSU}}</span>
+                   </div>
+               </div>
+               <div class="row">
+                 <div class="col-lg-3">
+                     <label class="control-label">Saleable/Unsaleable :&nbsp;</label><br>
+                     <span id="rReturnType">{{SerialNoDetails.rReturnType}}</span>  
+                 </div>
+                   <div class="col-lg-2">
+                       <label class="control-label">Quality :&nbsp;</label><br>
+                       <span id="rGarmentQuality">{{SerialNoDetails.rGarmentQuality}}</span>
+                   </div>
+                   <div class="col-lg-2">
+                       <label class="control-label">Justification :&nbsp;</label><br>
+                       <span id="rReturnJU">{{SerialNoDetails.rReturnJU}}</span>
+                   </div>
+                   <div class="col-lg-2">
+                       <label class="control-label">Defect :&nbsp;</label><br>
+                       <span id="rDefectCode">{{SerialNoDetails.rDefectCode}}</span>
+                   </div>
+                   <div class="col-lg-2">
+                       <label class="control-label">Defect Type :&nbsp;</label><br>
+                       <span id="rDefectType">{{SerialNoDetails.rDefectType}}</span>
+                   </div>
+                   <div class="col-lg-2">
+                       <label class="control-label">Remarks :&nbsp;</label><br>
+                       <span id="rComplaintRemarks">{{SerialNoDetails.rComplaintRemarks}}</span>
+                   </div>
+               </div>
+               <div class="row">
+                   <div class="col-lg-12">
+                       <button type="button" (click)="closeModals()" class="close" class="btn btn-success" style="float:right;margin-bottom: 10px;">close</button>
+                   </div>
+               </div>
+           </div>
+      </form>
+      </div>
+      </div>
+  </div>
+<!--View Details-->
+  <div id="details" class="modal">
+    <!-- Modal content -->
+  <div class="modals-content">
+    <div class="modal-header">
+        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" id="color" (click)="fordetailsPrint('print')"
+        style="cursor: pointer;margin-top: 27px;font-size: 23px;margin-bottom: 10px;"><i class="fa fa-print"></i></a>
+        <h2 id="viewDetails">Details # {{courier.SerialNo}}</h2>
+    </div>
+    <div class="modal-body" style="margin-top: 10px;margin-bottom: 10px;">
+        <form class="form-horizontal form-box remove-margin">
+            <div class="form-box-content">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <label class="control-label">Store Code :&nbsp;</label><br>
+                        <span id="Store">{{SerialNoDetails.Store}}</span>
+                    </div>
+                    <div class="col-lg-3">
+                        <label class="control-label">Store Name :&nbsp;</label><br>
+                        <span id="StoreName">{{SerialNoDetails.StoreName}}</span>
+                    </div>
+                    <div class="col-lg-3">
+                        <label class="control-label">Serial NO :&nbsp;</label><br>
+                        <span id="SerialNo">{{SerialNoDetails.SerialNo}}</span>
+                   </div>
+                   <div class="col-lg-3">
+                        <label class="control-label">Inward Date :&nbsp;</label><br>
+                        <span id="InwardDate">{{SerialNoDetails.InwardDate}}</span>
+                   </div>
+                  
+                </div>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <label class="control-label">QC Analysis Date :&nbsp;</label><br>
+                        <span id="QCAnalysisDate">{{SerialNoDetails.QCAnalysisDate}}</span>
+                   </div>
+                    <div class="col-lg-3">
+                        <label class="control-label">Style :&nbsp;</label><br>
+                        <span id="Style">{{SerialNoDetails.Style}}</span>
+                    </div>
+                    <div class="col-lg-3">
+                        <label class="control-label">Sleeve :&nbsp;</label><br>
+                        <span id="Sleeve">{{SerialNoDetails.Sleeve}}</span>
+                    </div>
+                    <div class="col-lg-3">
+                        <label class="control-label">Size :&nbsp;</label><br>
+                        <span id="Size">{{SerialNoDetails.Size}}</span>
+                    </div>
+                    
+                </div>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <label class="control-label">Origin :&nbsp;</label><br>
+                        <span id="Origin">{{SerialNoDetails.Origin}}</span>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="control-label"> Fabric: &nbsp;</label><br>
+                        <span id="Fabric">{{SerialNoDetails.Fabric}}</span>  
+                    </div>
+                    <div class="col-lg-3">
+                        <label class="control-label" style="margin-top: 5px;">Manufacture Month:</label><br>
+                        <span id="MfgMonth">{{SerialNoDetails.MfgMonth}}</span>
+                    </div>
+                    <div class="col-lg-3">
+                        <label class="control-label" style="margin-top: 5px;">Manufacture Year:</label><br>
+                        <span id="MfgYear">{{SerialNoDetails.MfgYear}}</span>
+                    </div>
+                 </div>
+                
+                <div class="row">
+                    <div class="col-lg-3">
+                        <label class="control-label">Vendor Code:&nbsp;</label><br>
+                        <span id="Vendor">{{SerialNoDetails.VendorCode}}</span>
+                   </div>
+                   <div class="col-lg-3">
+                        <label class="control-label">Vendor name:&nbsp;</label><br>
+                        <span id="VendorName">{{SerialNoDetails.VendorName}}</span>
+                   </div>
+
+                    <div class="col-lg-3">
+                       <label class="control-label">Factory Code:&nbsp;</label><br>
+                       <span id="Factory">{{SerialNoDetails.FactoryCode}}</span>
+                    </div>
+                    <div class="col-lg-3">
+                        <label class="control-label">Factory Name :&nbsp;</label><br>
+                        <span id="FactoryName">{{SerialNoDetails.FactoryName}}</span>
+                     </div>
+                </div>
+                  <div class="row">
+                    <div class="col-lg-3">
+                        <label class="control-label">Saleable/Unsaleable :&nbsp;</label><br>
+                        <span id="SaleableUnSaleable">{{SerialNoDetails.SaleableUnSaleable}}</span>  
+                    </div>
+                    <div class="col-lg-3">
+                          <label class="control-label">Garment Quality :&nbsp;</label><br>
+                          <span id="GarmentQuality">{{SerialNoDetails.GarmentQuality}}</span>
+                      </div>
+                      <div class="col-lg-3">
+                          <label class="control-label">Garment MRP :&nbsp;</label><br>
+                          <span id="MRP">{{SerialNoDetails.MRP}}</span>
+                      </div>
+                      <div class="col-lg-3">
+                        <label class="control-label">Close Date :&nbsp;</label><br>
+                        <span id="CloseDate">{{SerialNoDetails.CloseDate}}</span>  
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-3">
+                        <label class="control-label">Garment Type :&nbsp;</label><br>
+                        <span id="GarmentType">{{SerialNoDetails.GarmentType}}</span>
+                    </div>
+                    <div class="col-lg-3">
+                        <label class="control-label">Garment Condition :&nbsp;</label><br>
+                        <span id="GarmentCondition">{{SerialNoDetails.GarmentCondition}}</span>
+                    </div>
+                    <div class="col-lg-3">
+                        <label class="control-label" >Justification:&nbsp;</label><br>
+                        <span id="Justification">{{SerialNoDetails.Justification}}</span>
+                    </div>
+                    <div class="col-lg-3">
+                        <label class="control-label">Defect:&nbsp;</label><br>
+                        <span id="Defect">{{SerialNoDetails.Defect}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-12">
+                        <label class="control-label" >Defect Analysis:&nbsp;</label><br>
+                        <span id="DefectAnalysis">{{SerialNoDetails.DefectAnalysis}}</span>
+                  </div>
+                </div>
+                  <div class="row">
+                    <div class="col-lg-12">
+                        <label class="control-label">Action Taken :&nbsp;</label><br>
+                        <span id="ActionTaken">{{SerialNoDetails.ActionTaken}}</span>  
+                    </div>
+                  </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button type="button" (click)="closeModals()" class="close" class="btn btn-success" style="float:right;margin-bottom: 10px;">close</button>
+                    </div>
+                </div>
+            </div>
+    </form>
+    </div>
+    </div>
+</div>
+
+<div id="uj_modal" class="modal">
+    <div class="modals-content">
+        <div class="modal-header">
+            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" id="color" (click)="forUJPrint('print')"
+            style="cursor: pointer;margin-top: 27px;font-size: 23px;margin-bottom: 10px;color:black"><i class="fa fa-print"></i></a>
+            <div class="header" style="color:white;">
+                <h4 id="ujviewDetails"><i>Customer Complaint Analysis Report</i></h4>
+            </div>
+            <div id="login-logo" style="margin-left: 70%;">
+                <a href="">
+                    <img src="assets/img/newlogo.png" alt="logo" height="70px" width="70px">
+                </a>
+            </div>
+        </div>
+        <div class="modal-body" style="margin-top: 10px;margin-bottom: 10px;">
+            <form [formGroup]="ujform" class="form-horizontal form-box remove-margin">
+                <div class="form-box-content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <button type="button" (click)="closeModals()" class="close" class="btn btn-success" style="float:right;margin-bottom: 10px;">close</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label col-md-2" >Complaint ID  : &nbsp;</label>
+                                    <div class="input-group" style="width:170px;">
+                                        <input type="text" formControlName="complaintId" id="ujComplaintID" class="form-control">
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label col-md-2" > Analysis Date  : &nbsp;</label>
+                                    <div class="input-group">
+                                        <input type="text" formControlName="analysisDate" id="ujQCAnalysisDate" class="form-control">
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label col-md-2" >  Customer Name  : &nbsp;</label>
+                                    <div class="input-group" style="width:145px">
+                                        <input type="text" formControlName="customerName" id="ujCustomerName" class="form-control">
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                              <div class="row"> 
+                                <div class="col-md-2">  <label class="control-label">Store :&nbsp;</label></div>
+                            
+                                <div class="col-md-2">
+                                    <div class="input-group" style="margin-top:-5px;">
+                                        <input type="text" formControlName="storeCode" id="ujStore" class="form-control" name="Store">
+                                    </div>
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="input-group" style="margin-top:-5px;  margin-left:15px; ">
+                                        <input type="text"  formControlName="storeName" id="ujStoreName" class="form-control">
+                                    </div>
+                                </div>
+            
+                                </div>
+                            </div> 
+                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label col-md-2" >  Contact Number  : &nbsp;</label>
+                                    <div class="input-group" style="width:145px">
+                                        <input type="text" formControlName="contactNumber" id="ujCustomerMobile" class="form-control">
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label col-md-2" >Brand : &nbsp;</label>
+                                    <div class="input-group" style="width:145px">
+                                        <input type="text" formControlName="brand" id="ujBrand" class="form-control">
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label col-md-2" > Address : &nbsp;</label>
+                                    <div class="input-group" style="width:145px">
+                                        <input type="text" formControlName="address" id="ujCustomerAddress" class="form-control">
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label col-md-2" > Receipt Date : &nbsp;</label>
+                                    <div class="input-group" style="width:145px">
+                                        <input type="text" formControlName="recieptDate" id="ujReceiptDate" class="form-control">
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label col-md-2" > City : &nbsp;</label>
+                                    <div class="input-group" style="width:145px">
+                                        <input type="text" formControlName="city" id="ujCustCity" class="form-control">
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label col-md-2" >Pincode: &nbsp;</label>
+                                    <div class="input-group" style="width:145px">
+                                        <input type="text" formControlName="pinCode" id="ujCustPin" class="form-control">
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label col-md-2" > Garment Type : &nbsp;</label>
+                                    <div class="input-group" style="width:145px">
+                                        <input type="text" formControlName="garmentType" id="ujGarmentType" class="form-control">
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label col-md-2" >Style Code: &nbsp;</label>
+                                    <div class="input-group" style="width:145px">
+                                        <input type="text" formControlName="styleCode" id="ujStyle" class="form-control">
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label col-md-2" >Fabric Code: &nbsp;</label>
+                                    <div class="input-group" style="width:145px">
+                                        <input type="text" formControlName="fabricCode" id="ujFabric" class="form-control">
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!--<div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label col-md-2" >Color: &nbsp;</label>
+                                    <div class="input-group" style="width:145px">
+                                        <input type="text" formControlName="color" class="form-control">
+                                    </div>
+                            </div>
+                        </div>-->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label col-md-2" >Size: &nbsp;</label>
+                                    <div class="input-group" style="width:145px">
+                                        <input type="text" formControlName="size" id="ujSize" class="form-control">
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label col-md-2" >Condition : &nbsp;</label>
+                                    <div class="input-group" style="width:145px">
+                                        <input type="text" formControlName="condition" id="ujGarmentCondition" class="form-control">
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label col-md-2" >Customer Comments : &nbsp;</label>
+                                    <div class="input-group" style="width:70%">
+                                        <input type="text" formControlName="customerComments" id="ujUserComments" class="form-control">
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 id="ujanalysis">Analysis Result : </h4><br>
+                        <P id="ujpara">We sincerely apologize for the disappointment and inconvenience caused by this incident.<br>
+                            <br>
+                            All our products go through a rigorous process of quality checks at various stages of product development
+                            and manufacturing.<br>
+                            Please be informed that complained product is comprehensively analysed by product experts & concluded
+                            that the defect is neither<br>
+                            related to our manufacturing process, nor related to the product. Hence the product is sent back to you.<br>
+                            <br>
+                            Reason for rejection : {{this.DefectAnalysis}}<br>
+                            <br>
+                            We thank you for patronizing our brands and hope for you continue the same in future too.<br>
+                            </P>
+                        <b>Verified by : Team QC Cell</b>
+                    </div>                    
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="page-content" style="min-height: 89vh !important;">
+    <!-- Navigation info -->
+    <div *ngIf="voucherFlag == true">
+        <form id="form-validation" [formGroup]="form" class="form-horizontal form-box remove-margin">
+        <div class="form">
+            <div class="form-box-content">
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-lg-3">
+                            <label class="control-label col-md-5" for="val_date" style="padding-left:30px;">From Date<span class="red">*</span>:&nbsp;</label>
+                            <div class="input-group" style="width:140px;padding-top: 2px;">
+                                <input type="date" id="FromDate" class="form-control" formControlName="FromDate" style="height:30px;" [ngClass]="{ 'is-invalid': submitted && f.FromDate.invalid }">
+                                <div *ngIf="submitted && f.FromDate.invalid" class="red">
+                                    <div *ngIf="f.FromDate.errors.required">FromDate is required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="control-label col-md-2" for="val_date">To Date<span class="red">*</span>:&nbsp;</label>
+                            <div class="input-group" style="width: 140px;padding-top: 2px;">
+                                <input type="date" id="ToDate" class="form-control" formControlName="ToDate" style="height:30px;margin-left:10px;" [ngClass]="{ 'is-invalid': submitted && f.ToDate.invalid }">
+                                <div *ngIf="submitted && f.ToDate.invalid" class="red">
+                                    <div *ngIf="f.ToDate.errors.required">ToDate is required</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="form-group">
+                    <div class="col-md-10 col-md-offset-2">
+                        <div *ngIf= "voucherFlag == true">
+                            <button type="button" (click)="load()" class="btn btn-success" style="float: left!important;margin-bottom: 18px;"> Load</button>
+                        <div *ngIf="dataFlag == true" class="nodata">No data for this specific date</div>
+                        </div> 
+                    </div>
+                </div> 
+            </div>
+        </div>
+        </form>
+        </div>
+    
+    <div *ngIf="voucherFlag == false"> 
+        <div  style="margin-bottom:20px;">
+            <div class="form-group form-actions">
+            <div class="form-group btn_panel">
+                <smart-button class="small" #button id="xlsxBtn">Export to Excel <i id="loader" style="display:none;" class="fa fa-spinner fa-spin"></i></smart-button>
+            </div>
+        </div>
+        </div>
+        <div>
+            <button type="button" (click)="clear()" class="btn btn-default" style="margin-left:154px;margin-top:-89px;">CLEAR ALL</button>
+        </div>
+    <div style="margin-top: -36px;">
+        <smart-grid
+            #grid 
+            [paging]="paging" 
+            [pager]="pager"
+            [appearance]="appearance"
+            [sorting]="sorting" 
+            [filtering]="filtering"
+            [grouping]="grouping" 
+            [dataSource]="dataSource" 
+            [header]="header"
+            [columns]="columns"
+            [scrolling]="'virtual'"
+            [behavior]="behavior"
+            id="grid" style="width:99%;height: 465px; margin-top: -39px;">
+        </smart-grid>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10 col-md-offset-2">
+            <button type="button" (click)="exit()" class="btn btn-success" style="float: left !important; margin-top: -9px;"> Exit</button>
+        </div>
+    </div> 
+    </div>
+
+</div>
+
+<footer>
+    <div class="footer">
+        <p>Copyrights &copy;2022. ABFRL Customer Complaints</p>
+    </div>
+</footer>

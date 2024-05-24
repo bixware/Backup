@@ -1,0 +1,27 @@
+<div id="page-content" style="min-height: 89vh !important;">
+<form class="form-horizontal form-box remove-margin">
+<div class="form">
+    <label style="margin-left: 13px;padding-top:7px;">Choose Barcode Tag Sheet</label>
+    <div class="form-group" style="margin-top: 10px;">
+        <input type="file" name="upload" id="upload" (change)="onFileChange($event)" style="margin-left: 13px;" muliple="false" value="file" 
+        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
+        <p *ngIf="errorFlag == true" style="color: darkred;">{{errorMsg}} &nbsp;</p>
+    </div>
+    <div class="form-group">
+    <div class="col-md-10 col-md-offset-2" style="margin-bottom: 10px;">
+        <button type="button" id="data_upload" class="btn btn-success" style="float: left!important;margin-left: 12px;" (click)="dataUpload()"> Upload</button>
+        <div *ngIf="successFlag == true" style="color: green;padding-top: 36px;margin-left: 12px;">{{successMsg}} &nbsp;</div>
+    </div> 
+    </div>
+</div>
+</form>
+</div> 
+
+<footer>
+    <div class="footer">
+        <p>Copyrights &copy;2022. ABFRL Customer Complaints</p>
+    </div>
+</footer>
+
+
+

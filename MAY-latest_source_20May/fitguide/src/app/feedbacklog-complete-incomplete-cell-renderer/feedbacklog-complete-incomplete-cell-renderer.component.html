@@ -1,0 +1,14 @@
+<div class="iconContainer">
+    <div *ngIf="params.data.ArchStatus != '1'">
+        <i class="fa fa-archive icon_btn_success handCursor" (click)="archive()" style="padding-left:82px; color: #026680;font-size: 21px; cursor:pointer;" title="Archive"></i>
+    </div>
+    <div *ngIf="params.data.ArchStatus == '1'">
+        <i class='fa fa-window-restore' style='font-size:24px; color: #026680; padding-left: 82px; cursor:pointer' (click)="restore()"  title="restore"></i>
+    </div>
+    </div>
+    <div class="slideContainer">
+    <label class="switch">
+        <input type="checkbox" id="{{'c_' + params.data.feedbackLogUID}}" (click)="updateComplete()" [checked]="params.data.isCompleted == 'complete'">
+        <div class="slider round"></div>
+    </label>
+</div>

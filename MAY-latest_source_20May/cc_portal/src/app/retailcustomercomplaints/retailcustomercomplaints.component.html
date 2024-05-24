@@ -1,0 +1,210 @@
+<div id="Modal" class="modal">
+    <!-- Modal content -->
+  <div class="modals-content">
+    <div class="modal-header">
+        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" id="color" (click)="forretailPrint('print')"
+        style="cursor: pointer;margin-top: 27px;font-size: 23px;margin-bottom: 10px;"><i class="fa fa-print"></i></a>
+           <h2 id="compdetails">Customer Complaint # {{courier.SerialNo}} Details</h2>
+    </div>
+    <div class="modal-body" style="margin-top: 10px;margin-bottom: 10px;">
+        <form class="form-horizontal form-box remove-margin">
+            <div class="form-box-content">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <label class="control-label">Style Code :&nbsp;</label><br>
+                        <span id="cStylecode">{{SerialNoDetails.cStylecode}}</span>
+                    </div>
+                    <div class="col-lg-2">
+                        <label class="control-label">Reciept Date :&nbsp;</label><br>
+                        <span id="cReceiptDate">{{SerialNoDetails.cReceiptDate}}</span>
+                    </div>
+                    <div class="col-lg-2">
+                        <label class="control-label">From :&nbsp;</label><br>
+                        <span id="cfromtype">{{SerialNoDetails.cfromtype}}</span>
+                    </div>
+                    <div class="col-lg-2">
+                        <label class="control-label">Sleeve :&nbsp;</label><br>
+                        <span id="cSleeve">{{SerialNoDetails.cSleeve}}</span>
+                    </div>
+                    <div class="col-lg-2">
+                        <label class="control-label">Size :&nbsp;</label><br>
+                        <span id="cSizeCode">{{SerialNoDetails.cSizeCode}}</span> 
+                </div>
+                </div>
+                <div class="row">
+                   
+                    <!--<div class="col-lg-3">
+                        <label class="control-label">GarmentColor :&nbsp;</label><br>
+                        <span>{{SerialNoDetails.cGarmentColor}}</span>
+                    </div>-->
+                    <div class="col-lg-3">
+                        <label class="control-label">Store contact No :&nbsp;</label><br>
+                        <span id="cStorePhNo">{{SerialNoDetails.cStorePhNo}}</span>
+                    </div>
+                    <div class="col-lg-2">
+                        <label class="control-label">Fabric Code :&nbsp;</label><br>
+                        <span id="cFabricCode">{{SerialNoDetails.cFabricCode}}</span>
+                    </div>
+                    
+                    <div class="col-lg-2">
+                        <label class="control-label">Address :&nbsp;</label><br>
+                        <span id="cCustomerAddress">{{SerialNoDetails.cCustomerAddress}} </span>
+                    </div>
+                    <div class="col-lg-2">
+                        <label class="control-label">City :&nbsp;</label><br> 
+                        <span id="cCustCity">{{SerialNoDetails.cCustCity}}</span>
+                   </div>
+                </div>
+                <div class="row">
+                    
+                    <div class="col-lg-3">
+                        <label class="control-label">Pincode :&nbsp;</label><br>
+                        <span id="cCustPin">{{SerialNoDetails.cCustPin}}</span>
+                    </div>
+                    <div class="col-lg-2">
+                        <label class="control-label">Mobile :&nbsp;</label><br>
+                        <span id="cCustomerMobile">{{SerialNoDetails.cCustomerMobile}}</span>
+                    </div>
+                    <div class="col-lg-2">
+                        <label class="control-label">Email :&nbsp;</label><br>
+                        <span id="cCustomerEmail">{{SerialNoDetails.cCustomerEmail}}</span>
+                    </div>
+                    
+                    <div class="col-lg-2">
+                        <label class="control-label">Bill No :&nbsp;</label><br>
+                        <span id="cBillNo">{{SerialNoDetails.cBillNo}}</span>  
+                    </div>
+                </div>
+                <div class="row">
+                    
+                    <div class="col-lg-3">
+                        <label class="control-label">Bill Date :&nbsp;</label><br>
+                        <span id="cBillDate">{{SerialNoDetails.cBillDate}}</span>
+                    </div>
+                    <div class="col-lg-2">
+                        <label class="control-label">Garment MRP :&nbsp;</label><br>
+                        <span id="cGarmentMRP">{{SerialNoDetails.cGarmentMRP}}</span>
+                    </div>
+                    <div class="col-lg-2">
+                        <label class="control-label">No Of Wash :&nbsp;</label><br>
+                        <span id="cNoofWashes">{{SerialNoDetails.cNoofWashes}}</span>
+                    </div>
+                    
+                    <div class="col-lg-2">
+                        <label class="control-label">Customer Name :&nbsp;</label><br>
+                        <span id="cCustomerName">{{SerialNoDetails.cCustomerName}}</span>
+                    </div>
+                    <div class="col-lg-3">
+                        <label class="control-label">Store contact person name :&nbsp;</label><br>
+                        <span id="cStoreContact">{{SerialNoDetails.cStoreContact}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <label class="control-label">CustomerComments :&nbsp;</label><br>
+                        <span id="cReturnReason">{{SerialNoDetails.cReturnReason}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-2">
+                        <label class="control-label">CCA Comments :&nbsp;</label><br>
+                        <span id="cUserComments">{{SerialNoDetails.cUserComments}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button type="button"(click)="closeModals()" class="close"class="btn btn-success" style="float:right;margin-bottom: 10px;">close</button>
+                    </div>
+                </div>
+            </div>
+    </form>
+    </div>
+    </div>
+</div>
+<div id="page-content" style="min-height: 89vh !important;">
+    <!-- Navigation info -->
+    <div *ngIf="voucherFlag == true">
+        <form id="form-validation" [formGroup]="form" class="form-horizontal form-box remove-margin">
+        <div class="form">
+            <div class="form-box-content">
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-lg-3">
+                            <label class="control-label col-md-5" for="val_date" style="padding-left:30px;">From Date<span class="red">*</span>:&nbsp;</label>
+                            <div class="input-group" style="width:140px;padding-top: 2px;">
+                                <input type="date" id="FromDate" name="FromDate" class="form-control" formControlName="FromDate" style="height:30px;" [ngClass]="{ 'is-invalid': submitted && f.FromDate.invalid }">
+                                <div *ngIf="submitted && f.FromDate.invalid" class="red">
+                                    <div *ngIf="f.FromDate.errors.required">FromDate is required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="control-label col-md-2" for="val_date">To Date<span class="red">*</span>:&nbsp;</label>
+                            <div class="input-group" style="width: 140px;padding-top: 2px;">
+                                <input type="date" id="ToDate" name="ToDate" class="form-control" formControlName="ToDate" style="height:30px;margin-left:10px;" [ngClass]="{ 'is-invalid': submitted && f.ToDate.invalid }">
+                                <div *ngIf="submitted && f.ToDate.invalid" class="red">
+                                    <div *ngIf="f.ToDate.errors.required">ToDate is required</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="form-group">
+                    <div class="col-md-10 col-md-offset-2">
+                        <div *ngIf= "voucherFlag == true">
+                            <button type="button" (click)="load()" class="btn btn-success" style="float: left!important;margin-bottom: 18px;"> Load</button>
+                        <div *ngIf="dataFlag == true" class="nodata">No data for this specific date</div>
+                        </div> 
+                    </div>
+                </div> 
+            </div>
+        </div>
+        </form>
+        </div>
+    
+    <!--<p style="margin-left:3px">Total Count for the selected period is: 1</p>-->
+   
+    <div *ngIf="voucherFlag == false"> 
+        <div  style="margin-bottom:20px;">
+            <div class="form-group form-actions">
+            <div class="form-group btn_panel">
+                <smart-button class="small" #button id="xlsxBtn">Export to Excel</smart-button>
+            </div>
+        </div>
+        </div>
+        <div>
+            <button type="button" (click)="clear()" class="btn btn-default" style="margin-left:154px;margin-top:-89px;">CLEAR ALL</button>
+        </div>
+        <smart-grid
+            #grid 
+            [paging]="paging" 
+            [pager]="pager"
+            [appearance]="appearance"
+            [sorting]="sorting" 
+            [filtering]="filtering"
+            [grouping]="grouping" 
+            [dataSource]="dataSource" 
+            [header]="header"
+            [columns]="columns"
+            [scrolling]="'virtual'" 
+            [behavior]="behavior"
+            id="grid" style="width:99%;height:460px;margin-top: -35px;">
+        </smart-grid>
+    
+   
+    <div class="form-group">
+        <div class="col-md-10 col-md-offset-2">
+            <button type="submit" (click)="justify()" class="btn btn-success" style="float: left !important;"> Justify</button>
+            <button type="button" (click)="unjustify()" class="btn btn-success" style="float: left !important;"> Unjustify</button>
+            <button type="button" (click)="exit()" class="btn btn-success" style="float: left !important;"> Exit</button>
+        </div>
+    </div> 
+    </div>
+</div>
+
+<footer>
+    <div class="footer">
+        <p>Copyrights &copy;2022. ABFRL Customer Complaints</p>
+    </div>
+</footer>

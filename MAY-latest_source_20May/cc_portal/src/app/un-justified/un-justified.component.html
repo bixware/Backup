@@ -1,0 +1,205 @@
+<div id="page-content" style="min-height: 89vh !important;">
+    <form id="form-validation" [formGroup]="form"  class="form-horizontal form-box remove-margin">
+        <!-- Form Header -->
+        <div class="form-box-content">
+            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" id="color" (click)="forPrint('print')"
+            style="cursor: pointer;margin-top: 27px;font-size: 23px;margin-bottom: 10px;color:black"><i class="fa fa-print"></i></a>
+            <div class="header" style="color:blue;">
+                <h4 id="viewDetails"><i>Customer Complaint Analysis Report</i></h4>
+            </div>
+            <div id="login-logo" style="margin-left: 70%;">
+                <a href="">
+                    <img src="assets/img/newlogo.png" alt="logo" height="70px" width="70px">
+                </a>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label col-md-2" >Complaint ID  : &nbsp;</label>
+                            <div class="input-group" style="width:170px;">
+                                <input type="text" formControlName="complaintId" id="ComplaintID" class="form-control">
+                            </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label col-md-2" > Analysis Date  : &nbsp;</label>
+                            <div class="input-group">
+                                <input type="text" formControlName="analysisDate" id="QCAnalysisDate" class="form-control">
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label col-md-2" >  Customer Name  : &nbsp;</label>
+                            <div class="input-group" style="width:145px">
+                                <input type="text" formControlName="customerName" id="CustomerName" class="form-control">
+                            </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="row"> 
+                        <div class="col-md-2">  <label class="control-label">Store :&nbsp;</label></div>
+                    
+                        <div class="col-md-2">
+                            <div class="input-group" style="margin-top:-5px;">
+                                <input type="text" formControlName="storeCode" id="Store" class="form-control" name="Store">
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="input-group" style="margin-top:-5px;  margin-left:15px; ">
+                                <input type="text"  formControlName="storeName" id="StoreName" class="form-control">
+                            </div>
+                        </div>
+    
+                        </div>
+                    </div> 
+                    </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label col-md-2" >  Contact Number  : &nbsp;</label>
+                            <div class="input-group" style="width:145px">
+                                <input type="text" formControlName="contactNumber" id="CustomerMobile" class="form-control">
+                            </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label col-md-2" >Brand : &nbsp;</label>
+                            <div class="input-group" style="width:145px">
+                                <input type="text" formControlName="brand" id="Brand" class="form-control">
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label col-md-2" > Address : &nbsp;</label>
+                            <div class="input-group" style="width:145px">
+                                <input type="text" formControlName="address" id="CustomerAddress" class="form-control">
+                            </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label col-md-2" > Reciept Date : &nbsp;</label>
+                            <div class="input-group" style="width:145px">
+                                <input type="text" formControlName="recieptDate" id="ReceiptDate" class="form-control">
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label col-md-2" > City : &nbsp;</label>
+                            <div class="input-group" style="width:145px">
+                                <input type="text" formControlName="city" id="CustCity" class="form-control">
+                            </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label col-md-2" >Pincode: &nbsp;</label>
+                            <div class="input-group" style="width:145px">
+                                <input type="text" formControlName="pinCode" id="CustPin" class="form-control">
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label col-md-2" > Garment Type : &nbsp;</label>
+                            <div class="input-group" style="width:145px">
+                                <input type="text" formControlName="garmentType" id="GarmentType" class="form-control">
+                            </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label col-md-2" >Style Code: &nbsp;</label>
+                            <div class="input-group" style="width:145px">
+                                <input type="text" formControlName="styleCode" id="Style" class="form-control">
+                            </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label col-md-2" >Fabric Code: &nbsp;</label>
+                            <div class="input-group" style="width:145px">
+                                <input type="text" formControlName="fabricCode" id="Fabric" class="form-control">
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!--<div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label col-md-2" >Color: &nbsp;</label>
+                            <div class="input-group" style="width:145px">
+                                <input type="text" formControlName="color" class="form-control">
+                            </div>
+                    </div>
+                </div>-->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label col-md-2" >Size: &nbsp;</label>
+                            <div class="input-group" style="width:145px">
+                                <input type="text" formControlName="size" id="Size" class="form-control">
+                            </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label col-md-2" >Condition : &nbsp;</label>
+                            <div class="input-group" style="width:145px">
+                                <input type="text" formControlName="condition" id="GarmentCondition" class="form-control">
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-2" >Customer Comments : &nbsp;</label>
+                            <div class="input-group" style="width:70%">
+                                <input type="text" formControlName="customerComments" id="UserComments" class="form-control">
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h4 id="analysis">Analysis Result : </h4><br>
+                <P id="para">We sincerely apologize for the disappointment and inconvenience caused by this incident.<br>
+                    <br>
+                    All our products go through a rigorous process of quality checks at various stages of product development
+                    and manufacturing.<br>
+                    Please be informed that complained product is comprehensively analysed by product experts & concluded
+                    that the defect is neither<br>
+                    related to our manufacturing process, nor related to the product. Hence the product is sent back to you.<br>
+                    <br>
+                    Reason for rejection : {{this.DefectAnalysis}}<br>
+                    <br>
+                    We thank you for patronizing our brands and hope for you continue the same in future too.<br>
+                    </P>
+                <b>Verified by : Team QC Cell</b>
+            </div>
+        </div>
+    </form>
+
+</div>
+<footer>
+    <div class="footer">
+        <p>Copyrights &copy;2022. ABFRL Customer Complaints</p>
+    </div>
+</footer>
+
+
+

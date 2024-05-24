@@ -1,0 +1,235 @@
+<div *ngIf="apiFlag == true" id="overlay">
+    <div id="text">Processing...<br/><i class="fa fa-spinner fa-spin" style="font-size:24px;color:rgb(0,0,0);"></i></div>
+    <div id="info_alert" class="alert_info alert" style="display: none;">
+      <span class="closebtn" (click)="close1()">&times;</span> 
+      <strong>{{successMessage}}</strong>
+    </div>
+    <div id="info_success" class="success_info success" style="display: none;">
+      <span class="closebtn" (click)="close1()">&times;</span> 
+      <strong>{{successMessage}}</strong>
+    </div>
+  </div>
+  <div *ngIf="apiFlagModal == true" id="overlay_modal">
+    <div id="text_modal">Processing...<br/><i class="fa fa-spinner fa-spin" style="font-size:24px;color:rgb(0,0,0);"></i></div>
+    <div id="info_alert" class="alert_info alert" style="display: none;">
+      <span class="closebtn" (click)="closeModalError()">&times;</span> 
+      <strong>{{successMessage}}</strong>
+    </div>
+    <div id="info_success" class="success_info success" style="display: none;">
+      <span class="closebtn" (click)="closeModal()">&times;</span> 
+      <strong>{{successMessage}}</strong>
+    </div>
+  </div>
+
+  <!--Country modal box-->
+<!-- Modal content -->
+
+<div class="countrymodal" id="myModal">
+  
+  <div class="modals-content">
+    
+  <div class="modal-header" style="margin-top: 10px;">
+      <h4 class="modal-title" id="modal-title">Add Country</h4>
+  </div>
+  <div class="modal-body" style="margin-top: 12px;">
+  <!-- begin row -->
+  <div class="row">
+    <div class="col-xl-12 order-xl-1">
+      <div class="card bg-secondary shadow">
+        <form [formGroup]="countryform">
+                <div class="row">
+                    <div class="col-xl-12 order-xl-1">
+                      <div class="card bg-secondary shadow">
+                        
+                        <div class="card-body">
+                            <h6 class="heading-small text-muted mb-4">Country information</h6>
+                            <div class="pl-lg-4">
+                              <div class="row">
+                                <div class="col-lg-4">
+                                  <div class="form-group">
+                                    <label class="form-control-label" for="input-countryname">Country Name <span class="text-danger">*</span></label>
+                                    <input type="text" formControlName="countryName" class="form-control form-control-alternative" placeholder="Please Enter Country Name" [ngClass]="{ 'is-invalid': submitted && c.countryName?.invalid }" required>
+                                    <div *ngIf="submitted && c.countryName?.invalid" class="invalid-feedback">
+                                      <div *ngIf="c.countryName.errors.required">Country Name is required</div>
+                                    </div>
+                                    <!--<div id="distributorName_error" style="color:red; display:none;">Distributor Name is required</div>-->
+                                  </div>
+                                </div>
+                              </div>
+                            </div>                               
+                           </div>                        
+                        </div>
+                        <!-- <div class="card-header">
+                            <div class="row align-items-center">                          
+                              <div class="col-12 text-right"> -->
+                                  <button type="button" style="float: right;background-color: #c0c3d1;min-height: 36px; border: #c0c3d1; border-radius: 5px; color: #343643; font-family: Roboto; font-size: 14px; line-height: 20px;" (click)="cancel()" class="btn btn-sm btn-danger">Cancel</button>
+                                <button  type="button" style="background-color: #1c3fff; min-height: 36px; border: #1c3fff; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;float:right;margin-right: 5px;" (click)="saveCountry()" class="btn btn-sm btn-primary">Save</button>
+                       <!--        </div>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </form>
+      </div>
+    </div>
+  </div>
+  </div>
+  
+</div>
+</div>
+  <!--Country form-->
+  <!-- begin row -->
+  <div class="row" style="margin-right: -20px;
+  margin-top: 3px;
+  margin-bottom: -30px;">
+      <div class="col-xl-12 order-xl-1">
+        <div class="card bg-secondary shadow">
+          <form (ngSubmit)="submitForm()" [formGroup]="form">
+                  <div class="row">
+                      <div class="col-xl-12 order-xl-1">
+                        <div class="card bg-secondary shadow">
+                          <div class="card-header bg-white border-0">
+                            <div class="row align-items-center">
+                              <div class="col-8">
+                                <h5 class="mb-0">Add Distributor Details Here...</h5>
+                              </div>
+                              <div class="col-4 text-right">
+                                <button type="button" (click)="back()" style="float: right;background-color: #c0c3d1;min-height: 36px; border: #c0c3d1; border-radius: 5px; color: #343643; font-family: Roboto; font-size: 14px; line-height: 20px;" class="btn btn-sm btn-danger">Back</button>
+                                <button  type="button" style="background-color: #1c3fff; min-height: 36px; border: #1c3fff; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;float:right;margin-right: 5px;" [disabled]="clicked" (click)="submitForm()" class="btn btn-sm btn-primary">Save</button>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="card-body">
+                              <h6 class="heading-small text-muted mb-4">Distributor information</h6>
+                              <div class="pl-lg-4">
+                                <div class="row">
+                                  <div class="col-lg-4">
+                                    <div class="form-group">
+                                      <label class="form-control-label" for="input-dname">Distributor Name <span class="text-danger">*</span></label>
+                                      <input type="text" formControlName="distributorName" class="form-control form-control-alternative" placeholder="Please Enter Distributor Name" [ngClass]="{ 'is-invalid': submitted && f.distributorName?.invalid }" required>
+                                      <div *ngIf="submitted && f.distributorName?.invalid" class="invalid-feedback">
+                                        <div *ngIf="f.distributorName.errors.required">Distributor Name is required</div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-lg-4">
+                                    <label class="form-control-label" placeholder="">Distributor Primary Contact Name</label>
+                                    <input type="name" formControlName="distributorPrimaryContact" class="form-control" placeholder="Please Enter the Primary Contact Name">
+                                  </div>
+                                  <div class="col-lg-4">
+                                    <div class="form-group">
+                                      <label class="form-control-label" for="input-daddress">Distributor Address</label>
+                                      <input type="text" formControlName="distributorAddress" class="form-control form-control-alternative" placeholder="Please Enter Distributor Address">
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-lg-4">
+                                    <div class="form-group focused">
+                                      <label class="form-control-label" for="input-country">Distributor Country
+                                      <span>
+                                      <a href="javascript:;" (click)="addcountry()" title="Add Country"><i class="fa fa-plus-square" style="font-size: 20px;color:green;padding-left: 9px;"></i></a>
+                                    </span>
+                                  </label>
+                                      <select (change)="countryOnchange($event)" formControlName="distributorCountry" class="form-select form-control-alternative">
+                                        <option value="">Select Country</option>
+                                        <option [value]="country.countryName" *ngFor="let country of countries">{{country.countryName}}</option>                                                 </select>
+                                    </div>
+                                  </div>
+                                  <div class="col-lg-4">
+                                    <div class="form-group focused">
+                                      <label class="form-control-label" for="input-country">Distributor State</label>
+                                      <select (change)="getCity($event)" formControlName="distributorState" id="stateDistributor" class="form-select form-control-alternative">
+                                        <option value="">Select State</option>
+                                        <option [value]="state.StateUID" *ngFor="let state of states">{{state.StateName}}</option>                                                                               
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div class="col-lg-4">
+                                    <div class="form-group focused">
+                                      <label class="form-control-label" for="input-region">Distributor City </label>
+                                      <select formControlName="distributorCity" class="form-select form-control-alternative">
+                                        <option value="">Select City</option>
+                                        <option [value]="city.cityUID" *ngFor="let city of cities">{{city.CityName}}</option>                                                                               
+                                      </select>                                   
+                                    </div>
+                                  </div>
+                                </div>
+  
+                                <div class="row">
+                                  <div class="col-lg-4">
+                                    <div class="form-group focused">
+                                      <label class="form-control-label" for="input-city">Distributor Region</label>
+                                      <!-- <input type="text" formControlName="distributorRegion" placeholder="Please Enter Distributor Region" class="form-control" /> -->
+                                      <!-- <select formControlName="distributorCity" class="form-control form-control-alternative">
+                                        <option value="">Select City</option>
+                                        <option [value]="city.CityUID" *ngFor="let city of cities">{{city.CityName}}</option>                                                                               
+                                      </select>-->
+                                      <select formControlName="distributorRegion"  class="form-select form-control-alternative">
+                                        <option value="">Select Region</option>
+                                        <option [value]="region.regionName" *ngFor="let region of regions">{{region.regionName}}</option> 
+                                        <!-- <option value="Midwest">Midwest</option>  
+                                        <option value="Mountain">Mountain</option>
+                                        <option value="West">West</option>
+                                        <option value="South">South</option>
+                                        <option value="Southeast">Southeast</option>
+                                        <option value="Southwest">Southwest</option>
+                                        <option value="Northern">Northern</option>
+                                        <option value="Northwest">Northwest</option>
+                                        <option value="Northeast">Northeast</option>
+                                        <option value="East">East</option>          -->                                                                    
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div class="col-lg-4">
+                                    <div class="form-group">
+                                      <label class="form-control-label" for="input-zip">Distributor Zip code</label>
+                                      <input type="text" formControlName="distributorZip" placeholder="Please Enter Distributor ZipCode" class="form-control" />
+                                    </div>
+                                  </div>
+                                  <div class="col-lg-4">
+                                      <div class="form-group focused">
+                                        <label class="form-control-label" for="input-email">Distributor Primary Email</label>
+                                        <input type="text" formControlName="distributorEmail" placeholder="Please Enter Distributor Email" class="form-control"/>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-lg-4">
+                                    <div class="form-group">
+                                      <label class="form-control-label" for="input-phone">Distributor Contact Number</label>
+                                      <input type="text" formControlName="distributorContact" class="form-control form-control-alternative" placeholder="Please Enter Distributor Contact Number" [ngClass]="{ 'is-invalid': submitted && f.distributorContact.invalid }">                                        
+                                      <div *ngIf="submitted && f.distributorContact.invalid" class="invalid-feedback">                                      
+                                        <div *ngIf="f.distributorContact.errors.pattern">Only USA Numbers are allowed</div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-lg-4">
+                                    <label class="form-control-label" placeholder="">Distributor Website</label>
+                                    <input type="name" formControlName="distributorWebsite" class="form-control" placeholder="Please Enter Distributor Website">
+                                  </div>
+                                  <div class="col-lg-4">
+                                    <div class="form-group focused">
+                                      <label class="form-control-label" for="distributor-image">Distributor Image</label>
+                                      <input type="file" formControlName="distributorImage" (change)="fileEvent($event)" />                                   
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>                               
+                             </div>                        
+                          </div>
+                          <div class="card-header bg-white border-0">
+                              <div class="row align-items-center">                          
+                                <div class="col-12 text-right">
+                                    <button type="button" style="float: right;background-color: #c0c3d1;min-height: 36px; border: #c0c3d1; border-radius: 5px; color: #343643; font-family: Roboto; font-size: 14px; line-height: 20px;" (click)="back()" class="btn btn-sm btn-danger">Back</button>
+                                  <button  type="button" style="background-color: #1c3fff; min-height: 36px; border: #1c3fff; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;float:right;margin-right: 5px;"  [disabled]="clicked" (click)="submitForm()" class="btn btn-sm btn-primary">Save</button>
+                                </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </form>
+        </div>
+      </div>
+  </div>
+

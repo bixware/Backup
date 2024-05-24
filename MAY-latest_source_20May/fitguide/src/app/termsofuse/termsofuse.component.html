@@ -1,0 +1,59 @@
+<div *ngIf="apiFlag == true" id="overlay">
+    <div id="text">Processing...<br/><i class="fa fa-spinner fa-spin" style="font-size:24px;color:rgb(0,0,0);"></i></div>
+    <div id="info_alert" class="alert_info alert" style="display: none;">
+      <span class="closebtn" (click)="close1()">&times;</span> 
+      <strong>{{successMessage}}</strong>
+    </div>
+    <div id="info_success" class="success_info success" style="display: none;">
+      <span class="closebtn" (click)="close1()">&times;</span> 
+      <strong>{{successMessage}}</strong>
+    </div>
+  </div>
+  <!-- begin breadcrumb 
+  <ol class="breadcrumb float-xl-right">
+    <li class="breadcrumb-item"><a routerLink="/home/dashboard">Home</a></li>
+    <li class="breadcrumb-item active">Terms of Use</li>
+  </ol>-->
+  <!-- end breadcrumb -->
+  <!-- begin page-header -->
+  <!-- <h1 class="page-header">Terms of Use<small></small></h1> -->
+  <!-- end page-header -->
+  
+  <!-- begin row -->
+  
+  <form method="POST">
+    <div class="row">
+      <div class="col-xl-12 order-xl-1">
+        <div class="card bg-secondary shadow" style="background-color: #f7fafc !important;">
+  
+          <div class="card-body" style="margin: 0 !important;">
+            <form>
+  
+              <div class="pl-lg-4">
+                <div class="row" [innerHTML]="termsText">
+  
+                </div>
+              </div>
+              <hr />
+              <div class="pl-lg-4" id="termsandCondition">
+                <div class="row">
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                    <label class="form-check-label" for="exampleCheck1">Please Accept Terms and Condition</label>
+                  </div>
+                </div>
+                <div class="row"> 
+                   <div style="margin-left: -8px; margin-top: 5px;">            
+                    <button type="button" (click)="termsUpdate()"
+                    class="btn btn-sm btn-primary">Accept</button>   
+                   </div>           
+                </div>
+              </div>
+              <!-- <hr class="my-4"> -->
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <!-- end row -->

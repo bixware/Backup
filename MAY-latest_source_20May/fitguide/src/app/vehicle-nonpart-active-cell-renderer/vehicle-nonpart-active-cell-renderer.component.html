@@ -1,0 +1,11 @@
+<div class="iconContainer">
+    <i (click)="edit(params.data.vehicleDetailNonPartUID)" class="ri-file-edit-fill" title="Edit Part" style="cursor:pointer;font-size:20px;color: #026680;" title="Edit NonPart"></i>
+    <i *ngIf="params.data.ArchStatus != '1'" class="ri-archive-fill" (click)="archive(params.data.vehicleDetailNonPartUID)" style="cursor:pointer; font-size: 20px; color: #026680;" title="Archive"></i>&nbsp;&nbsp;
+   <i *ngIf="params.data.ArchStatus == '1'" class='fa fa-window-restore' (click)="restore(params.data.vehicleDetailNonPartUID)" style="cursor:pointer; font-size: 20px; color: #026680;" title="Restore"></i>
+   </div>
+   <div class="slideContainer">
+       <label class="switch">
+           <input type="checkbox" id="{{'v_' + params.data.vehicleDetailNonPartUID}}" (click)="updateActive(params.data.vehicleDetailNonPartUID)" [checked]="params.data.isActive == '1'">
+           <div class="slider round"></div>
+       </label>
+   </div>

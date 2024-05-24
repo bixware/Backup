@@ -1,0 +1,172 @@
+<!-- Page Content -->
+<div id="page-content" style="min-height: 89vh !important;">
+    <!-- Navigation info -->
+    
+    <!-- Form Validation, Validation Initialization happens at the bottom of the page -->
+    <form id="form-validation" [formGroup]="form" class="form-horizontal form-box remove-margin">
+        <!-- Form Header -->
+    <div class="form">
+    <!--<div class="form-group form-actions">
+        <div class="col-md-10 col-md-offset-2">
+            <button type="button" (click)="confirm()" class="btn btn-success" style="margin-right: 15px;"> Confirm</button>
+        </div>
+    </div>  -->
+
+    <!-- Form Content -->
+    <div class="form-box-content">
+        <div class="row"> 
+            <div class="col-lg-4">
+                <div class="form-group" style="padding-left:37px">
+                    <label class="control-label col-md-2">Stylecode<span class="red">*</span>:&nbsp;</label>
+                    <div class="input-group" style="width: 155px">
+                    <input type="text" class="form-control" formControlName="StyleCode"  (blur)="onBlur()" style="width: 150px" [ngClass]="{ 'is-invalid': submitted && f.StyleCode.invalid }">
+                    <div *ngIf="submitted && f.StyleCode.invalid" class="invalid-feedback">
+                        <div *ngIf="f.StyleCode.errors.required">Stylecode is required</div>
+                    </div>
+                    <div *ngIf="errorFlag" class="red">
+                        StyleCode is Wrong
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4" style="padding-left:48px">   
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="val_date">Date<span class="red">*</span>:&nbsp;</label>
+                    <div class="input-group date input-datepicker" style="width: 145px">
+                    <!--<span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>-->
+                    <input type="date" formControlName="Date" class="form-control" style="height:30px;">
+                    </div>
+                    <div *ngIf="submitted && f.Date.invalid" class="invalid-feedback" >
+                        <div *ngIf="f.Date.errors.required">Select Date</div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="col-lg-4" style="padding-left:68px">
+                <div class="form-group">
+                    <label class="control-label col-md-2">Products:&nbsp;</label>
+                    <div class="input-group" style="width: 180px">
+                    <input type="text" style="width: 240px" formControlName="Product" class="form-control" style="width: 20px">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row"> 
+            <div class="col-lg-4" *ngIf="f2Flag == false;" style="padding-left:45px">
+                <div class="form-group">
+                    <label class="control-label col-md-2">Sleeve<span class="red" *ngIf="showRed">*</span>:&nbsp;</label>
+                    <div class="input-group" style="width:200px;padding-left:27px;">
+                    <select id="val_sleeve" formControlName="Sleeve" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.Sleeve.invalid }">
+                    <option value="">Sleeve</option>
+                    <option value="{{sleeve}}" *ngFor="let sleeve of sleeveList">{{sleeve}}</option>
+                    </select>
+                    <div *ngIf="submitted && f.Sleeve.invalid" class="invalid-feedback" >
+                        <br/><div *ngIf="f.Sleeve.errors.required">Select Sleeve</div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4" *ngIf="f2Flag == true;" style="padding-left:45px">
+                <div class="form-group">
+                    <label class="control-label col-md-2">Color<span class="red" *ngIf="f2RedFlag">*</span>:&nbsp;</label>
+                    <div class="input-group" style="width:200px;padding-left:27px;">
+                    <select id="val_color" formControlName="Color" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.Color.invalid }">
+                    <option value="">Color</option>
+                    <option value="{{color}}" *ngFor="let color of colorList">{{color}}</option>
+                    </select>
+                    <div *ngIf="submitted && f.Color.invalid" class="invalid-feedback" >
+                        <br/><div *ngIf="f.Color.errors.required">Select Color</div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="col-lg-4" style="padding-left:33px">
+                <div class="form-group">
+                    <label class="control-label col-md-2">Size<span class="red" *ngIf="showRed">*</span>:&nbsp;</label>
+                    <div class="input-group" style="width:145px;">
+                    <select id="val_size" formControlName="Size" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.Size.invalid }">
+                    <option value="">Size</option>
+                    <option value="{{size}}" *ngFor="let size of sizeList">{{size}}</option>
+                    </select>
+                    <div *ngIf="submitted && f.Size.invalid"  class="invalid-feedback">
+                        <div *ngIf="f.Size.errors.required">Select size</div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="col-lg-4">
+                <div class="form-group" style="padding-left:60px">
+                    <label class="control-label col-md-2">Quantity<span class="red">*</span>:&nbsp;</label>
+                    <div class="input-group"  style="width: 155px">
+                    <input type="number" style="width: 155px" formControlName="Quantity" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.Quantity.invalid }">
+                    <div *ngIf="submitted && f.Quantity.invalid"  class="invalid-feedback">
+                        <div *ngIf="f.Quantity.errors.required">Select quantity</div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row"> 
+            <div class="col-lg-4">
+                <div class="form-group"  style="padding-left:34px">
+                    <label class="control-label col-md-3">Garment MRP:&nbsp;</label>
+                    <div class="input-group" style="width: 162px">
+                    <input type="text" style="width: 160px" class="form-control" formControlName="GarmentMRP">
+                    </div>
+                </div>
+           </div>
+            <div class="col-lg-6" style="padding-left:14px">
+                <div class="form-group">
+                    <label class="control-label col-md-2">Reason<span class="red">*</span>:&nbsp;</label>
+                    <div class="input-group" style="width:320px;">
+                    <select id="val_reason" style="width: 320px" class="form-control" formControlName="Reason">
+                    <option value="">Reason</option>
+                    <option [value]="reason.ReasonCode" *ngFor="let reason of reasonDetails">{{reason.ReasonDesc}}</option>
+                   <!-- <option value="Tag torn during customer trail">Tag torn during customer trail</option>
+                    <option value="Tag misplaced while putting on mannequin">Tag misplaced while putting on mannequin</option>
+                    <option value="Tag misplaced during interstore stock transfer">Tag misplaced during interstore stock transfer</option>
+                    <option value="Tags not available when returns/exchanges">Tags not available when returns/exchanges</option> 
+                    <option value="General Mishandling">General Mishandling</option>
+                    <option value="Others">Others</option>-->
+                    </select>
+                    <div *ngIf="submitted && f.Reason.invalid" class="invalid-feedback">
+                        <div *ngIf="f.Reason.errors.required">Select Reason</div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group form-actions"style= "padding-bottom:5px; margin-top:10px;">
+        <div class="col-md-10 col-md-offset-2">
+            <button type="button" (click)="confirm()" class="btn btn-success" style="float:right; margin-bottom:15px;"> Confirm</button>
+        </div>
+        </div>
+        
+    </div>
+    </div>
+    
+    <!-- END Form Content -->
+    </form>
+    <!-- END Form Validation -->
+</div>
+
+<footer>
+    <div class="footer">
+        <p>Copyrights &copy;2022. ABFRL Customer Complaints</p>
+    </div>
+</footer>
+<!-- END Page Content -->
+
+
+    
+    
+
+
+
+    

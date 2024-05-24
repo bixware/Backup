@@ -1,0 +1,10 @@
+<div class="iconContainer">
+   <!--  <i (click)="openModal('focusFirst')" class="fa fa-trash icon_btn_danger handCursor" title="Delete Vehicle"></i> -->
+   <i (click)="remove()" class="ri-delete-bin-5-fill" title="Delete Vehicle" style="cursor:pointer;font-size:20px;color: #026680;"></i>&nbsp;&nbsp;
+</div>
+<div *ngIf="params.data.ArchStatus != '1'">
+    <i class="fa fa-archive icon_btn_success handCursor" (click)="archive()" style="padding-left:32px; font-size:20px;color: #026680;" title="Archive"></i>
+</div>
+<div *ngIf="params.data.ArchStatus == '1'">
+    <i class='fa fa-window-restore' style='font-size:20px;color: #026680;padding-left: 32px; cursor:pointer' (click)="restore()"  title="restore"></i>
+</div>

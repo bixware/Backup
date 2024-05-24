@@ -1,0 +1,408 @@
+<div *ngIf="apiFlag == true" id="overlay">
+    <div id="text">Processing...<br /><i class="fa fa-spinner fa-spin" style="font-size:24px;color:rgb(0,0,0);"></i></div>
+    <div id="info_alert" class="alert_info alert" style="display: none;">
+      <span class="closebtn" (click)="close1()">&times;</span>
+      <strong style="color:#ffffff">{{successMessage}}</strong>
+    </div>
+    <div id="info_success" class="success_info success" style="display: none;">
+      <span class="closebtn" (click)="close1()">&times;</span>
+      <strong style="color:#ffffff">{{successMessage}}</strong>
+      <ngcontainer *ngIf="errorMessage">
+        <div *ngFor=" let data of errorMessage">{{data}}</div>
+      </ngcontainer>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 col-sm-12 search_place">
+      <!--<div class="row align-items-center">
+        <div class="col-12 text-right">
+          <button type="button" (click)="back()" class="btn btn-sm btn-danger">Back</button>
+        </div>
+      </div>-->
+      <div class="form-group row">
+      <div class="col-lg-12 col-xl-12 col-xs-12 col-xl-12">
+      <h3 class="page-header" style="margin-left: -22px;">Vehicle Details</h3>
+      <div id="vech_title" class="title_top"></div>
+      </div>
+      </div>
+      <!-- <div> -->
+        <div class="form-group row">
+          <div class="col-lg-12 col-xl-12 col-xs-12 col-xl-12">
+            <div class="loaderContent" id="loader"><i class="fa fa-spinner fa-spin"
+                style="font-size:24px;color:rgb(105,105,105);"></i></div>
+            <div class="alert alert-info alert-dismissible" style="margin-left:30px;" *ngIf="info">
+              <button class="close" (click)="close()">&times;</button>
+              {{failureMessage}}
+            </div>
+            <div id="resultbtn" class="resultbtnlist" style="visibility: hidden;">
+              <button class="btn btn-secondary waves-effect" (click)="loadAllDetailsAgain()" style="margin-left: 5px;margin-right: 5px;">Show All</button>
+              <ng-container *ngFor="let data of AllSectionListDetailsArray">
+                <button class="btn btn-white waves-effect active btnall" [attr.id]="'btn' +data.searchSectionUID"
+                  (click)="filterSelection(data.searchSectionName,'btn'+data.searchSectionUID)">{{data.Name}}</button>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+     <!--  </div> -->
+      <!-- end row -->
+      <!--  <ng-template #itemTemplate let-item="item" let-index="index"><span>{{index}}: {{item.value.partDisplayHeader}}</span></ng-template> -->
+      <ng-template #itemTemplate let-item="item" let-index="index">
+        <div class="section_container">
+          <ng-container
+            *ngIf="(item.value.partDisplayHeader | lowercase) != 'warning' && (item.value.partDisplayHeader | lowercase) != 'banner img' && (item.value.partDisplayHeader | lowercase) != 'banner notes' && (item.value.partDisplayHeader | lowercase) != 'image' && (item.value.partDisplayHeader | lowercase) != 'notes' && (item.value.sourceName)!='tbl_xVehicleDetailsNonPart' && (item.value.sourceName)!='tbl_xVehicleGalleryDoc'">
+            <div class="c1" *ngIf="sectionEditArray[item.value.editIndex]">
+              <button type="button" class="btn btn-sm btn-primary Deletebtn"
+                (click)="sectionRowDelete(index, item.value,item.value.editIndex)" style="margin-top: -9px;"
+                title="Delete">x</button>
+            </div>
+            <div class="c5">
+              <span *ngIf="!sectionEditArray[item.value.editIndex]">{{item.value.partNumber}}</span>
+              <input type="text" name="partNumber{{index}}" [(ngModel)]="item.value.partNumber"
+                value="{{item.value.partNumber}}" class="form-control" *ngIf="sectionEditArray[item.value.editIndex]">
+            </div>
+            <div class="c6" *ngIf="item.value.partNumber1">
+              <span *ngIf="!sectionEditArray[item.value.editIndex]">{{item.value.partNumber1}}</span>
+              <input type="text" name="partNumber1{{index}}" [(ngModel)]="item.value.partNumber1"
+                value="{{item.value.partNumber1}}" class="form-control"  *ngIf="sectionEditArray[item.value.editIndex]">
+            </div>
+            <div class="c7" *ngIf="item.value.partNumber2">
+              <span *ngIf="!sectionEditArray[item.value.editIndex]">{{item.value.partNumber2}}</span>
+              <input type="text" name="partNumber2{{index}}" [(ngModel)]="item.value.partNumber2"
+                value="{{item.value.partNumber2}}" class="form-control" *ngIf="sectionEditArray[item.value.editIndex]">
+            </div>
+            <div class="c4">
+              <span>{{item.value.BrandName}}</span>
+            </div>
+            <div class="c12">
+              <span *ngIf="!sectionEditArray[item.value.editIndex]">{{item.value.MSRP}}</span>
+              <input type="text" name="MSRP{{index}}" [(ngModel)]="item.value.MSRP"
+                value="{{item.value.MSRP}}" class="form-control" 
+                *ngIf="sectionEditArray[item.value.editIndex]">
+            </div>
+            <div class="c13">
+              <span *ngIf="!sectionEditArray[item.value.editIndex]">{{item.value.LaborHours}}</span>
+              <input type="text" name="LaborHours{{index}}" [(ngModel)]="item.value.LaborHours"
+                value="{{item.value.LaborHours}}" class="form-control" 
+                *ngIf="sectionEditArray[item.value.editIndex]">
+            </div>
+            <div class="c3">
+              <span *ngIf="!sectionEditArray[item.value.editIndex]">{{item.value.partDisplayHeader}}</span>
+              <input type="text" name="partDisplayHeader{{index}}" [(ngModel)]="item.value.partDisplayHeader"
+                value="{{item.value.partDisplayHeader}}" class="form-control"
+                *ngIf="sectionEditArray[item.value.editIndex]">
+            </div>
+            <div class="c2">
+              <span *ngIf="!sectionEditArray[item.value.editIndex]">{{item.value.shortDescription}}</span>
+              <input type="text" name="shortDescription{{index}}" [(ngModel)]="item.value.shortDescription"
+                value="{{item.value.shortDescription}}" class="form-control"
+                *ngIf="sectionEditArray[item.value.editIndex]">
+            </div> 
+            <div class="c8">
+              <div class="dropdown" id="mobdescription" *ngIf="item.value.description">
+                Description
+                <div class="dropdown-content">
+                  {{item.value.description}}
+                </div>
+              </div>
+            </div>
+            <div class="c9">
+              <div class="dropdown" id="mobnotes" *ngIf="item.value.note">
+                Notes
+                <div class="dropdown-content">
+                  {{item.value.note}}
+                </div>
+              </div>
+            </div>
+            <div class="c2">
+              <span *ngIf="!sectionEditArray[item.value.editIndex]">{{item.value.flowLine}}</span>
+              <input type="text" name="flowLine{{index}}" [(ngModel)]="item.value.flowLine"
+                value="{{item.value.flowLine}}" class="form-control"
+                *ngIf="sectionEditArray[item.value.editIndex]">
+            </div>
+            <div class="c10">
+              <a href="{{item.value.web}}" id="moblink"   *ngIf="item.value.web" target="_blank">Link</a>
+            </div>
+            <div class="c11">
+              <div class="dropdown" id="mobimage" *ngIf="item.value.picture">
+                Image
+                <div class="dropdown-content">
+                  <img src="{{this.imgURL + item.value.picture}}" class="imgResponsiveMax" alt="" height="100px"
+                    width="125px" />
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+          <ng-container
+            *ngIf="(item.value.partDisplayHeader | lowercase) != 'warning' && (item.value.partDisplayHeader | lowercase) != 'banner img' && (item.value.partDisplayHeader | lowercase) != 'banner notes' && (item.value.partDisplayHeader | lowercase) != 'image' && (item.value.partDisplayHeader | lowercase) != 'notes' && (item.value.sourceName) =='tbl_xVehicleDetailsNonPart' && (item.value.sourceName)!='tbl_xVehicleGalleryDoc'">
+            <div class="c1" *ngIf="sectionEditArray[item.value.editIndex]">
+              <button type="button" class="btn btn-sm btn-primary Deletebtn"
+                (click)="sectionRowDelete(index, item.value,item.value.editIndex)" style="margin-top: -9px;"
+                title="Delete">x</button>
+            </div>
+            <div class="c5">
+              <span *ngIf="!sectionEditArray[item.value.editIndex]">{{item.value.partDisplayHeader}}</span>
+              <input type="text" name="partDisplayHeader{{index}}" [(ngModel)]="item.value.partDisplayHeader"
+                value="{{item.value.partDisplayHeader}}" class="form-control" *ngIf="sectionEditArray[item.value.editIndex]">
+            </div>
+            <div class="c5">
+              <span *ngIf="!sectionEditArray[item.value.editIndex]">{{item.value.partValue1}}</span>
+              <input type="text" name="partValue1{{index}}" [(ngModel)]="item.value.partValue1"
+                value="{{item.value.partValue1}}" class="form-control" *ngIf="sectionEditArray[item.value.editIndex]">
+            </div>
+            <div class="c5">
+              <span *ngIf="!sectionEditArray[item.value.editIndex]">{{item.value.partValue2}}</span>
+              <input type="text" name="partValue2{{index}}" [(ngModel)]="item.value.partValue2"
+                value="{{item.value.partValue2}}" class="form-control" *ngIf="sectionEditArray[item.value.editIndex]">
+            </div>
+            <div class="c5">
+              <span *ngIf="!sectionEditArray[item.value.editIndex]">{{item.value.partValue3}}</span>
+              <input type="text" name="partValue3{{index}}" [(ngModel)]="item.value.partValue3"
+                value="{{item.value.partValue3}}" class="form-control" *ngIf="sectionEditArray[item.value.editIndex]">
+            </div>
+            <div class="c5">
+              <span *ngIf="!sectionEditArray[item.value.editIndex]">{{item.value.partValue4}}</span>
+              <input type="text" name="partValue4{{index}}" [(ngModel)]="item.value.partValue4"
+                value="{{item.value.partValue4}}" class="form-control" *ngIf="sectionEditArray[item.value.editIndex]">
+            </div>
+            <div class="c5">
+              <span *ngIf="!sectionEditArray[item.value.editIndex]">{{item.value.partValue5}}</span>
+              <input type="text" name="partValue5{{index}}" [(ngModel)]="item.value.partValue5"
+                value="{{item.value.partValue5}}" class="form-control" *ngIf="sectionEditArray[item.value.editIndex]">
+            </div>
+            <div class="c5">
+              <span *ngIf="!sectionEditArray[item.value.editIndex]">{{item.value.partValue6}}</span>
+              <input type="text" name="partValue6{{index}}" [(ngModel)]="item.value.partValue6"
+                value="{{item.value.partValue6}}" class="form-control" *ngIf="sectionEditArray[item.value.editIndex]">
+            </div>           
+            <div class="c5">
+              <span *ngIf="!sectionEditArray[item.value.editIndex]">{{item.value.partValue7}}</span>
+              <input type="text" name="partValue7{{index}}" [(ngModel)]="item.value.partValue7"
+                value="{{item.value.partValue7}}" class="form-control" *ngIf="sectionEditArray[item.value.editIndex]">
+            </div>
+            <div class="c5">
+              <span *ngIf="!sectionEditArray[item.value.editIndex]">{{item.value.partValue8}}</span>
+              <input type="text" name="partValue8{{index}}" [(ngModel)]="item.value.partValue8"
+                value="{{item.value.partValue8}}" class="form-control" *ngIf="sectionEditArray[item.value.editIndex]">
+            </div>
+          </ng-container>
+
+          <!--<ng-container
+            *ngIf="(item.value.partDisplayHeader | lowercase) != 'warning' && (item.value.partDisplayHeader | lowercase) != 'banner img' && (item.value.partDisplayHeader | lowercase) != 'banner notes' && (item.value.partDisplayHeader | lowercase) != 'image' && (item.value.partDisplayHeader | lowercase) != 'notes' && (item.value.sourceName) =='tbl_xVehicleDetailsNonPart' && make != 'BMW'  && (item.value.sourceName)!='tbl_xVehicleGalleryDoc'">
+            <div class="c1" *ngIf="sectionEditArray[item.value.editIndex]">
+              <button type="button" class="btn btn-sm btn-primary Deletebtn"
+                (click)="sectionRowDelete(index, item.value,item.value.editIndex)" style="margin-top: -9px;"
+                title="Delete">x</button>
+            </div>
+            <div class="c3">
+              <span *ngIf="!sectionEditArray[item.value.editIndex]">{{item.value.partDisplayHeader}}</span>
+              <input type="text" name="partDisplayHeader{{index}}" [(ngModel)]="item.value.partDisplayHeader"
+                value="{{item.value.partDisplayHeader}}" class="form-control"
+                *ngIf="sectionEditArray[item.value.editIndex]">
+            </div>
+            <div class="c4">
+              <span>{{item.value.BrandName}}</span>
+            </div>
+            <div class="c5">
+              <span *ngIf="!sectionEditArray[item.value.editIndex]">{{item.value.partNumber}}</span>
+              <input type="text" name="partNumber{{index}}" [(ngModel)]="item.value.partNumber"
+                value="{{item.value.partNumber}}" class="form-control" *ngIf="sectionEditArray[item.value.editIndex]">
+            </div>
+            <div class="c6">
+              <span *ngIf="!sectionEditArray[item.value.editIndex]">{{item.value.partNumber1}}</span>
+              <input type="text" name="partNumber1{{index}}" [(ngModel)]="item.value.partNumber1"
+                value="{{item.value.partNumber1}}" class="form-control" *ngIf="sectionEditArray[item.value.editIndex]">
+            </div>
+            <div class="c7">
+              <span *ngIf="!sectionEditArray[item.value.editIndex]">{{item.value.partNumber2}}</span>
+              <input type="text" name="partNumber2{{index}}" [(ngModel)]="item.value.partNumber2"
+                value="{{item.value.partNumber2}}" class="form-control" *ngIf="sectionEditArray[item.value.editIndex]">
+            </div>
+            <div class="c12">
+              <span *ngIf="!sectionEditArray[item.value.editIndex]">{{item.value.MSRP}}</span>
+              <input type="text" name="MSRP{{index}}" [(ngModel)]="item.value.MSRP"
+                value="{{item.value.MSRP}}" class="form-control"
+                *ngIf="sectionEditArray[item.value.editIndex]">
+            </div>
+            <div class="c13">
+              <span *ngIf="!sectionEditArray[item.value.editIndex]">{{item.value.LaborHours}}</span>
+              <input type="text" name="LaborHours{{index}}" [(ngModel)]="item.value.LaborHours"
+                value="{{item.value.LaborHours}}" class="form-control"
+                *ngIf="sectionEditArray[item.value.editIndex]">
+            </div>
+            <div class="c8">
+              <div class="dropdown" *ngIf="item.value.description">
+                Description
+                <div class="dropdown-content">
+                  {{item.value.description}}
+                </div>
+              </div>
+            </div>
+            <div class="c9">
+              <div class="dropdown" *ngIf="item.value.note">
+                Notes
+                <div class="dropdown-content">
+                  {{item.value.note}}
+                </div>
+              </div>
+            </div>
+            <div class="c10">
+              <a href="{{item.value.web}}" *ngIf="item.value.web" target="_blank">Link</a>
+            </div>
+            <div class="c11">
+              <div class="dropdown" *ngIf="item.value.picture">
+                Image
+                <div class="dropdown-content">
+                  <img src="{{this.imgURL + item.value.picture}}" class="imgResponsiveMax" alt="" height="100px"
+                    width="125px" />
+                </div>
+              </div>
+            </div>
+          </ng-container>-->
+  
+          <ng-container
+            *ngIf="(item.value.partDisplayHeader | lowercase) != 'warning' && (item.value.partDisplayHeader | lowercase) != 'banner img' && (item.value.partDisplayHeader | lowercase) != 'banner notes' && (item.value.partDisplayHeader | lowercase) != 'image' && (item.value.partDisplayHeader | lowercase) != 'notes' && (item.value.sourceName)=='tbl_xVehicleGalleryDoc'">
+            <div class="c1" *ngIf="sectionEditArray[item.value.editIndex]">
+              <button type="button" class="btn btn-sm btn-primary Deletebtn"
+                (click)="sectionRowDelete(index, item.value,item.value.editIndex)" style="margin-top: -9px;"
+                title="Delete">x</button>
+            </div>
+            <div class="doc3">
+              <span>{{item.value.partNumber}}</span>
+            </div>
+            <div class="doc4">
+              <a href="{{this.imgURL +'/' + item.value.vehicleImage}}" target="_blank" download>
+  
+                <button class="btn btn-sm btn-primary">Download</button>
+              </a>
+            </div>
+          </ng-container>
+  
+          <ng-container *ngIf="(item.value.partDisplayHeader | lowercase) == 'warning'">
+              <div style="width:100%" *ngIf="!sectionEditArray[item.value.editIndex]" [innerHTML]="item.value.partNumber"></div>
+              <div style="width:4%" *ngIf="sectionEditArray[item.value.editIndex]">
+                <button type="button" class="btn btn-sm btn-primary Deletebtn"
+                  (click)="sectionRowDelete(index, item.value,item.value.editIndex)" style="margin-top: -60px;"
+                  title="Delete">x</button>
+              </div>
+              <div style="width:95%" *ngIf="sectionEditArray[item.value.editIndex]">
+                <textarea name="partNumber{{index}}" class="form-control" style="width:100%" [(ngModel)]="item.value.partNumber" value="{{item.value.partNumber}}"></textarea>
+              </div>
+          </ng-container>
+          <ng-container *ngIf="(item.value.partDisplayHeader | lowercase) == 'banner img'">
+            <div>
+              <img *ngIf="item.value.partNumber" src="{{this.imgURL +'storage/' + item.value.partNumber}}"
+                class="imgResponsiveMax" alt="" />
+            </div>
+          </ng-container>
+        </div>
+      </ng-template>
+      <div id="search_results"  class="collapse show" style="margin-top: 10px;margin-bottom: 5rem;">
+        <ng-container *ngFor="let data of AllSectionListDetailsArray; index as i">
+          <div class="filterDiv {{data.searchSectionName}}" [attr.id]="'print' +data.searchSectionUID"
+            style="display: block;color: black !important;">
+            <!-- Start filterDiv-body -->
+            <div class="panel panel-inverse">
+              <!-- begin panel-heading -->
+              <div class="card-header bg-primary text-white">
+                <h4 class="card-title mb-0">{{data.Name}}</h4>
+                <!-- <div class="card-widgets"  style="margin-top: -20px;">
+                  <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success"
+                    (click)="forPrint('print' +data.searchSectionUID)" style="cursor: pointer;"><i
+                      class="fa fa-print"></i></a>
+                  <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i
+                      class="fa fa-minus"></i></a>
+                </div> -->
+                <div class="card-widgets" style="margin-top: -20px;">
+                  <a href="javascript:;" (click)="forPrint('print' +data.searchSectionUID)"
+                    style="cursor: pointer;"><i class="mdi mdi-printer"></i></a>
+                  <a data-bs-toggle="collapse" style="cursor: pointer;" style="display: block; margin-left: 25px; margin-top: -20px;" [attr.href]="'#sec_'+i" [attr.id]="'sec_'+i" ><i
+                      class="mdi mdi-minus"></i></a>
+                </div>
+              </div>
+              <!-- end panel-heading -->
+              <!-- begin panel-body -->
+              <div class="panel-body" class="collapse show" [attr.id]="'sec_'+i">
+                <div class="col-lg-12 col-xs-12 col-sm-12">
+                  <div class="table-responsive view_vehicle">
+                  <div>
+                    <bs-sortable [(ngModel)]="sortableSectionPartArray[i]"
+                     [itemTemplate]="itemTemplate"
+                     itemClass="sortable-item"
+                     itemActiveClass="sortable-item-active"
+                     placeholderItem="Drag here"
+                     placeholderClass="placeholderStyle"
+                     wrapperClass="sortable-wrapper"
+                     >
+                    </bs-sortable>
+                  </div>
+                  <!--  <pre class="code-preview">model: {{ sortableSectionPartArray[i] | json }}</pre> -->
+  
+                    <div *ngFor="let notes of data.searchSectionNotes; let noteindex = index">
+                      <div class="section_container1">
+                    <div  class="cNotes1" *ngIf="sectionEditArray[data.sectionIndex]">
+                      <button type="button" class="btn btn-sm btn-primary Deletebtn"
+                        (click)="sectionGalleryRowDelete(noteindex, data.searchSectionNotes[noteindex],data.sectionIndex,'notes')" style="margin-top: -50px;"
+                        title="Delete">x</button>
+                    </div>
+                    <div class="cNotes2">
+                      <span  *ngIf="!sectionEditArray[data.sectionIndex]" [innerHTML]="notes.notes"></span>
+                      <textarea name="galleryNote{{data.sectionIndex}}" [(ngModel)]="notes.notes"
+                      value="{{notes.notes}}" class="form-control" *ngIf="sectionEditArray[data.sectionIndex]"></textarea>
+                    </div>
+                  </div>
+                  </div>
+                  <div *ngFor="let gallery of data.searchSectionGallery; let galleyindex = index">
+                    <div class="section_container2">
+                      <div class="cgallery1" *ngIf="sectionEditArray[data.sectionIndex]">
+                        <button type="button" class="btn btn-sm btn-primary Deletebtn"
+                          (click)="sectionGalleryRowDelete(galleyindex, data.searchSectionGallery[galleyindex],data.sectionIndex,'images')" style="margin-top: -9px;"
+                          title="Delete">x</button>
+                      </div>
+                      <div class="cgallery2">
+                        <img src="{{gallery.galleryImage}}" class="gallery" />
+  
+                      </div>
+                      <div class="cgallery3">
+                        <input type="file" name="galleryImage{{data.sectionIndex}}" style="margin-left: -85px;"
+                        value="" *ngIf="sectionEditArray[data.sectionIndex]"  (change)="searchGalleyEvent($event,galleyindex,data.sectionIndex)">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="btnmariginright">
+                    <button type="button" *ngIf="sectionEditArray[data.sectionIndex] && data.sourceName=='nonpart' && data.searchSectionName=='SpeakerFitGuideNonPart'"
+                      (click)="addNonPart(i)"
+                      class="btn btn-sm btn-primary">New</button>
+                  </div>
+                  <div class="btnmariginleft">
+                    <button type="button" *ngIf="!sectionEditArray[data.sectionIndex]"
+                      (click)="sectionEditFunction(data.sectionIndex)" class="btn btn-sm btn-primary" style=" background-color: #00c9fd;">Edit</button>
+                    <button type="button" *ngIf="sectionEditArray[data.sectionIndex]"
+                      (click)="sectionEditCancelFunction(data.sectionIndex)"
+                      class="btn btn-sm btn-primary" style=" background-color: #00c9fd;">Cancel</button>
+                    <button *ngIf="data.sourceName=='nonpart'"  type="button"
+                      (click)="sectionNonPartDetailsSave($event,data.sectionIndex)"
+                      class="btn btn-sm btn-primary" style=" background-color: #00c9fd;">Save</button>
+                      <button *ngIf="data.sourceName!='nonpart'"  type="button"
+                      (click)="sectionDetailsSave($event,data.sectionIndex,data.searchSectionUID,data.searchSectionName)"
+                      class="btn btn-sm btn-primary" style=" background-color: #00c9fd;">Save</button>
+                  </div>
+                  </div>
+                </div>
+              </div>
+              <!-- end panel-body -->
+            </div>
+            <!-- end filterDiv-body -->
+            <!-- Start filterDiv-body -->
+          </div>
+        </ng-container>
+      </div>
+      <!--<div class="row align-items-center">
+        <div class="col-12 text-right">
+          <button type="button" style="margin-right: 15px;" (click)="back()" class="btn btn-sm btn-danger">Back</button>
+        </div>
+      </div>-->
+    </div>
+  </div>
+  
+

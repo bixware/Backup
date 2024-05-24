@@ -1,0 +1,234 @@
+<!-- begin breadcrumb -->
+<!-- <ol class="breadcrumb float-xl-right">
+    <li class="breadcrumb-item"><a routerLink="/home/dashboard">Home</a></li>
+    <li class="breadcrumb-item active">View Profile</li>
+</ol> -->
+<!-- end breadcrumb -->
+<!-- begin page-header -->
+<!-- <h1 class="page-header">View Profile<small></small></h1> -->
+<!-- end page-header -->
+
+<!-- begin row -->
+<!-- begin breadcrumb -->
+<!-- <ol class="breadcrumb float-xl-right">
+  <li class="breadcrumb-item"><a routerLink="/home/dashboard">Home</a></li>
+  <li class="breadcrumb-item active">View Profile</li>
+</ol> -->
+<!-- end breadcrumb -->
+<!-- begin page-header -->
+
+<!-- end page-header -->
+
+<!-- begin row -->
+<div class="row">
+  <div class="col-xl-12 order-xl-1">
+    <div class="card bg-secondary shadow">
+      <!--<div class="card-header bg-white border-0">
+       <div class="row align-items-center">
+           <div class="col-8">
+            <h5 class="mb-0">View User Details Here...</h5>
+          </div> 
+          <div class="col-12 text-right">
+              
+               <button  type="submit" name="submit" class="btn btn-sm btn-primary">Update</button>
+          </div>
+        </div>
+      </div>-->
+      <div class="card-body">
+        <form>
+          <h6 class="heading-small text-muted mb-4">User information</h6>
+          <div class="row">
+          <div class="col-12 text-right"><a routerLink="/home/editprofile" class="btn btn-sm btn-success" style="margin-right: 10px;">Edit</a></div>
+          </div>
+          <div class="pl-lg-4">
+      <!-- table -->
+           <div class="row no-margin">
+             <div class="col-lg-6 no-padding">
+
+                <table class="addrss-list">
+                    <tbody>
+                    <tr>
+                        <th>Username</th>
+                        <td>{{user.userName}}</td>
+                    </tr>
+                    <tr>
+                        <th>First Name</th>
+                        <td>{{user.firstName}}</td>
+                    </tr>
+                    
+                    <tr>
+                            <th>Email</th>
+                            <td>{{user.email}}</td>
+                        </tr>
+
+                </tbody></table>
+
+            </div>
+            <div class="col-lg-6 no-padding">
+                 <table class="addrss-list">
+                        <tbody>
+
+                            <tr>
+                        <th>Password</th>
+                        <td>*******</td>
+                    </tr>
+
+                        <tr>
+                            <th>Last Name</th>
+                            <td>{{user.lastName}}</td>
+                        </tr>
+                        
+                        <tr>
+                            <th>Phone</th>
+                            <td>{{user.phone}}</td>
+                        </tr>
+                        
+                    </tbody></table>
+            </div>
+            </div>
+      <!-- table -->
+
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- end row -->
+
+
+<!-- end row -->
+
+<!-- <div class="calloutmodal" id="modalEditUserprofile">
+    <div class="modals-content">
+       
+            <a style="cursor: pointer;" (click)="close1()" title="Close" class="close">X</a>
+            
+                <button type="button" (click)=" close1()"
+                    style="background-color: #c0c3d1; min-height: 36px; border: #c0c3d1; border-radius: 5px; color: #343643; font-family: Roboto; font-size: 14px; line-height: 20px;float:right"
+                    class="btn btn-sm btn-danger">Back</button>&nbsp;&nbsp;
+                <button type="button"
+                    style="background-color: #1c3fff; min-height: 36px; border: #1c3fff; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;float:right;margin-right: 5px;"
+                    class="btn btn-sm btn-primary" (click)="validatePassword(f)">Save</button>
+          
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-title">Edit User Details Here...</h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-xl-12 order-xl-1">
+                    <div class="card-body" style="height: 100vh; max-height: 50%; width: auto; margin-left: -50px;
+                    margin-right: -40px;">
+                        <div class="card-header bg-white border-0" style= "background-color:#fff !important; ">
+                            <form name="form" (ngSubmit)="f.form.valid && validatePassword(f)" #f="ngForm" novalidate>
+
+                               
+                                <div class="card-body" style="margin-top:-25px;">
+                                    <h6 class="heading-small text-muted mb-4">User information</h6>
+                                    <div class="pl-lg-4">
+                                    
+                                     <div class="row no-margin">
+                                       <div class="col-lg-6 no-padding">
+                        
+                                          <table class="addrss-list">
+                                              <tbody>
+                                              <tr>
+                                                  <th>Username</th>
+                                                  <td>
+                                                    <input type="text" [(ngModel)]="Edituser.userName" class="form-control readonly form-control-lg" readonly id="userName" name="userName" />
+                                                    
+                                                </td>
+                                              </tr>
+                                              <tr>
+                                                  <th>First Name <span class="text-danger">*</span></th>
+                                                  <td>
+                                                    <input type="text" pattern="[a-zA-Z][a-zA-Z ]+" [(ngModel)]="Edituser.firstName" required class="form-control" id="firstName" name="firstName" #firstName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && firstName.invalid }"/> 
+                                                    <div *ngIf="f.submitted && firstName.invalid" class="invalid-feedback">
+                                                      <div *ngIf="firstName.errors.required">First Name is required</div>
+                                                      <div *ngIf="firstName.errors.pattern">Only Alphabets Allowed</div>
+                                                  </div>         
+                                                  </td>
+                                              </tr>
+                                              
+                                              <tr>
+                                                      <th>Email <span class="text-danger">*</span></th>
+                                                      <td>
+                                                        <input type="text" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.com)+$" 
+                                                        [(ngModel)]="Edituser.email" required class="form-control" id="email" name="email" #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" email/>
+                                                        <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+                                                          <div *ngIf="email.errors.required">Email is required</div>
+                                                          <div *ngIf="email.errors.email">Email format should be required</div>
+                                                          
+                                                          <div *ngIf="email.errors.pattern">valid Email id should be required</div>
+                                                      </div>
+                                                      </td>
+                                                  </tr>
+                        
+                                          </tbody></table>
+                        
+                                      </div>
+                                      <div class="col-lg-6 no-padding">
+                                           <table class="addrss-list">
+                                                  <tbody>
+                        
+                                                      <tr>
+                                                  <th>Password <span class="text-danger">*</span></th>
+                                                  <td>
+                                                    <input type="text" required class="form-control" id="password" name="password" [(ngModel)]="Edituser.password" #password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.invalid }" readonly/>  
+                                                    <div *ngIf="f.submitted && password.invalid" class="invalid-feedback">
+                                                      <div *ngIf="password.errors.required">Password is required</div>
+                                                  </div>              
+                                                  </td>
+                                              </tr>
+                        
+                                                  <tr>
+                                                      <th>Last Name <span class="text-danger">*</span></th>
+                                                      <td>
+                                                        <input type="text" pattern="[a-zA-Z]+" [(ngModel)]="Edituser.lastName" required class="form-control" id="lastName" name="lastName"  #lastName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && lastName.invalid }"/>
+                                                        <div *ngIf="f.submitted && lastName.invalid" class="invalid-feedback">
+                                                          <div *ngIf="lastName.errors.required">Last Name is required</div>
+                                                          <div *ngIf="lastName.errors.pattern">Only Alphabets Allowed</div>
+                                                      </div>
+                                                      </td>
+                                                  </tr>
+                                                  
+                                                  <tr>
+                                                      <th>Phone <span class="text-danger">*</span></th>
+                                                      <td>
+                                                        <input type="tel" [(ngModel)]="Edituser.phone" inputmode="numeric" pattern="[0-9]*" (change)="phoneValidator($event)" class="form-control" id="phone" name="phone"  #phone="ngModel" [ngClass]="{ 'is-invalid': f.submitted && phone.invalid }" minlength="10" maxlength="10" required /> 
+                                                        <div *ngIf="f.submitted && phone.invalid" class="invalid-feedback">
+                                                          <div *ngIf="phone.errors.required">Mobile Number is required</div>
+                                                          <div *ngIf="phone.errors.pattern">Mobile Number should be only number Allowed</div>
+                                                          <div *ngIf="phone.errors.minlength">Mobile Number should be 10digit</div>
+                                                      </div>             
+                                                      </td>
+                                                  </tr>
+                                                  
+                                              </tbody></table>
+                                      </div>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div class="card-header bg-white border-0">
+                                  <div class="row align-items-center">
+                                    <div class="col-12 text-right">
+                                    
+                                    </div>
+                                 </div>
+                              </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+           
+        </div>
+        
+        </div>
+</div>
+ -->
+
+
+

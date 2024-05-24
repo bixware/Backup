@@ -1,0 +1,29 @@
+a:hover {border-bottom: 0px solid blue !important;}
+
+.table td:nth-child(1){
+    padding: 17px;
+    width:40%;
+    border: 1px solid #000000;
+}
+.table td:nth-child(2){
+    padding: 17px;
+    text-align: center;
+    width:60%;
+    border: 1px solid #000000;
+}
+.table th{
+    text-align: center;
+    border: 1px solid #000000;
+}
+ .table {
+    margin-left: auto;
+    margin-right: auto;
+    width:90%;
+  }
+ /* #page-content{
+    overflow: hidden !important;
+  }
+  .row{
+      width:100% !important
+  }
+  */

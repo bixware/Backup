@@ -1,0 +1,241 @@
+<div *ngIf="apiFlag == true" id="overlay">
+  <div id="text">Processing...<br /><i class="fa fa-spinner fa-spin" style="font-size:24px;color:rgb(0,0,0);"></i></div>
+  <div id="info_alert" class="alert_info alert" style="display: none;">
+    <span class="closebtn" (click)="close1()">&times;</span>
+    <strong>{{successMessage}}</strong>
+  </div>
+  <div id="info_success" class="success_info success" style="display: none;">
+    <span class="closebtn" (click)="close1()">&times;</span>
+    <strong>{{successMessage}}</strong>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12 col-sm-12 col-xs-12 search_place">
+    <div class="panel panel-inverse">
+
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-lg-10 col-sm-10 col-md-12 col-xs-12">
+            <div class="row">
+              <div class="col-lg-3 col-xl-2"></div>
+              <div class="col-lg-9 col-xl-10 col-sm-10 col-xs-10">
+                <h4>Select Part / Bundle</h4>
+                <input type="radio" id="part-detail" (click)="getpartform()" name="form" value="partform" checked />
+                <label for="input-partform">Individual
+                  Part&nbsp;&nbsp;</label>
+                <input type="radio" id="bundle-detail" (click)="getbundleform()" name="form" value="bundleform">
+                <label for="input-bundleform">Bundle
+                  Part&nbsp;&nbsp;</label>
+              </div>
+            </div>
+            <div class="row" *ngIf="partFlag">
+              <div class="col-lg-3 col-xl-2"></div>
+              <div class="col-lg-2 col-md-3 col-sm-3 col-xs-2 m-t-10 mt-2" id="section_list_hide">
+                <div class="style-module-wrap-NENV" data-e2e="wrapElement">
+                  <select class="form-select" name="sectionList" (change)="getOptionSection($event)" id="sectionList"
+                    >
+                    <option value="">Select Section</option>
+                    <option [value]="section.searchSectionUID" *ngFor="let section of sections">
+                      {{section.searchSectionName}}</option>
+                  </select>
+                </div>
+                <span id="s_text" style="visibility: hidden; display: none;" class="m-l-10 text-warning"><small>Select
+                    Section</small></span>
+              </div>
+
+              <div class="col-lg-2 col-md-3 col-sm-3 col-xs-2 m-t-10 mt-2" id="brand_list_hide" >
+                <select class="form-select" name="brandList" (change)="getOptionBrand($event)" id="brandList"
+                  >
+                  <option value="">Select Brand</option>
+                  <option [value]="brand.brandUID" *ngFor="let brand of brands">{{brand.brandName}}</option>
+                </select>
+                <span id="b_text" style="visibility: hidden;display: none;" class="m-l-10 text-warning"><small>Select
+                    Brand</small></span>
+              </div>
+
+              <div class="col-lg-2 col-md-3 col-sm-3 col-xs-2 m-t-10 mt-2" id="part_list_hide" >
+                <select class="form-select" name="partList" (change)="getOptionPart($event)" id="partList"
+                  >
+                  <option value="">Select Part</option>
+                  <option [value]="part.partUID" *ngFor="let part of parts">{{part.partNumber}}</option>
+                </select>
+                <span id="p_text" style="visibility: hidden;display: none;" class="m-l-10 text-warning"><small>Select
+                    Part</small></span>
+              </div>
+
+              <div class="col-lg-2 col-md-2 col-sm-3 col-xs-2 mt-2">
+                <button *ngIf="vehicleDetailsFlag == false" disabled (click)="getPartDetails()"
+                  class="btn btn-primary btn-sm"
+                  style="background-color: #00c9fd;border:#00c9fd" type="button">Get
+                  Part</button>
+                <button *ngIf="vehicleDetailsFlag == true" (click)="getPartDetails()" class="btn btn-primary btn-sm"
+                  style="background-color: #00c9fd;border:#00c9fd" type="button">Get
+                  Part</button>
+              </div>
+              <!-- Get Part Details AG Grid  -->
+            </div>
+            <div class="row" *ngIf="bundleFlag">
+              <div class="col-lg-3 col-xl-2"></div>
+              <!-- <div class="col-2 m-t-10"></div> -->
+              <div class="col-md-3 col-sm-3 col-xs-2 mt-2">
+                
+                <select class="form-select bundleinput" id="bundleNamedropdown" placeholder="Select Bundle"
+                  
+                  (change)="getBundleUID($event)">
+                  <option value=''>Select Bundle</option>
+                  <option [value]="bundle.bundleUID" *ngFor="let bundle of bundleparts">
+                    {{bundle.bundleName}}</option>
+                </select>
+                <span id="bundle_text" style="visibility: hidden; display: none;"
+                  class="m-l-10 text-warning"><small>Select
+                    Bundle</small></span>
+              </div>
+              <div class="col-md-3 col-xs-2 mt-2">
+                <button *ngIf="vehicleDetailsFlag == false" disabled (click)="getPartBundleDetails()"
+                  class="btn btn-primary btn-sm"
+                  style="background-color: #00c9fd;border:#00c9fd" type="button">Get
+                  Part</button>
+                <button *ngIf="vehicleDetailsFlag == true" (click)="getPartBundleDetails()"
+                  class="btn btn-primary btn-sm"
+                  style="background-color: #00c9fd;border:#00c9fd" type="button">Get
+                  Part</button>
+              </div>
+            </div>
+            
+          </div>
+        
+        <br/>
+        <div class="form-group row">
+          <div class="col-lg-2 col-sm-6">
+            <h4 class="page-header" style="padding: 0px;">Select Vehicle</h4>
+            <br/>
+            <div class="row row-space-6">
+              <div class="col-12">
+                <!-- <label>Make</label> -->
+                <select class="form-select" name="make_list" (change)="getModel($event)" id="make_list"
+                  >
+                  <option value=null>Select Make</option>
+                  <option [value]="make.vehicleUID" *ngFor="let make of makes">{{make.Make}}</option>
+                </select>
+              </div>
+
+              <div class="col-12" id="model_list_hide" style="visibility: hidden; margin-top: 10px;display:none;">
+
+                <!-- <label>Model</label> -->
+                <select class="form-select" name="model_list" id="model_list" (change)="getYear($event)"
+                  >
+                  <option value=null>Select Model</option>
+                  <option [value]="model.Model" *ngFor="let model of models">{{model.Model}}</option>
+                </select>
+              </div>
+              <div class="col-12" id="year_list_hide" style="visibility: hidden; margin-top: 10px; display: none;">
+                <!-- <label>Year</label> -->
+                <select multiple class="form-select" name="year_list" id="year_list" (change)="getOptionOne($event)"
+                  >
+                  <option value=null>Select Year </option>
+                  <option [value]="year.Year" *ngFor="let year of years">{{year.Year}}</option>
+                </select>
+              </div>
+
+              <div class="col-12" id="options_1_hide" style="visibility: hidden;margin-top: 10px;display:none;">
+                <!-- <label>Key type</label> -->
+                <select multiple class="form-select" name="options_1" id="options_1" (change)="getOptionTwo($event)"
+                  >
+                  <option value=null>Select Keys</option>
+                  <option [value]="one.option1" *ngFor="let one of ones">{{one.option1}}</option>
+                </select>
+              </div>
+              <div class="col-12" id="options_2_hide" style="visibility: hidden;margin-top: 10px;display:none;">
+                <!-- <label>Options 1</label> -->
+                <select multiple class="form-select" (change)="getOptionThree($event)" name="options_2" id="options_2"
+                  >
+                  <option value=null>Select Option </option>
+                  <option [value]="two.option2" *ngFor="let two of twos">{{two.option2}}</option>
+                </select>
+              </div>
+              <div class="col-12" id="options_3_hide" style="visibility: hidden;margin-top: 10px;display:none;">
+                <!-- <label>Options 2</label> -->
+                <select multiple class="form-select" name="options_3" (change)="getOptionFour($event)" id="options_3"
+                  >
+                  <option value=null>Select Option </option>
+                  <option [value]="three.option3" *ngFor="let three of threes">{{three.option3}}</option>
+                </select>
+              </div>
+              <div class="col-12" id="options_4_hide" style="visibility: hidden;margin-top: 10px;display:none;">
+                <!-- <label>Options 3</label> -->
+                <select multiple class="form-select" *ngIf="fours" name="options_4" (change)="getOptionFive($event)"
+                  id="options_4">
+                  <option value=null>Select Option </option>
+                  <option [value]="four.option4" *ngFor="let four of fours">{{four.option4}}</option>
+                </select>
+              </div>
+              <div class="col-12" id="options_5_hide" style="visibility: hidden;margin-top: 10px;display:none;">
+                <!-- <label>Options 4</label> -->
+                <select multiple class="form-select" class="options_5" name="options_5" (change)="getOptionSix($event)"
+                  id="options_5">
+                  <option value=null>Select Option </option>
+                  <option [value]="five.option5" *ngFor="let five of fives">{{five.option5}}</option>
+                </select>
+              </div>
+
+              <div class="col-12" id="options_6_hide" style="visibility: hidden;margin-top: 10px;display:none;">
+                <!-- <label>Options 5</label> -->
+                <select multiple class="form-select" name="options_6" (change)="getOptionSeven($event)" id="options_6"
+                 >
+                  <option value=null>Select Option </option>
+                  <option [value]="six.option6" *ngFor="let six of sixes">{{six.option6}}</option>
+                </select>
+              </div>
+
+            </div>
+            <div class="m-t-20 mt-2">
+              <button (click)="getVehicleDetails()" id="getvehicle" class="btn btn-primary btn-sm" type="button" id="buttonvehicle" style="background-color: #00c9fd;border:#00c9fd">Get
+                Vehicle</button>
+            </div>
+          </div>
+          
+            <div class="col-lg-10 col-sm-10 col-xs-10">
+            
+            <h3 *ngIf="partDetailsFlag"  style="margin-top: 10px">Part Details</h3>
+          <div *ngIf="partDetailsFlag">
+            <ag-grid-angular style="width: 100%; height: 25vh; margin-top: 10px;" class="ag-theme-alpine"
+              [rowData]="rowData" [columnDefs]="columnDefs" [modules]="modules" [rowSelection]="rowSelection"
+              (selectionChanged)="onSelectionChanged()" (cellValueChanged)="onCellValueChanged($event)"
+              [animateRows]="true" [frameworkComponents]="frameworkComponents" (gridReady)="onGridReady($event)"
+              [pagination]="true">
+            </ag-grid-angular>
+          </div>
+          <h3 *ngIf="partBundleDetailsFlag"  style="margin-top: 10px">Part Details</h3>
+          <div *ngIf="partBundleDetailsFlag">
+            <ag-grid-angular style="width: 100%; height: 35vh; margin-top: 10px;" class="ag-theme-alpine"
+              [rowData]="rowData2" [columnDefs]="columnDefs2" [modules]="modules" [animateRows]="true"
+              (gridReady)="onGridReady2($event)" [pagination]="true">
+            </ag-grid-angular>
+          </div>
+          <h3 *ngIf="vehicleDetailsFlag"  style="margin-top: 10px">Vehicle Details</h3>
+          <br/>
+          <div *ngIf="vehicleDetailsFlag">
+            <ag-grid-angular style="width: 100%; height: 40vh; " class="ag-theme-alpine"
+              [rowData]="rowData1" [columnDefs]="columnDefs1" [modules]="modules" [rowSelection]="rowSelection1"
+              (selectionChanged)="onSelectionChanged1()" [animateRows]="true"
+              [frameworkComponents]="frameworkComponents1" (gridReady)="onGridReady1($event)" [pagination]="true">
+            </ag-grid-angular>
+          </div>
+          <br />
+          <div class="updatebtnenable" *ngIf="updateBtnFlag">
+            <p>Please select the Part and Vehicle to update against it.</p>
+            <button id="uVehicle" (click)="updateVehicleDetails()" class="btn btn-primary btn-sm" type="button" style="background-color: #00c9fd;border:#00c9fd">Update
+              Vehicle</button>
+          </div>
+          </div>
+          
+          <!--Grid-->
+          <!-- <div class="col-lg-10 col-xl-10 col-md-10 col-sm-10 col-xs-10">
+            
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

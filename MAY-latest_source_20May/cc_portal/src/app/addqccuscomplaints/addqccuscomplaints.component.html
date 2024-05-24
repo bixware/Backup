@@ -1,0 +1,414 @@
+<div id="confirmpopup" class="modal">
+    <div class="modal-content">
+      <div class="modal-body" style="margin-top: 10px;margin-bottom: 10px;">
+       <div class="form-box-content">
+          <div class="row">
+              <div class="col-lg-12">
+                  <h4>Are you Sure, Do you want to continue?</h4>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-lg-12">
+                  <button type="button" (click)="ok()" class="close" class="btn btn-success" style="float:right;margin-bottom: 10px;">OK</button>
+                  <button type="button" (click)="closeModals()" class="close" class="btn btn-success" style="float:right;margin-bottom: 10px;">CANCEL</button>
+              </div>
+          </div>
+       </div>
+      </div>
+    </div>
+  </div>
+  <div id="myModal" class="modal">
+      <!-- Modal content -->
+    <div class="modal-content">
+      <div class="modal-header">
+         <span (click)="closeModal()" class="close">&times;</span>
+         <h3>Customer Complaints Details</h3>
+      </div>
+      <div class="modal-body" style="margin-top: 10px;margin-bottom: 10px;">
+          <form>
+          <div class="form-box-content">
+          <div class="row">
+              <div class="col-lg-12">
+                  <h4>Customer Complaint No : <span>{{serialNo}}</span></h4>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-lg-12">
+                  <button type="button"  (click)="closeModal()"  class="close" class="btn btn-success" style="float:right;margin-bottom: 10px;">Close</button>
+              </div>
+          </div>
+       </div>
+      </form>
+       </div>
+      </div>
+  </div>
+  <div id="page-content">
+      <!-- Navigation info -->
+     
+      <form id="form-validation" [formGroup]="form" class="form-horizontal form-box remove-margin">
+          <!-- Form Header -->
+          <div class="form"> 
+          <!-- Form Content -->
+          <div class="form-box-content">
+              <div class="row">
+                  <div class="col-lg-3"> 
+                      <div class="form-group">
+                      <label class="control-label  col-md-6">Style code<span class="red">* </span> : &nbsp;</label>
+                      <div class="input-group" style="width:180px;">
+                          <input type="text" class="form-control" style= "width:180px;" formControlName="StyleCode" (blur)="onBlur()" [ngClass]="{ 'is-invalid': submitted && f.StyleCode.invalid }" required>
+                              <div *ngIf="errorFlag" class="red">
+                                  StyleCode is Wrong
+                              </div>
+                              <div *ngIf="submitted && f.StyleCode.invalid" class="red">
+                                  <div *ngIf="f.StyleCode.errors.required">StyleCode is required</div>
+                              </div>
+                      </div>
+                      </div>
+                  </div>
+                  <div class="col-lg-3">
+                      <div class="form-group">
+                      <label class="control-label col-md-6" for="val_date">Receipt Date : &nbsp;</label>
+                      <div class="input-group">
+                          <!--<span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>-->
+                          <input type="date" formControlName="ReceiptDate" id="ReceiptDate" name="ReceiptDate" class="form-control" style="width: 120px;height:30px;">
+                      </div>
+                      </div> 
+                  </div>
+                  <div class="col-lg-4"> 
+                      <div class="form-group" style="margin-left: 10px;">
+                      <label class="control-label col-md-8">Product : &nbsp;</label>
+                      <div class="input-group" style="width:200px;">
+                          <input type="text" class="form-control" formControlName="Product" >
+                      </div>
+                  </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-lg-3">  
+                      <div class="form-group">
+                        <label class="control-label col-md-4">From : &nbsp;</label>
+                        
+                        <div class="col-md-8">
+                          <select id="val_from" name="val_from" (change)="onFromChange($event)" class="form-control" formControlName="From" style="margin-top: -6px;">
+                              <option value="">From</option>
+                              <option value="IndividualCustomer">Individual-Customer</option>
+                              <option value="CustomerService">Customer-Service</option>
+                              <option value="MHComplaints">MH-Complaints</option>
+                              <option value="EcommerceMarketPlace">Ecommerce Market Place</option>
+                              <option value="BrandWebsite">Brand Website</option>
+                          </select>
+                      </div> 
+                     </div>
+                     </div>
+                     
+                  <div class="col-lg-3"> 
+                      <div class="form-group">
+                      <label class="control-label col-md-2">Sleeve <span class="red" *ngIf="showRed">* </span> : &nbsp;</label>
+                      <div class="col-md-6">
+                          <select id="val_sleeve" style="margin-top: -6px;width:100px" class="form-control" formControlName="Sleeve" [ngClass]="{ 'is-invalid': submitted && f.Sleeve.invalid }" required>
+                              <option value="">Sleeve</option>
+                              <option value="{{sleeve}}" *ngFor="let sleeve of sleeveList">{{sleeve}}</option>
+                          </select>
+                          <div *ngIf="submitted && f.Sleeve.invalid" class="red">
+                              <div *ngIf="f.Sleeve.errors.required">Sleeve is required</div>
+                          </div>
+                      </div> 
+                      </div>
+                  </div>
+                  <div class="col-lg-4">
+                      <div class="form-group" style="margin-left: 20px;">
+                          <label class="control-label col-md-3">Size  <span class="red" *ngIf="showRed">* </span> : &nbsp;</label>
+                          <div class="col-md-4">
+                              <select id="val_size" style="margin-top: -6px;width:200px" class="form-control" formControlName="Size" [ngClass]="{ 'is-invalid': submitted && f.Size.invalid }" required>
+                                  <option value="">Size</option>
+                                  <option value="{{size}}" *ngFor="let size of sizeList">{{size}}</option>
+                              </select>
+                              <div *ngIf="submitted && f.Size.invalid" class="red">
+                                  <div *ngIf="f.Size.errors.required">Size is required</div>
+                              </div>
+                          </div> 
+                          
+                      </div>
+                  </div> 
+           </div>
+              <div class="row">
+                 <!--<div class="col-lg-3">
+                      <div class="form-group">
+                          <label class="control-label col-md-5">Garment Color: &nbsp;</label>
+                         
+                              <div class="input-group">
+                                  
+                                  <input type="text" class="form-control" formControlName="GarmentColor" style= "width:150px;">
+                              </div>
+                         
+                      </div>
+                  </div> --> 
+                  <div class="col-lg-4">
+                      <div class="form-group">
+                      <label class="control-label col-md-4">Fabric code : &nbsp;</label>
+                      
+                          <div class="input-group">
+                             
+                              <input type="text"  class="form-control" formControlName="FabricCode" style="width:250px;">
+                          </div>
+                      
+                  </div>
+              </div>
+              <div class="col-lg-6"  style="margin-top: 0px;">
+                <div class="form-group">
+                    <div class="row">
+                         <div class="col-lg-2" style="padding-top:7px;"><label class="control-label">Store<span class="red">* </span>  :&nbsp;</label></div>
+                               <div class="col-lg-3">
+                                  <div class="input-group" style="margin-left:-30px;">
+                                      <select style="width: 60px;" (change)="getstorecode($event)" class="form-control" formControlName="StoreCode" [ngClass]="{ 'is-invalid': submitted && f.StoreCode.invalid }" required>
+                                              <option [value]="store" *ngFor="let store of storeCodeList">{{store}}</option>
+                                      </select>
+                                      <div *ngIf="submitted && customFlag1"  class="invalid-feedback">
+                                         <div>Store Code is required</div>
+                                     </div>
+                                   </div>
+                               </div>
+                       <div class="col-lg-6">
+                         <div class="input-group" style="padding-left:5px;">
+                             <select style="width: 115px;" (change)="getstorename($event)" class="form-control" formControlName="StoreName" [ngClass]="{ 'is-invalid': submitted && f.StoreName.invalid }" required>
+                              <option [value]="store" *ngFor="let store of storeNameList">{{store}}</option>
+                            </select>
+                            <div *ngIf="submitted && customFlag1"  class="invalid-feedback">
+                             <div>Store Name is required</div>
+                         </div>
+                        </div>
+                     </div>
+                   </div>
+                 </div>
+             </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-lg-4">
+                      <div class="form-group">
+                          <label class="control-label col-md-6" >Customer Name  <span class="red">* </span>: &nbsp;</label>
+                          
+                              <div class="input-group">
+                                  
+                                  <input type="text" style="width: 240px;" formControlName="CustomerName" name="CustomerName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.CustomerName.invalid }" required>
+                                  <div *ngIf="submitted && f.CustomerName.invalid" class="red">
+                                      <div *ngIf="f.CustomerName.errors.required">CustomerName is required</div>
+                                  </div>
+                              </div>
+                          
+                      </div>
+                  </div>
+                  <div class="col-lg-8">
+                      <div class="form-group">
+                          <label class="control-label col-md-6" >Address  <span class="red">* </span> : &nbsp;</label>
+                          
+                              <div class="input-group">
+                                  
+                                  <input type="text" style="width:550px;" formControlName="Address" name="Address" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.Address.invalid }" required>
+                                  <div *ngIf="submitted && f.Address.invalid" class="red">
+                                      <div *ngIf="f.Address.errors.required">Address is required</div>
+                                  </div>
+                              </div>
+                          
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-lg-3">
+                      
+                      <div class="form-group">
+                          <label class="control-label col-md-6" >City  <span class="red">* </span> : &nbsp;</label>
+                          
+                              <div class="input-group">
+                                  
+                                  <input type="text" style="width: 150px;" formControlName="City" name="City" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.City.invalid }" required>
+                                  <div *ngIf="submitted && f.City.invalid" class="red">
+                                      <div *ngIf="f.City.errors.required">City is required</div>
+                                  </div>
+                              </div>
+                          
+                      </div>
+                  </div>
+                  
+                  <div class="col-lg-3">
+                      <div class="form-group">
+                          <label class="control-label col-md-6" >Pincode  <span class="red">* </span> : &nbsp;</label>
+                          
+                              <div class="input-group">
+                                  <input type="text" pattern="[1-9][0-9]{5}" style="width: 150px;" formControlName="Pincode" name="Pincode" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.Pincode.invalid }" required>
+                                  <div *ngIf="submitted && f.Pincode.invalid" class="red">
+                                      <div *ngIf="f.Pincode.errors.required">Pincode is required</div>
+                                      <div *ngIf="f.Pincode.errors.pattern">Please, Enter Valid PINCODE.</div>
+                                  </div>
+                              </div>
+                          
+                      </div>
+                  </div>
+                  <div class="col-lg-4">
+                      <div class="form-group">
+                          <label class="control-label col-md-6" >Mobile <span class="red">* </span> : &nbsp;</label>
+                          
+                              <div class="input-group">
+                                  <input type="text" style="width: 250px;" formControlName="Mobile" name="Mobile" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.Mobile.invalid }" required>
+                                  <div *ngIf="submitted && f.Mobile.invalid" class="red">
+                                      <div *ngIf="f.Mobile.errors.required">Mobile is required</div>
+                                      <div *ngIf="f.Mobile.errors.pattern">Please, Enter 10 digit Mobile Number.</div>
+                                  </div>
+                              </div>
+                          
+                      </div>
+                  </div>
+                  
+          <div class="col-lg-12">
+              <div class="form-group">
+                  <label class="control-label col-md-6" >Email <span class="red">* </span> : &nbsp;</label>
+                  <div class="input-group">
+                  <input type="text" id="Email" formControlName="Email" name="Email" class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && f.Email?.invalid }" style="width:600px;"/> 
+                  <div *ngIf="submitted && f.Email.invalid" class="invalid-feedback">
+                  <div *ngIf="f.Email.errors.required" class="red">Email is required</div>
+                  <div *ngIf="f.Email.errors.pattern" class="red">Please enter valid Email.</div> 
+                  </div>    
+                  <span class="black" style="margin-top: 5px;">&nbsp; Please enter store Email if customer doesn't provide Email</span>
+                  </div>
+              </div>
+          </div>
+                  <div class="col-lg-12">
+                      <div class="form-group">
+                          <label class="control-label col-md-6" >Customer Comments  <span class="red">* </span> : &nbsp;</label>
+                          
+                          <div class="input-group">
+                                  
+                          <input type="text"  style="width: 800px;" formControlName="CustomerComments" name="CustomerComments" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.CustomerComments.invalid }" required>
+                          <div *ngIf=" submitted && f.CustomerComments.invalid" class="red">
+                              <div *ngIf="f.CustomerComments.errors.required">CustomerComments is required</div>
+                          </div>
+                          </div>
+                          
+                      </div>
+                  </div>
+                  <div class="col-lg-3">
+                      <div class="form-group">
+                          <label class="control-label col-md-6" >Bill No : &nbsp;</label>
+                          
+                              <div class="input-group">
+                                  
+                                  <input type="text" class="form-control" formControlName="BillNo">
+                              </div>
+                          
+                      </div>
+                  </div>
+                  <div class="col-lg-3"> <div class="form-group">
+                      <label class="control-label col-md-6" for="val_date">Bill Date : &nbsp;</label>                    
+                          <div class="input-group date input-datepicker">
+                              <input type="date" style="width: 150px;height:30px;" formControlName="BillDate" id="BillDate" name="BillDate" class="form-control">
+                          </div>                   
+                  </div> </div>
+                  <div class="col-lg-3">
+                      <div class="form-group">
+                          <label class="control-label col-md-6" >Garment MRP : &nbsp;</label>
+                          
+                              <div class="input-group">
+                                  
+                                  <input type="text" class="form-control" formControlName="GarmentMRP">
+                              </div>
+                          
+                      </div>
+                  </div>
+                  <div class="col-lg-3">
+                    <!--<div class="form-group">
+                        <label class="control-label col-md-6" >Invoice Value <span class="red">* </span> : &nbsp;</label>                        
+                            <div class="input-group">                                
+                                <input type="text" class="form-control" formControlName="InvoiceValue">
+                                <div *ngIf="submitted && f.InvoiceValue.invalid" class="red">
+                                    <div *ngIf="f.InvoiceValue.errors.required">Invoice Value is required</div>
+                                </div>
+                                <p *ngIf="errorInvoiceFlag == true" class="red" style="padding-left: 12px;">{{errorMsg}} &nbsp;</p>
+                            </div>                        
+                    </div>-->
+                </div>
+                  </div>
+                  <div class="row">
+                  <div class="col-lg-2">
+                      <div class="form-group">
+                          <label class="control-label col-md-6" >No of washes : &nbsp;</label>
+                          
+                              <div class="input-group">
+                                  
+                                  <input type="number"  class="form-control" formControlName="Noofwashes" style="width: 50px;">
+                              </div>
+                          
+                      </div> 
+                  </div>
+                  <div class="col-lg-8">
+                      <div class="form-group">
+                          <label class="control-label col-md-6" >CCA Comments  <span class="red">* </span> : &nbsp;</label>
+                          
+                              <div class="input-group">
+                                  
+                                  <input type="text" style="width:520px;" formControlName="CCAComments" name="CCAComments:" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.CCAComments.invalid }" required>
+                          <div *ngIf=" submitted && f.CCAComments.invalid" class="red">
+                              <div *ngIf="f.CCAComments.errors.required">CCAComments is required</div>
+                          </div>
+                              </div>
+                          
+                      </div>
+                  </div>
+                  <div class="col-lg-6">
+                      <div class="form-group">
+                          <label class="control-label col-md-6" >Store Contact Person name  <span class="red">* </span> : &nbsp;</label>
+                          <div class="input-group">
+                          <input type="text" style= "width:300px" formControlName="StoreContactPersonname" name="StoreContactPersonname" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.StoreContactPersonname.invalid }" required>
+                          <div *ngIf=" submitted && f.StoreContactPersonname.invalid" class="red">
+                              <div *ngIf="f.StoreContactPersonname.errors.required">StoreContactPersonname is required</div>
+                          </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-lg-6">
+                      <div class="form-group">
+                          <label class="control-label col-md-6" >Store Contact No <span class="red">* </span> : &nbsp;</label>
+                          <div class="input-group">
+                          <input type="text" style= "width:300px" formControlName="StoreContactNo" name="StoreContactNo" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.StoreContactNo.invalid }" required>
+                          <div *ngIf=" submitted && f.StoreContactNo.invalid" class="red">
+                              <div *ngIf="f.StoreContactNo.errors.required">StoreContactNo is required</div>
+                              <div *ngIf="f.StoreContactNo.errors.pattern">Please, Enter 10 digit Mobile Number.</div>
+                          </div> 
+                              </div>
+                          
+                      </div>
+                  </div>
+                  <!--<div class="col-lg-5">
+                    <div class="form-group">
+                        <label class="control-label col-md-6" >Attach Invoice Bill <span *ngIf="mandatoryFileFlag == true" class="red">* </span> : &nbsp;</label>                        
+                            <div class="input-group">
+                                <input type="file" formControlName="invoiceBillImage" id="upload" (change)="onFileChange($event)" style="margin-left: 13px;" muliple="false" value="file" 
+                                accept="application/pdf, image/*"/>
+                                <p *ngIf="errorFileFlag == true" class="red" style="padding-left: 12px;">{{errorMsg}} &nbsp;</p>                                
+                            </div>                        
+                    </div>
+                </div>-->
+              </div>
+           
+         
+              <div class="form-group form-actions"style= "padding-bottom:5px; margin-top:15px;">
+                          <span style="float:left;" class="red">* Mandatory fields</span>
+                          <button type="button" (click)="confirm()" class="btn btn-success"> Confirm</button> 
+                          <button type="button" (click)="back()" class="btn btn-success" style="margin-right: 15px;">Back</button><br><br>
+              </div>
+          </div> 
+      </div>
+          <!-- END Form Content -->
+      </form>
+  </div>
+      <!-- END Navigation info -->
+  
+  <footer>
+      <div class="footer">
+          <p>Copyrights &copy;2022. ABFRL Customer Complaints</p>
+      </div>
+  </footer>
+  
+  
+  
+  
+  

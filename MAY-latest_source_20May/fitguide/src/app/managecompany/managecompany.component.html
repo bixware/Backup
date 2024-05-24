@@ -1,0 +1,652 @@
+<div *ngIf="apiFlag == true" id="overlay">
+    <div id="text">Processing...<br/><i class="fa fa-spinner fa-spin" style="font-size:24px;color:rgb(0,0,0);"></i></div>
+    <div id="info_alert" class="alert_info alert" style="display: none;">
+      <span class="closebtn" (click)="close1()">&times;</span> 
+      <strong>{{successMessage}}</strong>
+    </div>
+    <div id="info_success" class="success_info success" style="display: none;">
+      <span class="closebtn" (click)="close1()">&times;</span> 
+      <strong>{{successMessage}}</strong>
+    </div>
+  </div>
+  <div *ngIf="apiFlagModal == true" id="overlay_modal">
+    <div id="text_modal">Processing...<br/><i class="fa fa-spinner fa-spin" style="font-size:24px;color:rgb(0,0,0);"></i></div>
+    <div id="info_alert" class="alert_info alert" style="display: none;">
+      <span class="closebtn" (click)="closeModalError()">&times;</span> 
+      <strong>{{successMessage}}</strong>
+    </div>
+    <div id="info_success" class="success_info success" style="display: none;">
+      <span class="closebtn" (click)="closeModal()">&times;</span> 
+      <strong>{{successMessage}}</strong>
+    </div>
+  </div>
+
+
+<!-- begin row -->
+<div class="row">
+    <div class="col-xl-12">
+        <!-- begin panel -->
+        <div class="panel panel-inverse" style="margin: 0 !important;">
+            <!-- begin panel-heading -->
+            <div class="panel-heading">
+                <div class="row">
+                    <!-- <div class="col-xl-3">
+                        <h4 class="panel-title">Manage Company</h4>
+                    </div> -->
+                    <!-- <div class="col-xl-5">
+                        <div style="margin-left: 30px;">
+                            <label>Quick Filter :</label> &nbsp;&nbsp;&nbsp;<input type="text" class="agform" placeholder="Filter quickly..." (keyup)="quickSearch()" [(ngModel)]="searchValue"><br/>
+                        </div>
+                        
+                    </div>
+                    <div class="col-xl-7" style="margin-top: 15px;justify-content: right;display: flex;padding-right: 22px;">                    
+                        <div style="float:right;">
+                          <a (click)="addCompanyModal()" class="button btn-xs icon_btn_success" title="Add New Company"><i class="fe-plus me-1" style="padding: 7px 9px 7px 7px;
+                            border-radius: 5px;
+                            color: #fff;font-size: 16px;
+                            border-color:#00c9fd;
+                            background-color: #00c9fd;
+                            cursor:pointer;">Add New</i></a>&nbsp;&nbsp;
+                        </div>
+                        <div style="float:right;margin-right: 10px;">
+                            <label>Archive :</label> &nbsp;
+                            <input type="checkbox" (click)="clickEvent()" class="form control" style="margin-right:6px;" id="archive">
+                        </div>
+                        <div style="margin-right:10px; float: right;">
+                            <button style="border: 1px solid #cccccc;" (click)="onBtnExport()">Download CSV export file</button>
+                        </div>
+                    </div> -->
+                    <div class="col-12">
+                      <div class="page-title-boxnew">
+                          <div class="style-module-titleWrap-mfvE filtermbview" data-e2e="headerContentBlock">
+                            
+                              <label>Quick Filter :</label><input type="text" class="agform"
+                                placeholder="Filter quickly..." (keyup)="quickSearch()" [(ngModel)]="searchValue">
+                            
+                          </div>
+            
+                      <div class="style-module-actions-t2Ea mt-2 stylebuttons" data-e2e="headerActionsBlock">
+                        <a (click)="addCompanyModal()" class="button btn-xs icon_btn_success" title="Add New Company"><i class="fe-plus me-1" style="padding: 7px 9px 7px 7px;
+                          border-radius: 5px;
+                          color: #fff;font-size: 16px;
+                          border-color:#00c9fd;
+                          background-color: #00c9fd;
+                          cursor:pointer;">Add New</i></a>
+                           <label>Archive :</label> &nbsp;
+                           <input type="checkbox" (click)="clickEvent()" class="form control" id="archive" style="margin-right:6px;margin-bottom: 5px;">
+                           <button style="border: 1px solid #cccccc;" class="downloadbtn" (click)="onBtnExport()">Download CSV export file</button>
+              <!-- <button class="style-module-btn-dck8 style-module-btn_primary-x7pK style-module-btn_m-yQoV"   data-e2e="saveCompanyChanges" type="button">Save
+              </button> -->
+                      </div>
+            
+            
+                      </div>
+                  </div>
+                </div>
+                
+
+                <!-- <button type="submit" id="inactive_btn" class="btn btn-danger" style="color: white;display: none;">InActive</button>&nbsp;&nbsp;
+
+                <button type="submit" id="active_btn" class="btn btn-success" style="color: white;display: none;">Active</button>&nbsp;&nbsp;
+
+                <div class="panel-heading-btn">
+                    
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                </div> -->
+            </div>
+            <!-- end panel-heading -->
+            <!-- begin panel-body -->
+            <div class="panel-body">                
+                
+              
+                <ag-grid-angular id="ag_grid"
+                style="width:100%;height: 63vh;"
+                        class="ag-theme-alpine"
+                        [rowData]="rowData"
+                        [columnDefs]="columnDefs"
+                        [modules]="modules"
+                        [tooltipShowDelay]="tooltipShowDelay"
+                        [animateRows]="true"
+                        [frameworkComponents]="frameworkComponents"
+                        (gridReady)="onGridReady($event)"
+                        [pagination]="true"
+                        [gridOptions]="gridOptions"
+                >
+                </ag-grid-angular>
+            </div>
+            <!-- end panel-body -->
+        </div>
+        <!-- end panel -->
+    </div>
+</div>
+
+
+  <!--Country modal box-->
+<!-- Modal content -->
+
+<div class="countrymodal" id="myModal">
+  
+    <div class="modals-country-content">
+      
+    <div class="modal-header" style="margin-top: 10px;">
+        <h4 class="modal-title" id="modal-title">Add Country</h4>
+    </div>
+    <div class="modal-body" style="margin-top: 12px;">
+      <form [formGroup]="countryform">
+        <div class="pl-lg-4" style=" height: 22vh; margin-top: 20px; max-height: 50%; margin-left: 0px;">
+          <div class="row" style="margin-bottom: 1.75rem !important;">
+            <div class="col-lg-6" >
+              <div  class="form-inline">
+                <div class="col-md-12 form-group">
+                  <label class="col-sm-4 form-control-label" for="input-countryname">Country Name <span class="text-danger">*</span></label>
+                  <input type="text" formControlName="countryName" class="form-control form-control-alternative" placeholder="Please Enter Country Name" [ngClass]="{ 'is-invalid': submitted && c.countryName?.invalid }" required>
+                  <div *ngIf="submitted && c.countryName?.invalid" class="invalid-feedback">
+                    <div *ngIf="c.countryName.errors.required">Country Name is required</div>
+                  </div>
+                  <!--<div id="distributorName_error" style="color:red; display:none;">Distributor Name is required</div>-->
+                </div>
+                </div>
+                </div>
+                </div>
+                <div style="float: right;">
+                  <button type="button" style="background-color: #00c9fd;min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;" (click)="cancel()" class="btn btn-sm btn-danger">Cancel</button>
+                  <button  type="button" style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;" (click)="saveCountry()" class="btn btn-sm btn-primary">Save</button>
+               
+                </div>
+                
+        </div>
+      
+        </form>
+    </div>
+    
+  </div>
+  </div>
+    <!--Country form-->
+    <!-- begin row -->
+  
+    <!-- begin row -->
+
+<div class="calloutmodal" id="modalAddCompany">
+    <div class="modals-content">
+        <!-- <div class="icon" style="cursor: pointer;"> -->
+            <!-- <i style="font-size:23px !important; float:right; margin-top: -37px; margin-right:-37px;" title="Close" class="fa fa-window-close"></i> -->
+           <!--  <a (click)="cancelCompanyAdd()" style="cursor: pointer;" title="Close" class="close">X</a> -->
+            <!-- <div style="float:right"> -->
+         
+            <!-- </div>
+        </div> -->
+        <div class="modal-header">
+          <a (click)="cancelCompanyAdd()" style="cursor: pointer;" title="Close" class="close">X</a>
+            <!-- <h4 class="modal-title" id="modal-title">Add Company Details Here...</h4>
+            <div style="float:right">
+              <button type="button" (click)="cancelCompanyAdd()"
+              style="background-color: #00c9fd; min-height: 36px;font-weight: 400; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+              class="btn btn-sm btn-danger">Back</button>&nbsp;&nbsp;
+          <button type="button" (click)="submitForm()"
+              style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+              class="btn btn-sm btn-primary">Save</button>
+            </div> -->
+        </div>
+        <div class="modal-body" style="overflow-x:hidden;overflow-y: auto;margin-top: 10px;">
+          <form (ngSubmit)="submitForm()" [formGroup]="form">
+            <div class="pl-lg-4" style="height: 60vh; margin-top: 20px; max-height: 50%; margin-left: 0px;">
+              <div class="row align-items-center">
+                <div class="col-lg-8 col-md-6 col-xs-6">
+                  <h5 class="mb-1 header">Add Company Details Here...</h5>
+                </div>
+                <div class="col-lg-4 col-md-6 col-xs-6 text-right" style="float: right;">
+                   <!--  <a href="users_list.php" class="btn btn-sm btn-danger">Back</a> -->
+                   
+                  <button (click)="cancelCompanyAdd()" style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;" type="button" class="btn btn-sm btn-danger" id="buttons">Back</button> 
+                  <button type="button" (click)="submitForm()" style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;" name="submit" id="buttons" class="btn btn-sm btn-primary">Save</button>
+                </div>
+              </div>
+            <div class="row">
+              <div class="col-lg-6" >
+                <div  class="form-inline">
+                  <div class="col-md-12 form-group"  style="margin-bottom: 1.75rem !important;">
+                    <label class="col-sm-5 form-control-label" for="input-dname">Company Name <span class="text-danger">*</span></label>
+                    <input type="text" formControlName="companyName" class="form-control form-control-alternative" placeholder="Please Enter Company Name" [ngClass]="{ 'is-invalid': submitted && f.companyName?.invalid }" required>
+                    <div *ngIf="submitted && f.companyName?.invalid" class="invalid-feedback">
+                      <div *ngIf="f.companyName.errors.required">Company Name is required</div>
+                    </div>
+                  </div>
+                  </div>
+                  </div>
+                  <div class="col-lg-6" >
+                    <div  class="form-inline">
+                      <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                        <label class="col-sm-5 form-control-label" for="input-country">Distributor Name <span class="text-danger">*</span></label>
+                        <select formControlName="distributorName" class="form-select form-control-alternative" [ngClass]="{ 'is-invalid': submitted && f.distributorName?.invalid }" required>
+                          <option value="">Select Distributor</option>
+                          <option [value]="dist.distributorUID" *ngFor="let dist of distributors">{{dist.distributorName}}</option>                                                                               
+                        </select>
+                        <div *ngIf="submitted && f.distributorName?.invalid" class="invalid-feedback">
+                          <div *ngIf="f.distributorName.errors.required">Distributor Name is required</div>
+                        </div>
+                      </div>
+                      </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-6" >
+                      <div  class="form-inline">
+                        <div class="col-md-12 form-group"  style="margin-bottom: 1.75rem !important;">
+                          <label class="col-sm-5 form-control-label" placeholder="">Company Primary Contact Name</label>
+                          <input type="name" formControlName="companyPrimaryContact" class="form-control form-control-alternative" placeholder="Please Enter the Primary Contact Name">
+                        </div>
+                        </div>
+                        </div>
+                    <div class="col-lg-6" >
+                      <div  class="form-inline">
+                        <div class="col-md-12 form-group"  style="margin-bottom: 1.75rem !important;">
+                          <label class="col-sm-5 form-control-label" for="input-daddress">Company Address</label>
+                          <input type="text" formControlName="companyAddress" class="form-control form-control-alternative" placeholder="Please Enter Company Address">
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-lg-6" >
+                            <div  class="form-inline">
+                              <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                                <label class="col-sm-5 form-control-label" for="input-country">Company Country
+                                  <span>
+                                    <a href="javascript:;" (click)="addcountry()" title="Add Country"><i class="fa fa-plus-square" style="font-size: 20px;color:green;padding-left: 9px;"></i></a>
+                                  </span>
+                                </label>
+                                <select (change)="countryOnchange($event)" formControlName="companyCountry" id="countryList" [(ngModel)]="countryName" class="form-select form-control-alternative">
+                                  <option value=''>Select Country</option>
+                                  <option [value]="country.countryName" *ngFor="let country of countries">{{country.countryName}}</option>                                                
+                                </select>
+                              </div>
+                              </div>
+                              </div>
+                              <div class="col-lg-6" *ngIf="showDropdown">
+                                <div  class="form-inline">
+                                  <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                                    <label class="col-sm-5 form-control-label" for="input-state">Company State</label>
+                                    <select (change)="getCity($event)" formControlName="companyState" [(ngModel)]="adddropdownValuestate" id="stateCompany" class="form-select form-control-alternative">
+                                      <option value=''>Select State</option>
+                                      <option [value]="state.StateUID" *ngFor="let state of states">{{state.StateName}}</option>                                                                               
+                                    </select>
+                                  </div>
+                                  </div>
+                                  </div>
+                                  <div class="col-lg-6" *ngIf="!showDropdown">
+                                    <div  class="form-inline">
+                                      <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                                        <label class="col-sm-5 form-control-label" for="input-state">Company State</label>
+                                        <input type="text" [(ngModel)]="inputValueState" placeholder="Please Enter Company State" formControlName="companyState" class="form-control form-control-alternative">
+                                        </div>
+                                        </div>
+                                        </div>
+                              </div>
+                              <div class="row">
+                                <!-- <div class="col-lg-6">
+                                  <div  class="form-inline">
+                                    <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                                      <label class="col-sm-5 form-control-label" for="input-city">Company City</label>
+                                      <select formControlName="companyCity" class="form-select form-control-alternative">
+                                        <option value="">Select City</option>
+                                        <option [value]="city.cityUID" *ngFor="let city of cities">{{city.CityName}}</option>                                                                               
+                                      </select>                                   
+                                    </div>
+                                    </div>
+                                    </div> -->
+                                    <div class="col-lg-6" *ngIf="showDropdown">
+                                      <div  class="form-inline">
+                                        <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                                          <label class="col-sm-5 form-control-label" for="input-region">Company City </label>
+                                          <select formControlName="companyCity" class="form-select form-control-alternative" id="cityList" [(ngModel)]="adddropdownValuecity">
+                                            <option value=''>Select City</option>
+                                            <option [value]="city.cityUID" *ngFor="let city of cities">{{city.CityName}}</option>                                                                               
+                                          </select>                                   
+                                        </div>
+                                        </div>
+                                        </div>
+                                        <div class="col-lg-6" *ngIf="!showDropdown">
+                                          <div  class="form-inline">
+                                            <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                                              <label class="col-sm-5 form-control-label" for="input-region">Company City </label>
+                                              <!-- <select formControlName="companyCity" class="form-select form-control-alternative" id="cityList">
+                                                <option value="">Select City</option>
+                                                <option [value]="city.cityUID" *ngFor="let city of cities">{{city.CityName}}</option>                                                                               
+                                              </select>  --> 
+                                              <input type="text"  [(ngModel)]="inputValueCity" placeholder="Please Enter Company City" formControlName="companyCity" class="form-control form-control-alternative">                                
+                                            </div>
+                                            </div>
+                                            </div>
+                                    <div class="col-lg-6" *ngIf="showDropdown">
+                                      <div  class="form-inline">
+                                        <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                                          <label class="col-sm-5 form-control-label" for="input-city">Company Region</label>
+                                          <!-- <input type="text" formControlName="companyRegion" placeholder="Please Enter Company Region" class="form-control" /> -->
+                                          <select formControlName="companyRegion" class="form-select form-control-alternative" id="regionList" [(ngModel)]="adddropdownValueRegion">
+                                            <option value=''>Select Region</option>
+                                            <option [value]="region.regionName" *ngFor="let region of regions">{{region.regionName}}</option> 
+                                            <!-- <option value="Midwest">Midwest</option>  
+                                            <option value="Mountain">Mountain</option>
+                                            <option value="West">West</option>
+                                            <option value="South">South</option>
+                                            <option value="Southeast">Southeast</option>
+                                            <option value="Southwest">Southwest</option>
+                                            <option value="Northern">Northern</option>
+                                            <option value="Northwest">Northwest</option>
+                                            <option value="Northeast">Northeast</option>
+                                            <option value="East">East</option>          -->                                                                    
+                                          </select>
+                                        </div>
+                                        </div>
+                                        </div>
+                                        <div class="col-lg-6" *ngIf="!showDropdown">
+                                          <div  class="form-inline">
+                                            <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                                              <label class="col-sm-5 form-control-label" for="input-city">Company Region</label>
+                                              <!-- <input type="text" formControlName="companyRegion" placeholder="Please Enter Company Region" class="form-control" /> -->
+                                              <input type="text"  [(ngModel)]="inputValueRegion" placeholder="Please Enter Company Region" formControlName="companyRegion" class="form-control form-control-alternative">  
+                                            </div>
+                                            </div>
+                                            </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-lg-6" >
+                                        <div  class="form-inline">
+                                          <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                                            <label class="col-sm-5 form-control-label" for="input-zip">Company Zip code</label>
+                                            <input type="tel" formControlName="companyZip" placeholder="Please Enter Company ZipCode" class="form-control form-control-alternative" />
+                                          </div>
+                                          </div>
+                                          </div>
+                                          <div class="col-lg-6" >
+                                            <div  class="form-inline">
+                                              <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                                                <label class="col-sm-5 form-control-label" for="input-email">Company Primary Email</label>
+                                                <input type="text" formControlName="companyEmail" placeholder="Please Enter Company Email" class="form-control form-control-alternative"/>
+                                              </div>
+                                              </div>
+                                              </div>
+                                          </div>
+                                          <div class="row">
+                                            <div class="col-lg-6" >
+                                              <div  class="form-inline">
+                                                <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                                                  <label class="col-sm-5 form-control-label" for="input-phone">Company Contact Number</label>
+                                                  <input type="text" formControlName="companyContact" class="form-control form-control-alternative" placeholder="Please Enter Company Contact Number" [ngClass]="{ 'is-invalid': submitted && f.companyContact.invalid }">
+                                                  <div *ngIf="submitted && f.companyContact.invalid" class="invalid-feedback">                                      
+                                                    <div *ngIf="f.companyContact.errors.pattern">Only USA Numbers are allowed</div>
+                                                  </div>
+                                                </div>
+                                                </div>
+                                                </div>
+                                                <div class="col-lg-6" >
+                                                  <div class="form-inline">
+                                                    <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                                                      <label class="col-sm-5 form-control-label" placeholder="">Company Website</label>
+                                                      <input type="name" formControlName="companyWebsite" class="form-control form-control-alternative" placeholder="Please Enter Company Website">
+                                                    </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row" style="margin-bottom: 1.75rem !important;">
+                                                  <div class="col-lg-6" >
+                                                    <div  class="form-inline">
+                                                      <div class="col-md-12 form-group">
+                                                        <label class="col-sm-5 form-control-label" for="distributor-image">Company Image</label>
+                                                        <input type="file" formControlName="companyImage" (change)="fileEvent($event)"/>                                   
+                                                      </div>
+                                                      </div>
+                                                      </div>
+                                                      <div class="col-lg-6">
+                                                        <div class="form-inline">
+                                                          <div class="col-md-12 form-group">
+                                                            <label class="col-sm-5 form-control-label">Search Limiter</label>
+                                                            <input type="number" class="searchlimiter" formControlName="searchLimiter"
+                                                              class="form-control form-control-alternative" placeholder="Please Enter Search limiter">
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                      </div>
+                  </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="calloutmodal" id="modalEditCompany">
+    <div class="modals-content">
+        <!-- <div class="icon" style="cursor: pointer;"> -->
+            <!-- <i style="font-size:23px !important; float:right; margin-top: -37px; margin-right:-37px;" title="Close" class="fa fa-window-close"></i> -->
+            <!-- <a (click)="cancelCompanyEdit()" style="cursor: pointer;" title="Close" class="close">X</a> -->
+            <!-- <div style="float:right"> -->
+          
+            <!-- </div>
+        </div> -->
+        <div class="modal-header">
+          <a (click)="cancelCompanyEdit()" style="cursor: pointer;" title="Close" class="close">X</a>
+            <!-- <h4 class="modal-title" id="modal-title">Edit Company Details Here...</h4>
+            <div style="float:right">
+              <button type="button" (click)="cancelCompanyEdit()"
+              style="background-color: #00c9fd; min-height: 36px;font-weight: 400; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+              class="btn btn-sm btn-danger">Back</button>&nbsp;&nbsp;
+          <button type="button" (click)="editSubmitForm()"
+              style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+              class="btn btn-sm btn-primary">Save</button>
+            </div> -->
+        </div>
+        <div class="modal-body" style="overflow-x:hidden;overflow-y: auto;margin-top: 10px;">
+          <form (ngSubmit)="editSubmitForm()" [formGroup]="editform">
+            <div class="pl-lg-4" style=" height: 60vh; margin-top: 20px; max-height: 50%; margin-left: 0px;">
+              <div class="row align-items-center">
+                <div class="col-lg-8 col-md-6 col-xs-6">
+                  <h5 class="mb-1 header">Edit Company Details Here...</h5>
+                </div>
+                <div class="col-lg-4 col-md-6 col-xs-6 text-right" style="float: right;">
+                   <!--  <a href="users_list.php" class="btn btn-sm btn-danger">Back</a> -->
+                   
+                  <button (click)="cancelCompanyEdit()" style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;" type="button" class="btn btn-sm btn-danger" id="buttons">Back</button> 
+                  <button type="submit" (click)="editSubmitForm()" style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;" name="submit" id="buttons" class="btn btn-sm btn-primary">Save</button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6" >
+                  <div  class="form-inline">
+                    <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                      <label class="col-sm-5 form-control-label" for="input-cname">Company Name <span class="text-danger">*</span></label>
+                      <input type="text" formControlName="companyName" class="form-control form-control-alternative" placeholder="Please Enter Company Name" [ngClass]="{ 'is-invalid': submitted && e.companyName?.invalid }" required>
+                      <div *ngIf="submitted && e.companyName?.invalid" class="invalid-feedback">
+                        <div *ngIf="e.companyName.errors.required">Company Name is required</div>
+                      </div>
+                    </div>
+                    </div>
+                    </div>
+                    <div class="col-lg-6" >
+                      <div  class="form-inline">
+                        <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                          <label class="col-sm-5 form-control-label" for="input-dname">Distributor Name <span class="text-danger">*</span></label>
+                          <select formControlName="distributorName" class="form-select form-control-alternative" [ngClass]="{ 'is-invalid': submitted && e.distributorName?.invalid }" required>
+                            <option value="null">Select Distributor</option>
+                            <option [value]="dist.distributorUID" *ngFor="let dist of distributors">{{dist.distributorName}}</option>                                                                               
+                          </select>
+                          <div *ngIf="submitted && e.distributorName?.invalid" class="invalid-feedback">
+                            <div *ngIf="e.distributorName.errors.required">Distributor Name is required</div>
+                          </div>
+                        </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-6" >
+                        <div  class="form-inline">
+                          <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                            <label class="col-sm-5 form-control-label" placeholder="">Company Primary Contact Name</label>
+                            <input type="name" formControlName="companyPrimaryContact" class="form-control form-control-alternative" placeholder="Please Enter the Primary Contact Name">
+                          </div>
+                          </div>
+                          </div>
+                          <div class="col-lg-6">
+                            <div  class="form-inline">
+                              <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                                <label class="col-sm-5 form-control-label" for="input-address">Company Address</label>
+                                <input type="text" formControlName="companyAddress" class="form-control form-control-alternative" placeholder="Please Enter Company Address">
+                              </div>
+                              </div>
+                              </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-lg-6" >
+                              <div  class="form-inline">
+                                <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                                  <label class="col-sm-5 form-control-label" for="input-country">Company Country
+                                  <!-- <select formControlName="companyCountry" class="form-control form-control-alternative">
+                                    <option value="">Select Country</option>
+                                    <option value="USA">USA</option> 
+                                    <option value="CANADA">CANADA</option>                                                  
+                                  </select> -->
+                                  <span>
+                                    <a href="javascript:;" (click)="addcountry()" title="Add Country"><i class="fa fa-plus-square" style="font-size: 20px;color:green;padding-left: 9px;"></i></a>
+                                  </span>
+                                </label>
+                                <select [(ngModel)]="countryName" (change)="countryOnchange($event)"
+                                    formControlName="companyCountry" class="form-select form-control-alternative" id="countryList">
+                                      <option value="">Select Country</option>
+                                      <option [value]="country.countryName" *ngFor="let country of countries">{{country.countryName}}</option>                                             
+                                </select>
+                                </div>
+                                </div>
+                                </div>
+                                <div class="col-lg-6" *ngIf="showDropdown">
+                                  <div  class="form-inline">
+                                    <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                                      <label class="col-sm-5 form-control-label" for="input-state">Company State</label>
+                                      <select (change)="getCity($event)" formControlName="companyState" [(ngModel)]="adddropdownValuestate" id="stateCompany" class="form-select form-control-alternative">
+                                        <option value="">Select State</option>
+                                        <option [value]="state.StateUID" *ngFor="let state of states">{{state.StateName}}</option>                                                                               
+                                      </select>
+                                    </div>
+                                    </div>
+                                    </div>
+                                    <div class="col-lg-6" *ngIf="!showDropdown">
+                                      <div  class="form-inline">
+                                        <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                                          <label class="col-sm-5 form-control-label" for="input-state">Company State</label>
+                                          <input type="text" placeholder="Please Enter Company State" formControlName="companyState" class="form-control form-control-alternative">
+                                          </div>
+                                          </div>
+                                          </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-lg-6" *ngIf="showDropdown">
+                                    <div  class="form-inline">
+                                      <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                                        <label class="col-sm-5 form-control-label" for="input-region">Company City </label>
+                                        <select formControlName="companyCity" class="form-select form-control-alternative" id="cityList" [(ngModel)]="adddropdownValuecity">
+                                          <option value="">Select City</option>
+                                          <option [value]="city.cityUID" *ngFor="let city of cities">{{city.CityName}}</option>                                                                               
+                                        </select>                                   
+                                      </div>
+                                      </div>
+                                      </div>
+                                      <div class="col-lg-6" *ngIf="!showDropdown">
+                                        <div  class="form-inline">
+                                          <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                                            <label class="col-sm-5 form-control-label" for="input-region">Company City </label>
+                                            <!-- <select formControlName="companyCity" class="form-select form-control-alternative" id="cityList">
+                                              <option value="">Select City</option>
+                                              <option [value]="city.cityUID" *ngFor="let city of cities">{{city.CityName}}</option>                                                                               
+                                            </select>  --> 
+                                            <input type="text" placeholder="Please Enter Company City" formControlName="companyCity" class="form-control form-control-alternative">                                
+                                          </div>
+                                          </div>
+                                          </div>
+                                      <div class="col-lg-6" *ngIf="showDropdown">
+                                        <div  class="form-inline">
+                                          <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                                            <label class="col-sm-5 form-control-label" for="input-city">Company Region</label>
+                                            <!-- <input type="text" formControlName="companyRegion" placeholder="Please Enter Company Region" class="form-control" /> -->                                    
+                                            <select formControlName="companyRegion"
+                                            class="form-select form-control-alternative" [(ngModel)]="adddropdownValueRegion" id="regionList">
+                                              <option value="">Select Region</option>
+                                              <option [value]="region.regionName" *ngFor="let region of regions">{{region.regionName}}</option>                                                
+                                            </select>
+                                          </div>
+                                          </div>
+                                          </div>
+                                          <div class="col-lg-6" *ngIf="!showDropdown">
+                                            <div  class="form-inline">
+                                              <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                                                <label class="col-sm-5 form-control-label" for="input-region">Company Region </label>
+                                                <!-- <select formControlName="companyCity" class="form-select form-control-alternative" id="cityList">
+                                                  <option value="">Select City</option>
+                                                  <option [value]="city.cityUID" *ngFor="let city of cities">{{city.CityName}}</option>                                                                               
+                                                </select>  --> 
+                                                <input type="text" placeholder="Please Enter Company Region" formControlName="companyRegion" class="form-control form-control-alternative">                                
+                                              </div>
+                                              </div>
+                                              </div>
+                                      </div>
+                                      <div class="row">
+                                        <div class="col-lg-6" >
+                                          <div  class="form-inline">
+                                            <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                                              <label class="col-sm-5 form-control-label" for="input-zip">Company Zip code</label>
+                                              <input type="tel" formControlName="companyZip" placeholder="Please Enter Company ZipCode" class="form-control form-control-alternative"/>
+                                            </div>
+                                            </div>
+                                            </div>
+                                            <div class="col-lg-6" >
+                                              <div  class="form-inline">
+                                                <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                                                  <label class="col-sm-5 form-control-label" for="input-email">Company Primary Email</label>
+                                                  <input type="text" formControlName="companyEmail" placeholder="Please Enter Company Email" class="form-control form-control-alternative"/>
+                                                </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                              <div class="col-lg-6">
+                                                <div  class="form-inline">
+                                                  <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                                                    <label class="col-sm-5 form-control-label" for="input-phone">Company Contact Number</label>
+                                                    <input type="text" formControlName="companyContact" class="form-control form-control-alternative" placeholder="Please Enter Company Contact Number" [ngClass]="{ 'is-invalid': submitted && f.companyContact.invalid }">
+                                                    <div *ngIf="submitted && e.companyContact.invalid" class="invalid-feedback">                                      
+                                                      <div *ngIf="e.companyContact.errors.pattern">Only USA Numbers are allowed</div>
+                                                    </div>
+                                                  </div>
+                                                  </div>
+                                                  </div>
+                                                  <div class="col-lg-6">
+                                                    <div  class="form-inline">
+                                                      <div class="col-md-12 form-group"  style="margin-bottom: 1.75rem !important;">
+                                                        <label class="col-sm-5 form-control-label" placeholder="">Company Website</label>
+                                                        <input type="name" formControlName="companyWebsite" class="form-control form-control-alternative" placeholder="Please Enter Company Website">
+                                                      </div>
+                                                      </div>
+                                                      </div>
+                                                  </div>
+                                                  <div class="row" style="margin-bottom: 1.75rem !important;">
+                                                    <div class="col-lg-6" >
+                                                      <div  class="form-inline">
+                                                        <div class="col-md-12 form-group">                                  
+                                                          <label class="col-sm-5 form-control-label" for="store-image">Company Image</label>
+                                                          <img *ngIf="prevImage" src={{prevImage}} width="300px" height="150px"><br/><br/>
+                                                          <input type="file" formControlName="companyImage" (change)="fileEvent($event)" style="margin-top: 6px;" />                                   
+                                                        </div>
+                                                        </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                          <div class="form-inline">
+                                                            <div class="col-md-12 form-group">
+                                                              <label class="col-sm-5 form-control-label" placeholder="">Search Limiter</label>
+                                                              <input type="number" formControlName="searchLimiter" class="form-control form-control-alternative"
+                                                                placeholder="Please Enter Search Limiter">
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                        </div>
+              </div> 
+          </form>
+        </div>
+    </div>
+</div>

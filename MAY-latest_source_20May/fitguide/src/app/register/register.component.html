@@ -1,0 +1,463 @@
+<div *ngIf="apiFlag == true" id="overlay">
+	<div id="text">Processing...<br /><i class="fa fa-spinner fa-spin" style="font-size:24px;color:rgb(0,0,0);"></i>
+	</div>
+	<div id="info_alert" class="alert_info alert" style="display: none;">
+		<span class="closebtn" (click)="close1()">&times;</span>
+		<strong>{{successMessage}}</strong>
+	</div>
+	<div id="info_success" class="success_info success" style="display: none;">
+		<span class="closebtn" (click)="close1()">&times;</span>
+		<strong>{{successMessage}}</strong>
+	</div>
+</div>
+	<div class="account-pages mb-5">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-8">
+					<div class="card">
+						<div class="card-body p-4">
+							<div class="row">
+								<div id="arrows">
+									<div class="icon" id="previous" class="arrowleft" (click)="Prev()" style="cursor: pointer;">
+										<i style="font-size:26px !important;" class="fa fa-arrow-left"></i>
+									</div>
+									<div class="icon" id="next" class="arrowright" (click)="Next()" style="cursor: pointer;">
+										<i style="font-size:26px !important;" class="fa fa-arrow-right"></i>
+									</div>
+								</div>
+								</div>
+							<!-- <div id="scrollform"> -->
+							<div class="scrollbar" id="style-1">
+								<div class="force-overflow">
+									<!--companyForm-->
+									<form [formGroup]="companyForm">
+										<div style="display:none;" id="cf">
+											<div class="col-8">
+												<h5 class="mb-0" style="padding-bottom: 26px;margin-left: 0px;">Enter
+													Company Details</h5>
+											</div>
+											<div class="col-lg-12 mb-1">
+												<div class="form-group">
+													<label class="form-control-label" for="input-dname">Company Name
+														<span class="text-danger">*</span></label>
+													<input type="text" (change)="cblur()" formControlName="companyName"
+														class="form-control form-control-alternative"
+														placeholder="Please Enter Company Name">
+													<div *ngIf="companyFlag == true" style="color:red;">Company Name is
+														required</div>
+												</div>
+											</div>
+											<div class="col-lg-12 mb-1">
+												<!-- <div class="form-group focused">
+						  <label class="form-control-label" for="input-country">Distributor Name</label>
+						  <select formControlName="distributorName" class="form-control form-control-alternative">
+							<option value="">Select Distributor</option>
+							<option [value]="dist.distributorUID" *ngFor="let dist of distributors">{{dist.distributorName}}</option>                                                            
+						 </select>
+						</div> -->
+												<!--<div *ngIf="submitted && f.distributorName?.invalid" class="invalid-feedback">
+							<div *ngIf="f.distributorName.errors.required">Distributor Name is required</div>
+						  </div>-->
+
+											</div>
+											<div class="col-lg-12 mb-1">
+												<div class="form-group">
+													<label class="form-control-label" for="input-daddress">Company
+														Address</label>
+													<input type="text" formControlName="companyAddress"
+														class="form-control form-control-alternative"
+														placeholder="Please Enter Company Address">
+												</div>
+											</div>
+											<div class="col-lg-12 mb-1">
+												<div class="form-group focused">
+													<label class="form-control-label" for="input-state">Company
+														State</label>
+													<select (change)="getCity($event)" formControlName="companyState"
+														placeholder="Select State"
+														class="form-control form-control-alternative">
+														<option value="">Select State</option>
+														<option [value]="state.StateUID" *ngFor="let state of states">
+															{{state.StateName}}</option>
+													</select>
+												</div>
+											</div>
+											<div class="col-lg-12 mb-1">
+												<div class="form-group focused">
+													<label class="form-control-label" for="input-region">Company
+														City</label>
+													<select formControlName="companyCity" placeholder="Select City"
+														class="form-control form-control-alternative">
+														<option value="">Select City</option>
+														<option [value]="city.cityUID" *ngFor="let city of cities">
+															{{city.CityName}}</option>
+													</select>
+												</div>
+											</div>
+											<!-- <div class="col-lg-12">
+						<div class="form-group focused">
+						  <label class="form-control-label" for="input-city">Company Region</label>
+						  <input type="text" formControlName="companyRegion" placeholder="Please Enter Company Region" class="form-control" />
+						</div>
+					  </div> -->
+											<div class="col-lg-12 mb-1">
+												<div class="form-group">
+													<label class="form-control-label" for="input-zip">Company Zip
+														code</label>
+													<input type="tel" formControlName="companyZip"
+														placeholder="Please Enter Company ZipCode"
+														class="form-control" />
+												</div>
+											</div>
+											<div class="col-lg-12 mb-1">
+												<div class="form-group focused">
+													<label class="form-control-label" for="input-email">Company Primary
+														Email</label>
+													<input type="text" formControlName="companyEmail"
+														placeholder="Please Enter Company Email" class="form-control" />
+												</div>
+											</div>
+											<div class="col-lg-12 mb-1">
+												<div class="form-group">
+													<label class="form-control-label" for="input-phone">Company Contact
+														Number</label>
+													<input type="text" formControlName="companyContact"
+														class="form-control form-control-alternative"
+														placeholder="Please Enter Company Contact Number">
+													<!--<div *ngIf="submitted && f.companyContact.invalid" class="invalid-feedback">                                      
+							<div *ngIf="f.companyContact.errors.pattern">Only USA Numbers are allowed</div>
+						  </div>-->
+												</div>
+											</div>
+											<div class="col-lg-12 mb-1">
+												<div class="form-group focused">
+													<label class="form-control-label" for="distributor-image">Company
+														Image</label><br>
+													<input type="file" formControlName="companyImage"
+														(change)="fileEvent($event)" />
+												</div>
+											</div>
+											<div class="col-lg-12 mb-1">
+												<label class="form-control-label" placeholder="">Company Primary Contact
+													Name</label>
+												<input type="name" formControlName="companyPrimaryContact"
+													class="form-control"
+													placeholder="Please Enter the Primary Contact Name">
+											</div>
+											<div class="col-lg-12 mb-1">
+												<label class="form-control-label" placeholder="">Company Website</label>
+												<input type="name" formControlName="companyWebsite" class="form-control"
+													placeholder="Please Enter Company Website">
+											</div>
+
+										</div>
+									</form>
+									<!--storeForm-->
+									<form [formGroup]="storeForm">
+										<div style="display:none;height:300px;" id="storedrop">
+											<div class="col-8">
+												<h5 class="mb-0" style="padding-bottom: 26px;">Enter Store Details</h5>
+											</div>
+											<div class="col-lg-12 mb-1">
+												<div class="form-group focused">
+													<label class="form-control-label" for="store-branch">Does your
+														company have more than one store? <span
+															class="text-danger">*</span></label>
+													<select (change)="setStore($event)" id="storeQuestion"
+														class="form-control" formControlName="isstoreAvailable">
+														<option value="">Select Store</option>
+														<option value="1">Yes</option>
+														<option value="0">No</option>
+													</select>
+													<div *ngIf="storeFlag1 == true" style="color:red;">Store Selection
+														is required</div>
+												</div>
+											</div>
+										</div>
+										<div style="display:none;" id="sf">
+											<div class="col-8">
+												<h5 class="mb-0" style="padding-bottom: 26px;">Enter Store Details</h5>
+											</div>
+											<div style="margin-left: 15px;">
+												<input type="checkbox" (click)="getStorebyCompany()" id="Companyinfo">
+												<label class="form-control-label" style="margin-left: 10px;">Same as
+													company info</label>
+											</div>
+											<div class="col-lg-12 mb-1">
+												<div class="form-group">
+													<label class="form-control-label" for="input-sname">Store Name <span
+															class="text-danger">*</span></label>
+													<input type="text" (change)="sf2blur()" formControlName="storeName"
+														class="form-control form-control-alternative"
+														placeholder="Please Enter Store Name">
+													<div *ngIf="storeFlag2 == true" style="color:red;">Store Name is
+														required</div>
+												</div>
+											</div>
+											<div class="col-lg-12 mb-1">
+												<div class="form-group">
+													<label class="form-control-label" for="input-saddress">Store
+														Address</label>
+													<input type="text" formControlName="storeAddress"
+														class="form-control form-control-alternative"
+														placeholder="Please Enter Store Address">
+												</div>
+											</div>
+											<div class="col-lg-12 mb-1">
+												<label class="form-control-label" placeholder="">Store Primary Contact
+													Name</label>
+												<input type="name" formControlName="storePrimaryContact"
+													class="form-control"
+													placeholder="Please Enter the Primary Contact Name">
+											</div>
+											<div class="col-lg-12 mb-1">
+												<label class="form-control-label" placeholder="">Store Website</label>
+												<input type="name" formControlName="storeWebsite" class="form-control"
+													placeholder="Please Enter Store Website">
+											</div>
+											<div class="col-lg-12 mb-1">
+												<div class="form-group focused">
+													<label class="form-control-label" for="input-country">Store
+														State</label>
+													<select (change)="getCity($event)" formControlName="storeState"
+														class="form-control form-control-alternative">
+														<option value="">Select State</option>
+														<option [value]="state.StateUID" *ngFor="let state of states">
+															{{state.StateName}}</option>
+													</select>
+												</div>
+											</div>
+											<div class="col-lg-12 mb-1">
+												<div class="form-group focused">
+													<label class="form-control-label" for="input-city">Store
+														City</label>
+													<select formControlName="storeCity"
+														class="form-control form-control-alternative">
+														<option value="">Select City</option>
+														<option [value]="city.cityUID" *ngFor="let city of cities">
+															{{city.CityName}}</option>
+													</select>
+												</div>
+											</div>
+											<!-- <div class="col-lg-12">
+						<div class="form-group focused">
+						  <label class="form-control-label" for="input-city">Store Region</label>
+						  <input type="text" formControlName="storeRegion" placeholder="Please Enter Store Region" class="form-control"/>
+						</div>
+					  </div> -->
+											<div class="col-lg-12 mb-1">
+												<div class="form-group">
+													<label class="form-control-label" for="input-country">Store Zip
+														code</label>
+													<input type="text" formControlName="storeZipcode"
+														placeholder="Please Enter Store ZipCode" class="form-control" />
+												</div>
+											</div>
+											<div class="col-lg-12 mb-1">
+												<div class="form-group focused">
+													<label class="form-control-label" for="input-email">Store
+														Email</label>
+													<input type="text" formControlName="storeEmail"
+														placeholder="Please Enter Store Email" class="form-control" />
+												</div>
+											</div>
+											<div class="col-lg-12 mb-1">
+												<div class="form-group">
+													<label class="form-control-label" for="input-phone">Store Contact
+														Number</label>
+													<input type="text" formControlName="storeContact"
+														class="form-control form-control-alternative"
+														placeholder="Please Enter Store Contact Number">
+												</div>
+											</div>
+											<div class="col-lg-4">
+												<div class="form-group focused">
+													<label class="form-control-label" for="store-image">Store
+														Image</label>
+													<input type="file" formControlName="storeImage"
+														(change)="fileEventStore($event)" />
+												</div>
+											</div>
+										</div>
+									</form>
+									<!--registerForm-->
+									<form [formGroup]="registerForm">
+
+										<!--registerform-->
+										<div style="display:none;" id="rf">
+											<div class="col-8">
+												<h5 class="mb-2" style="padding-top: 8px; color:black">Enter User
+													Details</h5>
+											</div>
+											<div>
+												<input type="checkbox" (click)="getuserbyCompany()"
+													id="Companyuserinfo">
+												<label class="form-control-label" style="margin-left: 5px;">Same as
+													company info</label>
+											</div>
+											<div class="form-group mb-2">
+												<input type="text" class="form-control form-control-lg widthmax"
+													required formControlName="firstName" id="firstName" name="firstName"
+													[ngClass]="{ 'is-invalid': submitted && f.firstName?.invalid }"
+													placeholder="Please Enter First Name" />
+												<div *ngIf="submitted && f.firstName.invalid" class="invalid-feedback">
+													<div *ngIf="f.firstName.errors.required">First Name is required.
+													</div>
+													<div *ngIf="f.firstName.errors.pattern">Please enter valid First
+														Name.</div>
+												</div>
+											</div>
+
+											<div class="form-group mb-2">
+												<input type="text" class="form-control form-control-lg widthmax"
+													required formControlName="lastName" id="lastName" name="lastName"
+													[ngClass]="{ 'is-invalid': submitted && f.lastName?.invalid }"
+													placeholder="Please Enter Last Name" />
+												<div *ngIf="submitted && f.lastName.invalid" class="invalid-feedback">
+													<div *ngIf="f.lastName.errors.required">Last Name is required.</div>
+													<div *ngIf="f.lastName.errors.pattern">Please enter valid Last Name.
+													</div>
+												</div>
+											</div>
+
+											<div class="form-group mb-2">
+												<input type="text" (blur)="emailBlur()"
+													class="form-control form-control-lg widthmax" required
+													formControlName="email" id="email" name="email"
+													[ngClass]="{ 'is-invalid': submitted && f.email?.invalid }"
+													placeholder="Please Enter Email" />
+												<div *ngIf="submitted && f.email.invalid" class="invalid-feedback">
+													<div *ngIf="f.email.errors.required">Email is required.</div>
+													<div *ngIf="f.email.errors.pattern">Please enter valid Email.</div>
+												</div>
+											</div>
+
+											<div class="form-group mb-2">
+												<input type="text" (blur)="emailBlur()"
+													class="form-control form-control-lg widthmax" required
+													formControlName="verifyEmail" id="verifyEmail" name="verifyEmail"
+													[ngClass]="{ 'is-invalid': submitted && f.verifyEmail?.invalid }"
+													placeholder="Please Verify Email" />
+												<div *ngIf="submitted && f.verifyEmail.invalid"
+													class="invalid-feedback">
+													<div *ngIf="f.verifyEmail.errors.required">Email Verification is
+														required.</div>
+													<div *ngIf="f.verifyEmail.errors.pattern">Please enter valid Email.
+													</div>
+												</div>
+												<div *ngIf="emailVerifyFlag == true" class="red_error">Email Not Matched
+												</div>
+											</div>
+
+											<div class="form-group mb-2">
+												<input type="text" class="form-control form-control-lg widthmax"
+													required formControlName="phone" id="phone" name="phone"
+													[ngClass]="{ 'is-invalid': submitted && f.phone?.invalid }"
+													placeholder="Please Enter Phone Number" />
+												<div *ngIf="submitted && f.phone.invalid" class="invalid-feedback">
+													<div *ngIf="f.phone.errors.required">Phone Number is required.</div>
+													<div *ngIf="f.phone.errors.pattern">Please enter valid Phone Number.
+													</div>
+												</div>
+											</div>
+
+											<!--<div class="form-group m-b-15">
+					<input type="text" class="form-control form-control-lg" required formControlName="storeName" id="storeName" name="storeName" [ngClass]="{ 'is-invalid': submitted && f.storeName?.invalid }" placeholder="Please Enter Store Name"/>
+					<div *ngIf="submitted && f.storeName.invalid" class="invalid-feedback">
+						<div *ngIf="f.storeName.errors.required">Store Name is required.</div>
+					</div>	
+				</div>
+				<div class="form-group m-b-15">
+					<input type="text" class="form-control form-control-lg" required formControlName="storeAddress" id="storeAddress" name="storeAddress" [ngClass]="{ 'is-invalid': submitted && f.storeAddress?.invalid }" placeholder="Please Enter Store Address"/>
+					<div *ngIf="submitted && f.storeAddress.invalid" class="invalid-feedback">
+						<div *ngIf="f.storeAddress.errors.required">Store Address is required.</div>
+					</div>	
+				</div>
+				<div class="form-group m-b-15">
+					<select (change)="getCity($event)" required formControlName="storeState" id="storeState" name="storeState" [ngClass]="{ 'is-invalid': submitted && f.storeState?.invalid }" class="form-control">
+						<option value="">Select Store State</option>
+						<option [value]="state.StateUID" *ngFor="let state of states">{{state.StateName}}</option>                                                                               
+					  </select>
+					  <div *ngIf="submitted && f.storeState?.invalid" class="invalid-feedback">
+						  <div *ngIf="f.storeState?.errors.required">Store State is required</div>
+					  </div>
+				</div>
+				<div class="form-group m-b-15">
+					<select required formControlName="storeCity" id="storeCity" name="storeCity" [ngClass]="{ 'is-invalid': submitted && f.storeCity?.invalid }" class="form-control">
+						<option value="">Select Store City</option>
+						<option [value]="city.cityUID" *ngFor="let city of cities">{{city.CityName}}</option>                                                                               
+					  </select>
+					  <div *ngIf="submitted && f.storeCity?.invalid" class="invalid-feedback">
+						  <div *ngIf="f.storeCity.errors.required">Store City is required</div>
+					  </div>
+				</div>
+				<div class="form-group m-b-15">
+					<input type="text" required class="form-control form-control-lg" formControlName="region" id="region" name="region" [ngClass]="{ 'is-invalid': submitted && f.region?.invalid }" placeholder="Please Enter Store Region"/>
+					  <div *ngIf="submitted && f.region?.invalid" class="invalid-feedback">
+						  <div *ngIf="f.region.errors.required">Store Region is required</div>
+					  </div>
+				</div>
+				<div class="form-group m-b-15">
+					<input type="text" required class="form-control form-control-lg" formControlName="storeZip" id="storeZip" name="storeZip" [ngClass]="{ 'is-invalid': submitted && f.storeZip?.invalid }" placeholder="Please Enter Store Zip Code"/>
+					<div *ngIf="submitted && f.storeZip.invalid" class="invalid-feedback">
+						<div *ngIf="f.storeZip.errors.required">Store Zip Code is required.</div>
+						<div *ngIf="f.storeZip.errors.pattern">Store Zip is invalid</div>
+					</div>	
+				</div>-->
+											<div class="form-group mb-2">
+												<input type="password" required (blur)="passBlur()"
+													class="form-control form-control-lg widthmax"
+													formControlName="userPassword" id="userPassword" name="userPassword"
+													[ngClass]="{ 'is-invalid': submitted && registerForm.controls['userPassword'].invalid }"
+													placeholder="Please Enter Password" />
+												<div *ngIf="submitted && registerForm.controls['userPassword'].invalid"
+													class="invalid-feedback">
+													<div *ngIf="registerForm.controls['userPassword'].errors.required">
+														Password is required.</div>
+												</div>
+											</div>
+
+											<div class="form-group mb-2">
+												<input type="password" required (blur)="passBlur()"
+													class="form-control form-control-lg widthmax"
+													formControlName="verifyPassword" id="verifyPassword"
+													name="verifyPassword"
+													[ngClass]="{ 'is-invalid': submitted &&  registerForm.controls['verifyPassword'].invalid }"
+													placeholder="Please Verify Password" />
+												<div *ngIf="submitted && registerForm.controls['verifyPassword'].invalid"
+													class="invalid-feedback">
+													<div
+														*ngIf="registerForm.controls['verifyPassword'].errors.required">
+														Password Verify is required.</div>
+												</div>
+												<div *ngIf="passwordVerifyFlag == true" class="red_error">Password Not
+													Matched</div>
+											</div>
+
+											<div class="form-group mb-2">
+												<select class="form-control widthmax" formControlName="trial" id="trial"
+													name="trial">
+													<option value="1">Free 7 Day Trial</option>
+												</select>
+											</div>
+										</div>
+
+									</form>
+									<div class="alert alert-danger alert-dismissible"
+										*ngIf="error && registerFlag == false">
+										{{error_msg}}
+									</div>
+									<div class="alert alert-success" *ngIf="registerSuccess == true"
+										[innerHtml]="registerSuccessMsg"></div>
+									<div style="display:none;" id="rbtn" class="login-buttons">
+										<button type="button" [disabled]="disableFlag" (click)="registerUser()"
+											class="btn btn-primary btn-block btn-lg">Register User</button>
+									</div><br />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>

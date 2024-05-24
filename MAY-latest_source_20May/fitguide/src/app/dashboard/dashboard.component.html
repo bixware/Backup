@@ -1,0 +1,246 @@
+
+<div class="page style-module-page-UXT9 " data-e2e="pageBlock" style="overflow: hidden;">
+    <div class="style-module-header-y1Pq header_noTabs style-module-header-XWc0" data-e2e="headerBlock" style="padding: 0 !important;">
+      <div class="style-module-titleWrap-mfvE" data-e2e="headerContentBlock">
+        <!--<h1 class="style-module-title-EimQ" data-e2e="Dashboard">Dashboard</h1>
+        <div class=""></div>-->
+      </div>
+      <div class="style-module-tabs-cPQe"></div>
+    </div>
+    <div class="container-fluid" style="overflow: hidden;margin-top: 10px;">
+              <div class="row">
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card">
+                                <div class="card-body cardh">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Campaign Sent">TOTAL VEHICLES</h5>
+                                            <h3 class="my-2 py-1"><p>{{dashboard.TotalVehicle}}</p></h3>
+                                           
+                                        </div>
+                                        <div class="avatar-sm">
+                                            <span class="avatar-title bg-soft-primary rounded">
+                                                <i class="ri-stack-line font-20 text-primary"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="stats-link">
+                                    <ng-container *ngIf="(dashboard.roleUID == '1' )">
+                                    <!-- <a routerLink="/home/vehiclemaster/">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a> --> 
+                                    <a routerLink="/home/vehiclemaster/">View Detail <i class="ri-arrow-right-circle-line"></i></a>
+                                    </ng-container>
+                                    <ng-container *ngIf="(dashboard.roleUID == '2' || dashboard.roleUID == '3' || dashboard.roleUID == '4' || dashboard.roleUID == '5' || dashboard.roleUID == '6' || dashboard.roleUID == '7')">
+                                        <a href="javascript:;">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a> 
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div><!-- end col -->
+
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card">
+                                <div class="card-body cardh">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Deals">TOTAL COMPANIES</h5>
+                                            <h3 class="my-2 py-1"><p>{{dashboard.TotalCompany}}</p></h3>
+                                            
+                                        </div>
+                                        <div class="avatar-sm">
+                                            <span class="avatar-title bg-soft-primary rounded">
+                                                <i class="ri-hand-heart-line font-20 text-primary"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="stats-link">
+                                    <ng-container *ngIf="(dashboard.roleUID == '2' || dashboard.roleUID == '5' || dashboard.roleUID == '6' || dashboard.roleUID == '7')">
+                                       <br/>
+                                    </ng-container>
+                                </div>             
+                                <div class="stats-link">
+                                    <ng-container *ngIf="(dashboard.roleUID == '1' || dashboard.roleUID == '3' || dashboard.roleUID == '4')">
+                                        <a style="padding-bottom: 27px;" routerLink="/home/managecompany">View Detail <i class="ri-arrow-right-circle-line"></i></a>
+                                    </ng-container> 
+                                </div>
+                            </div>
+                        </div><!-- end col -->
+
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card">
+                                <div class="card-body cardh">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Booked Revenue">TOTAL STORES</h5>
+                                            <h3 class="my-2 py-1"><p>{{dashboard.TotalStores}}</p></h3>
+                                            
+                                        </div>
+                                        <div class="avatar-sm">
+                                            <span class="avatar-title bg-soft-primary rounded">
+                                                <i class="ri-money-dollar-box-line font-20 text-primary"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="stats-link">
+                                    <ng-container *ngIf="(dashboard.roleUID != '3' && dashboard.roleUID != '7')">
+                                    <!-- <a routerLink="/home/managestores/">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a> -->
+                                    <a routerLink="/home/managestores/">View Detail <i class="ri-arrow-right-circle-line"></i></a>
+                                </ng-container>
+                                </div>             
+                                <div class="stats-link">
+                                    <ng-container *ngIf="(dashboard.roleUID == '3' || dashboard.roleUID == '7')">
+                                    <a style="padding-bottom: 27px;"></a>
+                                </ng-container> 
+                                </div>
+                            </div>
+                        </div><!-- end col -->
+
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card">
+                                <div class="card-body cardh">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="New Leads">TOTAL USERS</h5>
+                                            <h3 class="my-2 py-1"><p>{{dashboard.TotalUsers}}</p></h3>
+                                            
+                                        </div>
+                                        <div class="avatar-sm">
+                                            <span class="avatar-title bg-soft-primary rounded">
+                                                <i class="ri-slideshow-2-line font-20 text-primary"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="stats-link">
+                                    <ng-container *ngIf="(dashboard.roleUID != '3' && dashboard.roleUID != '7')">
+                                    <!-- <a routerLink="/home/globaluser/">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a> -->
+                                    <a routerLink="/home/globaluser/">View Detail <i class="ri-arrow-right-circle-line"></i></a>
+                                </ng-container>
+                                </div>             
+                                <div class="stats-link">
+                                    <ng-container *ngIf="(dashboard.roleUID == '3' || dashboard.roleUID == '7')">
+                                    <a style="padding-bottom: 27px;"></a>
+                                </ng-container> 
+                                </div>
+                            </div>
+                        </div><!-- end col -->
+
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card">
+                                <div class="card-body cardh">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Campaign Sent">Total Searches THIS YEAR</h5>
+                                            <h3 class="my-2 py-1"><p>{{dashboard.YearSearch}}</p></h3>
+                                           
+                                        </div>
+                                        <div class="avatar-sm">
+                                            <span class="avatar-title bg-soft-primary rounded">
+                                                <i class="ri-profile-fill font-20 text-primary"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                               <div class="stats-link">
+                                    <!-- <a routerLink="/home/searchyear/">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a> --> 
+                                    <a routerLink="/home/searchyear/">View Detail <i class="ri-arrow-right-circle-line"></i></a>
+                                </div>
+                            </div>
+                        </div><!-- end col -->
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card">
+                                <div class="card-body cardh">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Campaign Sent">Total Searches THIS QUARTER</h5>
+                                            <h3 class="my-2 py-1"><p>{{dashboard.QuarterSearch}}</p></h3>
+                                           
+                                        </div>
+                                        <div class="avatar-sm">
+                                            <span class="avatar-title bg-soft-primary rounded">
+                                                <i class="ri-inbox-fill font-20 text-primary"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="stats-link">
+                                    <!-- <a routerLink="/home/searchquarter/">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a> -->
+                                    <a routerLink="/home/searchquarter/">View Detail <i class="ri-arrow-right-circle-line"></i></a>
+                                </div>
+                            </div>
+                        </div><!-- end col -->
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card">
+                                <div class="card-body cardh">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Campaign Sent">Total Searches THIS MONTH</h5>
+                                            <h3 class="my-2 py-1"><p>{{dashboard.MonthSearch}}</p></h3>
+                                           
+                                        </div>
+                                        <div class="avatar-sm">
+                                            <span class="avatar-title bg-soft-primary rounded">
+                                                <i class="ri-file-search-line font-20 text-primary"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="stats-link">
+                                   <!--  <a routerLink="/home/searchmonth/">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a> -->
+                                   <a routerLink="/home/searchmonth/">View Detail <i class="ri-arrow-right-circle-line"></i></a>
+                                </div>
+                            </div>
+                        </div><!-- end col -->
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card">
+                                <div class="card-body cardh">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Campaign Sent">Total Searches THIS WEEK</h5>
+                                            <h3 class="my-2 py-1"><p>{{dashboard.WeekSearch}}</p></h3>
+                                           
+                                        </div>
+                                        <div class="avatar-sm">
+                                            <span class="avatar-title bg-soft-primary rounded">
+                                                <i class="ri-ticket-2-line font-20 text-primary"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                
+                                <div class="stats-link">
+                                    <!-- <a routerLink="/home/searchweek/">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a> -->
+                                    <a routerLink="/home/searchweek/">View Detail <i class="ri-arrow-right-circle-line"></i></a>
+                                </div>
+                            </div>
+                        </div><!-- end col -->
+                    </div>
+                    <!-- end row -->
+                    <div class="row">
+                        <div class="col-md-12">
+                          <i class="fa fa-refresh" (click)="RefreshMap()" aria-hidden="true" style="float: right;
+                          cursor: pointer !important;
+                          margin-bottom: 0.75rem;"></i>
+                        </div>
+                    </div>                    
+                    <div id="map" class="leaflet-container"><div id="map_loader" style="vertical-align: middle; width: 100%; margin-top: 150px; text-align: center;"><i class="fa fa-spinner fa-spin"
+                        style="font-size:24px;color:rgb(105,105,105);"></i></div></div>
+                   <!-- <div class="row" id="numberofvisitorgragh">
+                        <div class="col-xl-12 col-md-12">
+                        <div id="calendar_basic0"></div>
+                        <div id="calendar_basic1"></div>
+                    </div>
+                  </div>-->
+                  <div class="row">
+                    <div class="col-md-12">
+                        <h3 style="margin-bottom:20px;margin-top:20px;">Top 10 Cars looked up this month</h3>
+                        <div id="barchart_material" style="width: 100%; height: 500px;"></div>
+                    </div>
+                  </div>          
+                <br/><br/>
+    </div>
+    </div>

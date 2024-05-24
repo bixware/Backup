@@ -1,0 +1,1301 @@
+<div *ngIf="apiFlag == true" id="overlay">
+  <div id="text">Processing...<br /><i class="fa fa-spinner fa-spin" style="font-size:24px;color:rgb(0,0,0);"></i>
+  </div>
+  <div id="info_alert" class="alert_info alert" style="display: none;">
+    <span class="closebtn" (click)="close1()">&times;</span>
+    <strong>{{successMessage}}</strong>
+  </div>
+  <div id="info_success" class="success_info success" style="display: none;">
+    <span class="closebtn" (click)="close1()">&times;</span>
+    <strong>{{successMessage}}</strong>
+  </div>
+</div>
+<div style="display:none;" id="archive_error">
+  <div id="info_archive" class="alert_info alert" style="display: none;">
+    <span class="closebtn" (click)="close2()">&times;</span>
+    <strong>User is Archived, Could not Edit</strong>
+  </div>
+</div>
+<!-- begin row -->
+<div class="row">
+  <div class="col-xl-12 part_master">
+    <!-- begin panel -->
+    <div class="panel panel-inverse" style="margin: 0px !important;">
+      <!-- begin panel-heading -->
+      <div class="panel-heading">
+        <div class="row">
+          <!-- <div class="col-xl-3">
+            <h4 class="panel-title">Part Master</h4>
+            </div> -->
+          <!-- <div class="col-xl-5">
+              <div style="margin-left: 30px;">
+                <label>Quick Filter :</label> &nbsp;&nbsp;&nbsp;<input type="text" class="agform" placeholder="Filter quickly..." (keyup)="quickSearch()" [(ngModel)]="searchValue"/>
+              </div>
+            </div>
+            <div class="col-xl-7">                    
+              <div style="float:right;margin-right: 40px;">
+                <a (click)="addpartModal()" style="cursor: pointer;" class="icon_btn_success" title="Add Part"><i class="fa fa-plus-square" style="font-size: 32px; color:green;"></i></a>
+              </div>
+              <div style="float:right;margin-right: 10px;">
+                <label>Archive :</label> &nbsp;
+                <input type="checkbox" (click)="clickEvent()" class="form control" style="margin-right:6px;" id="archive">
+              </div>
+              <div *ngIf="roleUID == 6 || roleUID == 1" style="float: right;margin-right: 10px;">
+                <button style="border: 1px solid #cccccc;" (click)="onBtnExport()">Download CSV export file</button>
+            </div>
+            </div> -->
+          <div class="col-12">
+            <div class="page-title-boxnew">
+              <div class="style-module-titleWrap-mfvE filtermbview" data-e2e="headerContentBlock">
+                <label>Quick Filter :</label><input type="text" class="agform" placeholder="Filter quickly..."
+                  (keyup)="quickSearch()" [(ngModel)]="searchValue" />
+              </div>
+              <div class="style-module-actions-t2Ea mt-2 stylebuttons" data-e2e="headerActionsBlock">
+                <a (click)="addpartModal()" style="cursor: pointer;" class="icon_btn_success" title="Add Part"><i
+                    class="fa fa-plus-square" style="font-size: 32px; color:green;"></i></a>
+                <label style="padding: 5px !important;">Archive :</label> &nbsp;
+                <input type="checkbox" (click)="clickEvent()" class="form control" style="margin-right:6px;"
+                  id="archive">
+                <div *ngIf="roleUID == 6 || roleUID == 1">
+                  <button style="border: 1px solid #cccccc;margin-top:4px;" (click)="onBtnExport()">Download CSV export
+                    file</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- begin panel-body -->
+      <div class="panel-body">
+        <ag-grid-angular id="ag_grid" style="width: 100%; height: 62vh;" class="ag-theme-alpine" [rowData]="rowData"
+          [columnDefs]="columnDefs" [modules]="modules" [tooltipShowDelay]="tooltipShowDelay" [animateRows]="true"
+          [frameworkComponents]="frameworkComponents" (gridReady)="onGridReady($event)" [pagination]="true"
+          [gridOptions]="gridOptions" [rowSelection]="rowSelection" (selectionChanged)="onSelectionChanged()"
+          (selectionChanged)="onSelectionChanged1()">
+        </ag-grid-angular>
+        <div class="card-header bg-white border-0" *ngIf="showButton">
+          <div class="row align-items-center">
+            <div class="col-12 text-left">
+              <button type="button" style="margin:6px;" (click)="combine()"
+                class="btn btn-sm btn-primary">Combine</button>
+              <button *ngIf="showButton1" (click)="bulkarchivedelete()" type="button"
+                class="btn btn-sm btn-primary">Bulk Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end panel-body -->
+    </div>
+    <!-- end panel -->
+  </div>
+</div>
+
+<div class="partmodal" id="myModal">
+  <div class="partmodals-content" id="partform">
+    <div class="modal-header" style="margin-top:10px">
+      <h4 class="modal-title" id="modal-title">Combine Part Details Here...</h4>
+      <div class="icon" (click)="cancel()" style="cursor: pointer;">
+        <i style="font-size:36px !important;" class="fa fa-window-close"></i>
+      </div>
+    </div>
+    <div class="modal-body">
+      <!-- begin row -->
+      <div class="row">
+        <div class="col-xl-12 order-xl-1">
+          <!-- <div class="card bg-secondary shadow"> -->
+          <form id="partform" (ngSubmit)="combinePart()" [formGroup]="form">
+            <div class="row">
+              <div class="col-xl-12 order-xl-1">
+                <div class="card bg-secondary shadow">
+
+                  <div class="card-body" style="overflow-x:hidden;overflow-y: auto;margin-top: 10px;">
+                    <h6 class="heading-small text-muted mb-2">Part information</h6>
+                    <div class="pl-lg-4" style="height: 32vh; margin-top: 20px; max-height: 50%; margin-left: 0px;">
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="form-group focused">
+                            <label class="form-control-label" for="input-sname">Section
+                              UID<span class="text-danger">*</span></label>
+                            <select class="form-control form-control-alternative" formControlName="sectionUID"
+                              id="sectionlist" (change)="getsubSection($event)"
+                              [ngClass]="{ 'is-invalid': submitted && f.sectionUID?.invalid }" required>
+                              <option value="">Select Section</option>
+                              <option [value]="section.searchSectionUID" *ngFor="let section of sections">
+                                {{section.searchSectionName}}</option>
+                            </select>
+                            <div *ngIf="submitted && f.sectionUID?.invalid" class="invalid-feedback">
+                              <div *ngIf="f.sectionUID.errors.required">Section Name is
+                                required</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-6">
+                          <div class="form-group focused">
+                            <label class="form-control-label" for="input-brandUID">Brand
+                              UID</label>
+                            <select class="form-control form-control-alternative" formControlName="brandUID"
+                              id="brandlist">
+                              <option value="">Select Brand</option>
+                              <option [value]="brand.brandUID" *ngFor="let brand of brands">{{brand.brandName}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row" *ngIf="subSectionFlag == true">
+                        <div class="col-lg-6">
+                          <div class="form-group focused">
+                            <label class="form-control-label" for="input-subname">Sub
+                              Section<span class="text-danger">*</span></label>
+                            <select class="form-control form-control-alternative" formControlName="subSection"
+                              id="dropdown" [ngClass]="{ 'is-invalid': submitted && f.subSection?.invalid }">
+                              <option value="">Select SubSection</option>
+                              <option [value]="subsectionList.searchsubSectionUID"
+                                *ngFor="let subsectionList of subsections">
+                                {{subsectionList.searchsubSectionName}}</option>
+                            </select>
+                            <div *ngIf="submitted && f.subSection.invalid" class="invalid-feedback">
+                              <div *ngIf="f.subSection.errors.required">SubSection is
+                                required</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-part-number">Part
+                              Number<span class="text-danger">*</span></label>
+                            <input type="text" formControlName="partNumber"
+                              class="form-control form-control-alternative" placeholder="Please Enter Part Number"
+                              [ngClass]="{ 'is-invalid': submitted && f.partNumber?.invalid }" required>
+                            <div *ngIf="submitted && f.partNumber?.invalid" class="invalid-feedback">
+                              <div *ngIf="f.partNumber.errors.required">Part Number is
+                                required</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-UPCCode">UPC
+                              Code</label>
+                            <input type="text" formControlName="UPCCode" class="form-control form-control-alternative"
+                              placeholder="Please Enter UPC Code">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-msrp">MSRP</label>
+                            <input type="tel" formControlName="MSRP" inputmode="numeric"
+                              class="form-control form-control-alternative" placeholder="Please Enter MSRP">
+                          </div>
+                        </div>
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-pdheader">Part Display Header</label>
+                            <!--<input type="text" formControlName="partDisplayHeader" class="form-control form-control-alternative" placeholder="Please Enter Part Display Header">-->
+                            <textarea value="" formControlName="partDisplayHeader"
+                              class="form-control form-control-alternative"
+                              placeholder="Please Enter Part Display Header"></textarea>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-psdescription">Short Description</label>
+                            <input type="text" formControlName="partShortDescription"
+                              class="form-control form-control-alternative"
+                              placeholder="Please Enter Part Short Description">
+                          </div>
+                        </div>
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-description">Description</label>
+                            <textarea type="text" formControlName="Description"
+                              class="form-control form-control-alternative"
+                              placeholder="Please Enter Description Here...."></textarea>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-notes">Note</label>
+                            <textarea type="textarea" formControlName="Note"
+                              class="form-control form-control-alternative"
+                              placeholder="Please Enter Note Here...."></textarea>
+                          </div>
+                        </div>
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-addflowline">Add 2nd Flow Line</label>
+                            <textarea value="" class="form-control" formControlName="Flowline"
+                              placeholder="Please Enter 2nd Flow Line"></textarea>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-web">Web</label>
+                            <input type="text" formControlName="Web" class="form-control form-control-alternative"
+                              placeholder="Please Enter Web">
+                          </div>
+                        </div>
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-list">LIST</label>
+                            <input type="text" formControlName="LIST" class="form-control form-control-alternative"
+                              placeholder="Please Enter List">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-map">MAP</label>
+                            <input type="tel" formControlName="MAP" inputmode="numeric"
+                              class="form-control form-control-alternative" pattern="^[0-9]*.[0-9]*$"
+                              placeholder="Please Enter Map">
+                          </div>
+                        </div>
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-COST">COST</label>
+                            <input type="tel" formControlName="COST" inputmode="numeric" pattern="^[0-9]*.[0-9]*$"
+                              class="form-control form-control-alternative" placeholder="Please Enter Cost"
+                              [ngClass]="{ 'is-invalid': submitted && f.COST.invalid }">
+                            <div *ngIf="submitted && f.COST.invalid" class="invalid-feedback">
+                              <div *ngIf="f.COST.errors.pattern">Only Numbers are allowed
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-list">Labor
+                              Hours</label>
+                            <input type="text" formControlName="labourHour"
+                              class="form-control form-control-alternative" placeholder="Please Labour Hours">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="form-group">
+                            <div class="m-t-10">
+                              <label class="form-control-label" for="gallery-image">Picture</label>
+                              <button type="button" class="btn btn-sm" (click)="addComImage()"
+                                style="background-color: #00c9fd;color: #fff;">Add Image +</button>
+                            </div>
+                          </div>
+                          <div class="form-group view-images">
+                            <ng-container formArrayName="images"
+                              *ngFor="let image of form.get('images')['controls']; let i = index">
+                              <div [formGroupName]="i" style="margin-bottom: 10px;">
+                                <img *ngIf="prevImage[i]" src={{prevImage[i]}} width="150px" height="150px">
+                                <div style="display: flex;">
+                                  <input type="file" formControlName="image" (change)="fileEditEvent($event,i)"
+                                    accept="image/*" />
+                                  <button type="button" class="btn btn-sm" (click)="deleteComImage(i)"
+                                    style="background-color: #00c9fd;color: #fff;">x</button>
+                                </div>
+                              </div>
+                            </ng-container>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer bg-white border-0">
+                    <div class="row align-items-center">
+                      <div class="col-lg-12">
+                        <div class="row">
+                          <div class="col-lg-6">
+                            <!-- <div id="arrows" style="display:none; clear:both;">	 -->
+                            <div class="icon" id="previous" class="arrowleft" (click)="Prev()" style="cursor: pointer;">
+                              <i style="font-size:26px !important;color:#000000; margin-bottom:16px; margin-right: 12px;"
+                                class="fa fa-arrow-left"></i>
+                            </div>
+                            <!-- </div> -->
+                          </div>
+                          <div class="col-lg-6">
+
+                            <button type="button" (click)="combinePart()" class="btn btn-sm btn-primary"
+                              style="float: right;">Proceed</button>
+                            <button type="button" (click)="cancel()" class="btn btn-sm btn-primary"
+                              style="margin-right: 5px;float: right;">Cancel</button>
+                          </div>
+
+
+
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="partmodals-content1" id="formpatch">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title">Combine Part Details Here...</h4>
+      <!--  <div class="icon" (click)="back()" style="cursor: pointer;">
+              <i style="font-size:36px !important;" class="fa fa-window-close"></i>
+            </div> -->
+    </div>
+    <div class="modal-body">
+      <!-- begin row -->
+      <div class="row">
+        <div class="col-xl-12 order-xl-1">
+          <form [formGroup]="patchform" id="formpatch">
+            <div class="row">
+              <div class="col-xl-12 order-xl-1">
+                <div class="card bg-secondary shadow">
+
+                  <div class="card-body">
+                    <h6 class="heading-small text-muted mb-2">Part information</h6>
+                    <div class="pl-lg-4">
+
+
+
+                      <div class="row no-margin" *ngFor="let selectpart of partDetails;let i = index">
+                        <div class="col-lg-12 col-xs-12 col-sm-12 no-padding table-responsive">
+                          <table width="100%" class="part_details">
+                            <tbody>
+
+                              <tr>
+                                <th>Select</th>
+                                <th>Part Number</th>
+                                <th>Section Name</th>
+                                <!--  <th>List</th>
+                                            <th>Brand Name</th> -->
+                              </tr>
+                              <tr>
+                                <td>
+                                  <div class="radio">
+                                    <label><input type="radio" name="patchpart" value="{{selectpart.partUID}}"
+                                        [checked]="(i === 0)"></label>
+                                  </div>
+                                </td>
+                                <td>{{selectpart.partNumber}}</td>
+                                <td>{{selectpart.sectionName}}</td>
+                                <!-- <td>{{selectpart.LIST}}</td>
+                                              <td>{{selectpart.brandName}}</td> -->
+                              </tr>
+                              <!-- <tr>
+                                            <th>MSRP</th>
+                                            <th>Labour hour</th>
+                                            <th>Section Name</th>
+                                            <th>MAP</th>
+                                          </tr>
+                                          <tr>
+                                            <td>{{selectpart.MSRP}}</td>
+                                            <td>{{selectpart.labourHour}}</td>
+                                            <td>{{selectpart.sectionUID}}</td>
+                                            <td>{{selectpart.MAP}}</td>
+                                          </tr>
+                                          <tr>
+                                            <th>COST</th>
+                                            <th>Descripion</th>
+                                            <th>UPC CODE</th>
+                                            <th>Note</th>
+                                          </tr>
+                                          <tr>
+                                          <td>{{selectpart.COST}}</td>
+                                            <td>{{selectpart.Description}}</td>
+                                            <td>{{selectpart.UPCCode}}</td>
+                                            <td>{{selectpart.Note}}</td>
+                                            
+                                          </tr>
+                                          <tr>
+                                            <th>Web</th>
+                                            <th>Short Description</th>
+                                            <th>Display Header</th>
+                                            <th>Add Flowline</th>
+                                          </tr>
+                                          <tr>
+                                            <td>{{selectpart.Web}}</td>
+                                            <td>{{selectpart.partShortDescription}}</td>
+                                            <td>{{selectpart.partDisplayHeader}}</td>
+                                            <td>{{selectpart.addFlowline}}</td>
+                                          </tr>
+                                          <tr>
+                                            <th>Picture</th>
+                                          </tr>
+                                          <tr>
+                                            <td>{{selectpart.Picture}}</td>
+                                          </tr> -->
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card-footer bg-white border-0">
+                    <div class="row align-items-center">
+                      <div class="col-lg-12 col-xs-12 col-sm-12">
+                        <div class="icon" id="next" class="arrowright" (click)="Next()" style="cursor: pointer;">
+                          <i style="font-size:26px !important;float: right;color:#000000; margin-bottom:16px; margin-right: 12px;"
+                            class="fa fa-arrow-right"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+          <!-- </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PartEdit modal popup -->
+<div class="calloutmodal" id="modalEditpart">
+  <div class="modals-content">
+    <!-- <div class="icon" style="cursor: pointer;"> -->
+    <!-- <i style="font-size:23px !important; float:right; margin-top: -37px; margin-right:-37px;" title="Close" class="fa fa-window-close"></i> -->
+    <!--  <a (click)="cancelpartEdit()" style="cursor: pointer;" title="Close" class="close">X</a> -->
+    <!-- <div style="float:right"> -->
+
+    <!-- </div>
+        </div> -->
+    <div class="modal-header">
+      <a (click)="cancelpartEdit()" style="cursor: pointer;" title="Close" class="close">X</a>
+      <!-- <h4 class="modal-title" id="modal-title">Edit Part Details Here...</h4>
+            <div style="float:right">
+              <button type="button" (click)="cancelpartEdit()"
+              style="background-color: #00c9fd; min-height: 36px;font-weight: 400; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+              class="btn btn-sm btn-danger">Back</button>&nbsp;&nbsp;
+          <button type="button" (click)="editPart()"
+              style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+              class="btn btn-sm btn-primary">Save</button>
+            </div> -->
+    </div>
+    <div class="modal-body" style="overflow-x:hidden;overflow-y: auto;margin-top: 10px;">
+      <!-- <div class="row">
+                <div class="col-xl-12 order-xl-1">
+                    <div class="card-body" style="overflow-y: scroll; overflow-x: hidden; height: 100vh; margin-right: -32px; max-height: 50%; width: auto; margin-left: 0px;">
+                        <div class="card-header bg-white border-0" style= "background-color:#fff !important;" > -->
+      <form (ngSubmit)="editPart()" [formGroup]="editform">
+        <div class="pl-lg-4" style="height: 60vh; margin-top: 20px; max-height: 50%; margin-left: 0px;">
+          <div class="row align-items-center">
+            <div class="col-lg-8 col-md-6 col-xs-6">
+              <h5 class="mb-2 header">Edit Part Details Here...</h5>
+            </div>
+            <div class="col-lg-4 col-md-6 col-xs-6 mb-2 text-right" style="float: right;">
+              <!--  <a href="users_list.php" class="btn btn-sm btn-danger">Back</a> -->
+
+              <button (click)="cancelpartEdit()"
+                style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+                type="button" class="btn btn-sm btn-danger" id="buttons">Back</button>&nbsp;&nbsp;
+              <button type="button" (click)="editPart()"
+                style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+                name="submit" id="buttons" class="btn btn-sm btn-primary">Save</button>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group inputedit_part">
+                  <label class="col-sm-5 form-control-label" for="input-sname">Section UID</label>
+                  <select class="form-select form-control-alternative" (change)="getsubSection($event)"
+                    style="border: 1px solid #ccc;" formControlName="sectionUID"
+                    [ngClass]="{ 'is-invalid': submitted && e.sectionUID.invalid }">
+                    <option value="null">Select Section</option>
+                    <option [value]="section.searchSectionUID" *ngFor="let section of sections">
+                      {{section.searchSectionName}}</option>
+                  </select>
+                  <div *ngIf="submitted && e.sectionUID.invalid" class="invalid-feedback">
+                    <div *ngIf="e.sectionUID.errors.required">Section UID is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group inputedit_part">
+                  <label class="col-sm-5 form-control-label" for="input-brandUID">Brand UID</label>
+                  <select class="form-select form-control-alternative" style="border: 1px solid #ccc;"
+                    formControlName="brandUID">
+                    <option value=null>Select Brand</option>
+                    <option [value]="brand.brandUID" *ngFor="let brand of brands">{{brand.brandName}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-2" *ngIf="subSectionFlag == true">
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group inputedit_part">
+                  <label class="col-sm-5 form-control-label" for="input-subname">Sub Section<span
+                      class="text-danger">*</span></label>
+                  <select class="form-select form-control-alternative" formControlName="subSection" id="dropdown"
+                    style="border: 1px solid #ccc;" [ngClass]="{ 'is-invalid': submitted && e.subSection.invalid }">
+                    <option value="">Select SubSection</option>
+                    <option [value]="subsectionList.searchsubSectionUID" *ngFor="let subsectionList of subsections">
+                      {{subsectionList.searchsubSectionName}}</option>
+                  </select>
+                  <div *ngIf="submitted && e.subSection.invalid" class="invalid-feedback">
+                    <div *ngIf="e.subSection.errors.required">SubSection is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group inputedit_part">
+                  <label class="col-sm-5 form-control-label" for="input-part-number">Part Number<span
+                      class="text-danger">*</span></label>
+                  <input type="text" id="PartNumberEditable" formControlName="partNumber"
+                    class="form-control form-control-alternative" placeholder="Please Enter Part Number" required
+                    [ngClass]="{ 'is-invalid': submitted && e.partNumber?.invalid }">
+                  <div *ngIf="submitted && e.partNumber?.invalid" class="invalid-feedback">
+                    <div *ngIf="e.partNumber.errors.required">Part Number is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group inputedit_part">
+                  <label class="col-sm-5 form-control-label" for="input-UPCCode">UPC Code</label>
+                  <input type="text" formControlName="UPCCode" class="form-control form-control-alternative"
+                    style="border: 1px solid #ccc;" placeholder="Please Enter UPC Code">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group inputedit_part">
+                  <label class="col-sm-5 form-control-label" for="input-msrp">MSRP</label>
+                  <input type="tel" formControlName="MSRP" inputmode="numeric"
+                    class="form-control form-control-alternative" style="border: 1px solid #ccc;"
+                    placeholder="Please Enter MSRP">
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group inputedit_part">
+                  <label class="col-sm-5 form-control-label" for="partdisplay-header">Part Display Header</label>
+                  <textarea value="" formControlName="partDisplayHeader" class="form-control form-control-alternative"
+                    style="border: 1px solid #ccc;" placeholder="Please Enter Part Display Header" rows="3" cols="20">
+                                                              </textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group inputedit_part">
+                  <label class="col-sm-5 form-control-label" for="partShort-Description">Short Description</label>
+                  <textarea type="text" formControlName="partShortDescription"
+                    class="form-control form-control-alternative" style="border: 1px solid #ccc;"
+                    placeholder="Please Enter Short Description" rows="3" cols="20">
+                                                               </textarea>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group inputedit_part">
+                  <label class="col-sm-5 form-control-label" for="input-description">Description</label>
+                  <textarea type="text" formControlName="Description" class="form-control form-control-alternative"
+                    style="border: 1px solid #ccc;" placeholder="Please Enter Description" rows="3" cols="20">
+                                                                    </textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group inputedit_part">
+                  <label class="col-sm-5 form-control-label" for="input-notes">Note</label>
+                  <textarea type="textarea" formControlName="Note" class="form-control form-control-alternative"
+                    style="border: 1px solid #ccc;" placeholder="Please Enter Note..." rows="3" cols="20">
+                                                                      </textarea>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group inputedit_part">
+                  <label class="col-sm-5 form-control-label" for="input-addflowline">Add 2nd Flow Line</label>
+                  <textarea class="form-control" formControlName="addFlowline" style="border: 1px solid #ccc;"
+                    value="2nd flow line" placeholder="Please Enter 2nd Flow Line" rows="3" cols="20">
+                                                                          </textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group inputedit_part">
+                  <label class="col-sm-5 form-control-label" for="input-web">Web</label>
+                  <input type="text" formControlName="Web" class="form-control form-control-alternative"
+                    style="border: 1px solid #ccc;" placeholder="Please Enter Web Address">
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group inputedit_part">
+                  <label class="col-sm-5 form-control-label" for="input-list">LIST</label>
+                  <input type="text" formControlName="LIST" class="form-control form-control-alternative"
+                    placeholder="Please Enter LIST">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group inputedit_part">
+                  <label class="col-sm-5 form-control-label" for="input-map">MAP</label>
+                  <input type="tel" formControlName="MAP" inputmode="numeric" style="border: 1px solid #ccc;"
+                    class="form-control form-control-alternative" placeholder="Please Enter MAP">
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group inputedit_part">
+                  <label class="col-sm-5 form-control-label" for="input-COST">COST</label>
+                  <input type="tel" formControlName="COST" inputmode="numeric" pattern="^[0-9]*.[0-9]*$"
+                    style="border: 1px solid #ccc;" class="form-control form-control-alternative"
+                    placeholder="Please Enter Cost" [ngClass]="{ 'is-invalid': submitted && d.COST.invalid }">
+                  <div *ngIf="submitted && e.COST.invalid" class="invalid-feedback">
+                    <div *ngIf="e.COST.errors.pattern">Only Numbers are allowed</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group inputedit_part">
+                  <label class="col-sm-5 form-control-label" for="input-list">Labor Hours</label>
+                  <input type="text" formControlName="labourHour" style="border: 1px solid #ccc;"
+                    class="form-control form-control-alternative" placeholder="Please Labour Hours">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="form-group">
+                <div class="m-t-10">
+                  <label class="form-control-label" for="gallery-image">Picture</label>
+                  <button type="button" class="btn btn-sm" (click)="addEditImage()"
+                    style="background-color: #00c9fd;color: #fff;">Add Image +</button>
+                </div>
+              </div>
+              <div class="form-group view-images">
+                <ng-container formArrayName="images"
+                  *ngFor="let image of editform.get('images')['controls']; let i = index">
+                  <div [formGroupName]="i" style="margin-bottom: 10px;">
+                    <img *ngIf="prevImage[i]" src={{prevImage[i]}} width="150px" height="150px">
+                    <div style="display: flex;">
+                      <input type="file" formControlName="image" (change)="fileEditEvent($event,i)" accept="image/*" />
+                      <button type="button" class="btn btn-sm" (click)="deleteEditImage(i)"
+                        style="background-color: #00c9fd;color: #fff;">x</button>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+
+          </div>
+
+
+        </div>
+      </form>
+      <!--       </div>
+                    </div>
+                </div>
+            </div>  -->
+    </div>
+  </div>
+</div>
+
+<!-- Duplicate Part modal popup -->
+<div class="calloutmodal" id="modalDuplicatepart">
+  <div class="modals-content1">
+    <!-- <div class="icon" style="cursor: pointer;"> -->
+    <!-- <i style="font-size:23px !important; float:right; margin-top: -37px; margin-right:-37px;" title="Close" class="fa fa-window-close"></i> -->
+    <!-- <a (click)="cancelDupepart()" style="cursor: pointer;" title="Close" class="close">X</a> -->
+    <!-- <div style="float:right"> -->
+
+    <!--  </div>
+        </div> -->
+    <div class="modal-header">
+      <a (click)="cancelDupepart()" style="cursor: pointer;" title="Close" class="close">X</a>
+      <!-- <h4 class="modal-title" id="modal-title">Duplicate Details Here...</h4>
+            <div style="float:right">
+              <button type="button" (click)="cancelDupepart()"
+              style="background-color: #00c9fd; min-height: 36px;  font-weight: 400; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+              class="btn btn-sm btn-danger">Back</button>&nbsp;&nbsp;
+          <button type="button" (click)="duplicatePart()"
+              style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+              class="btn btn-sm btn-primary">Save</button>
+            </div> -->
+    </div>
+    <div class="modal-body" style="overflow-x:hidden;overflow-y: auto;margin-top: 10px;">
+      <!-- <div class="row">
+                <div class="col-xl-12 order-xl-1">
+                    <div class="card-body" style="overflow-y: scroll; overflow-x: hidden; height: 100vh; margin-top: 22px; margin-right: -32px; max-height: 50%; width: auto; margin-left: 0px;">
+                        <div class="card-header bg-white border-0" style= "background-color:#fff !important; margin-top: -38px;"> -->
+      <form (ngSubmit)="duplicatePart()" [formGroup]="duplicateform">
+        <div class="pl-lg-4" style="height: 60vh; margin-top: 20px; max-height: 50%; margin-left: 0px;">
+          <div class="row align-items-center">
+            <div class="col-lg-8 col-md-6 col-xs-6">
+              <h5 class="mb-2 header">Duplicate Details Here...</h5>
+            </div>
+            <div class="col-lg-4 col-md-6 col-xs-6 mb-2 text-right" style="float: right;">
+              <!--  <a href="users_list.php" class="btn btn-sm btn-danger">Back</a> -->
+
+              <button (click)="cancelDupepart()"
+                style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+                type="button" class="btn btn-sm btn-danger" id="buttons">Back</button>&nbsp;&nbsp;
+              <button type="button" (click)="duplicatePart()"
+                style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+                name="submit" id="buttons" class="btn btn-sm btn-primary">Save</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group inputedit_part">
+                  <label class="col-sm-5 form-control-label" for="input-sname">Section UID</label>
+                  <select class="form-select form-control-alternative" (change)="getsubSection($event)"
+                    style="border: 1px solid #ccc;" formControlName="sectionUID"
+                    [ngClass]="{ 'is-invalid': submitted && d.sectionUID?.invalid }">
+                    <option value="null">Select Section</option>
+                    <option [value]="section.searchSectionUID" *ngFor="let section of sections">
+                      {{section.searchSectionName}}</option>
+                  </select>
+                  <div *ngIf="submitted && d.sectionUID?.invalid" class="invalid-feedback">
+                    <div *ngIf="d.sectionUID.errors.required">Section UID is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group inputedit_part">
+                  <label class="col-sm-5 form-control-label" for="input-brandUID">Brand UID</label>
+                  <select class="form-select form-control-alternative" style="border: 1px solid #ccc;"
+                    formControlName="brandUID">
+                    <option value=null>Select Brand</option>
+                    <option [value]="brand.brandUID" *ngFor="let brand of brands">{{brand.brandName}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" *ngIf="subSectionFlag == true">
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group inputedit_part">
+                  <label class="col-sm-5 form-control-label" for="input-subname">Sub Section<span
+                      class="text-danger">*</span></label>
+                  <select class="form-select form-control-alternative" formControlName="subSection" id="dropdown"
+                    style="border: 1px solid #ccc;" [ngClass]="{ 'is-invalid': submitted && d.subSection.invalid }">
+                    <option value="">Select SubSection</option>
+                    <option [value]="subsectionList.searchsubSectionUID" *ngFor="let subsectionList of subsections">
+                      {{subsectionList.searchsubSectionName}}</option>
+                  </select>
+                  <div *ngIf="submitted && d.subSection.invalid" class="invalid-feedback">
+                    <div *ngIf="d.subSection.errors.required">SubSection is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group inputedit_part">
+                  <label class="col-sm-5 form-control-label" for="input-part-number">Part Number<span
+                      class="text-danger">*</span></label>
+                  <input type="text" id="PartNumberEditable" style="border: 1px solid #ccc;"
+                    formControlName="partNumber" class="form-control form-control-alternative"
+                    placeholder="Please Enter Part Number" required
+                    [ngClass]="{ 'is-invalid': submitted && d.partNumber?.invalid }">
+                  <div *ngIf="submitted && d.partNumber?.invalid" class="invalid-feedback">
+                    <div *ngIf="d.partNumber.errors.required">Part Number is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group inputedit_part">
+                  <label class="col-sm-5 form-control-label" for="input-UPCCode">UPC Code</label>
+                  <input type="text" formControlName="UPCCode" class="form-control form-control-alternative"
+                    style="border: 1px solid #ccc;" placeholder="Please Enter UPC Code">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group inputedit_part">
+                  <label class="col-sm-5 form-control-label" for="input-msrp">MSRP</label>
+                  <input type="tel" formControlName="MSRP" inputmode="numeric"
+                    class="form-control form-control-alternative" style="border: 1px solid #ccc;"
+                    placeholder="Please Enter MSRP">
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group inputedit_part">
+                  <label class="col-sm-5 form-control-label" for="partdisplay-header">Part Display Header</label>
+                  <textarea value="" formControlName="partDisplayHeader" class="form-control form-control-alternative"
+                    style="border: 1px solid #ccc;" placeholder="Please Enter Part Display Header" rows="3" cols="20">
+                                                              </textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group inputedit_part">
+                  <label class="col-sm-5 form-control-label" for="partShort-Description">Short Description</label>
+                  <textarea type="text" formControlName="partShortDescription"
+                    class="form-control form-control-alternative" style="border: 1px solid #ccc;"
+                    placeholder="Please Enter Short Description" rows="3" cols="20">
+                                                                  </textarea>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group inputedit_part">
+                  <label class="col-sm-5 form-control-label" for="input-description">Description</label>
+                  <textarea type="text" formControlName="Description" class="form-control form-control-alternative"
+                    style="border: 1px solid #ccc;" placeholder="Please Enter Description" rows="3" cols="20">
+                                                                    </textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group inputedit_part">
+                  <label class="col-sm-5 form-control-label" for="input-notes">Note</label>
+                  <textarea type="textarea" formControlName="Note" class="form-control form-control-alternative"
+                    style="border: 1px solid #ccc;" placeholder="Please Enter Note..." rows="3" cols="20">
+                                                                    </textarea>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group inputedit_part">
+                  <label class="col-sm-5 form-control-label" for="input-addflowline">Add 2nd Flow Line</label>
+                  <textarea class="form-control" formControlName="addFlowline" style="border: 1px solid #ccc;"
+                    value="2nd flow line" placeholder="Please Enter 2nd Flow Line" rows="3" cols="20">
+                                                                          </textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group inputedit_part">
+
+                  <label class="col-sm-5 form-control-label" for="input-web">Web</label>
+                  <input type="text" formControlName="Web" class="form-control form-control-alternative"
+                    style="border: 1px solid #ccc;" placeholder="Please Enter Web Address">
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group inputedit_part">
+                  <label class="col-sm-5 form-control-label" for="input-list">LIST</label>
+                  <input type="text" formControlName="LIST" style="border: 1px solid #ccc;"
+                    class="form-control form-control-alternative" placeholder="Please Enter LIST">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group inputedit_part">
+                  <label class="col-sm-5 form-control-label" for="input-map">MAP</label>
+                  <input type="tel" formControlName="MAP" inputmode="numeric" style="border: 1px solid #ccc;"
+                    class="form-control form-control-alternative" placeholder="Please Enter MAP">
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group inputedit_part">
+                  <label class="col-sm-5 form-control-label" for="input-COST">COST</label>
+                  <input type="tel" formControlName="COST" inputmode="numeric" pattern="^[0-9]*.[0-9]*$"
+                    style="border: 1px solid #ccc;" class="form-control form-control-alternative"
+                    placeholder="Please Enter Cost" [ngClass]="{ 'is-invalid': submitted && d.COST.invalid }">
+                  <div *ngIf="submitted && d.COST.invalid" class="invalid-feedback">
+                    <div *ngIf="d.COST.errors.pattern">Only Numbers are allowed</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group inputedit_part">
+                  <label class="col-sm-5 form-control-label" for="input-list">Labor Hours</label>
+                  <input type="text" formControlName="labourHour" style="border: 1px solid #ccc;"
+                    class="form-control form-control-alternative" placeholder="Please Labour Hours">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="form-group">
+                <div class="m-t-10">
+                  <label class="form-control-label" for="gallery-image">Picture</label>
+                  <button type="button" class="btn btn-sm" (click)="addDupImage()"
+                    style="background-color: #00c9fd;color: #fff;">Add Image +</button>
+                </div>
+              </div>
+              <div class="form-group view-images">
+                <ng-container formArrayName="images"
+                  *ngFor="let image of duplicateform.get('images')['controls']; let i = index">
+                  <div [formGroupName]="i" style="margin-bottom: 10px;">
+                    <img *ngIf="prevImage[i]" src={{prevImage[i]}} width="150px" height="150px">
+                    <div style="display: flex;">
+                      <input type="file" formControlName="image" (change)="fileEditEvent($event,i)" accept="image/*" />
+                      <button type="button" class="btn btn-sm" (click)="deleteDupImage(i)"
+                        style="background-color: #00c9fd;color: #fff;">x</button>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </form>
+      <!-- </div>
+                    </div>
+                </div>
+            </div> -->
+    </div>
+  </div>
+</div>
+
+<!-- Add Part modal popup -->
+<div class="calloutmodal" id="modalAddpart">
+  <div class="modals-content">
+
+    <div class="modal-header">
+      <a (click)="canceladdpart()" style="cursor: pointer;" title="Close" class="close">X</a>
+
+    </div>
+    <div class="modal-body" style="overflow-x:hidden;overflow-y: auto;margin-top: 10px;">
+      <form (ngSubmit)="addPart()" [formGroup]="addform">
+        <div class="pl-lg-4" style="height: 60vh; margin-top: 20px; max-height: 50%; margin-left: 0px;">
+          <div class="row align-items-center">
+            <div class="col-lg-8 col-md-6 col-xs-6">
+              <h5 class="mb-2 header">Add Part Details Here...</h5>
+            </div>
+            <div class="col-lg-4 col-md-6 col-xs-6 mb-2 text-right" style="float: right;">
+              <!--  <a href="users_list.php" class="btn btn-sm btn-danger">Back</a> -->
+
+              <button (click)="canceladdpart()"
+                style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+                type="button" class="btn btn-sm btn-danger" id="buttons">Back</button>&nbsp;&nbsp;
+              <button type="button" (click)="addPart()"
+                style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+                name="submit" id="buttons" class="btn btn-sm btn-primary">Save</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                  <label class="col-sm-5 form-control-label" for="input-sname">Section UID<span
+                      class="text-danger">*</span></label>
+                  <select class="form-select form-control-alternative" (change)="getsubSection($event)"
+                    style="border: 1px solid #ccc;" formControlName="sectionUID"
+                    [ngClass]="{ 'is-invalid': submitted && a.sectionUID?.invalid }">
+                    <option value="null">Select Section</option>
+                    <option [value]="section.searchSectionUID" *ngFor="let section of sections">
+                      {{section.searchSectionName}}</option>
+                  </select>
+                  <div *ngIf="submitted && a.sectionUID?.invalid" class="invalid-feedback">
+                    <div *ngIf="a.sectionUID.errors.required">Section UID is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                  <label class="col-sm-5 form-control-label" for="input-brandUID">Brand UID</label>
+                  <select class="form-select form-control-alternative" style="border: 1px solid #ccc;"
+                    formControlName="brandUID">
+                    <option value=null>Select Brand</option>
+                    <option [value]="brand.brandUID" *ngFor="let brand of brands">{{brand.brandName}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" *ngIf="subSectionFlag == true">
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                  <label class="col-sm-5 form-control-label" for="input-subname">Sub Section<span
+                      class="text-danger">*</span></label>
+                  <select class="form-select form-control-alternative" formControlName="subSection" id="dropdown"
+                    style="border: 1px solid #ccc;" [ngClass]="{ 'is-invalid': submitted && a.subSection.invalid }">
+                    <option value="null">Select SubSection</option>
+                    <option [value]="subsectionList.searchsubSectionUID" *ngFor="let subsectionList of subsections">
+                      {{subsectionList.searchsubSectionName}}</option>
+                  </select>
+                  <div *ngIf="submitted && a.subSection.invalid" class="invalid-feedback">
+                    <div *ngIf="a.subSection.errors.required">SubSection is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                  <label class="col-sm-5 form-control-label" for="input-part-number">Part Number<span
+                      class="text-danger">*</span></label>
+                  <input type="text" id="PartNumberEditable" style="border: 1px solid #ccc;"
+                    formControlName="partNumber" class="form-control form-control-alternative"
+                    placeholder="Please Enter Part Number" required
+                    [ngClass]="{ 'is-invalid': submitted && a.partNumber?.invalid }">
+                  <div *ngIf="submitted && a.partNumber?.invalid" class="invalid-feedback">
+                    <div *ngIf="a.partNumber.errors.required">Part Number is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                  <label class="col-sm-5 form-control-label" for="input-UPCCode">UPC Code</label>
+                  <input type="text" formControlName="UPCCode" class="form-control form-control-alternative"
+                    style="border: 1px solid #ccc;" placeholder="Please Enter UPC Code">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                  <label class="col-sm-5 form-control-label" for="input-msrp">MSRP</label>
+                  <input type="tel" formControlName="MSRP" inputmode="numeric"
+                    class="form-control form-control-alternative" style="border: 1px solid #ccc;"
+                    placeholder="Please Enter MSRP">
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                  <label class="col-sm-5 form-control-label" for="partdisplay-header">Part Display Header</label>
+                  <textarea value="text" formControlName="partDisplayHeader"
+                    class="form-control form-control-alternative" style="border: 1px solid #ccc;"
+                    placeholder="Please Enter Part Display Header" rows="3" cols="20">
+                                                          </textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                  <label class="col-sm-5 form-control-label" for="partShort-Description">Short Description</label>
+                  <textarea type="text" formControlName="partShortDescription"
+                    class="form-control form-control-alternative" style="border: 1px solid #ccc;"
+                    placeholder="Please Enter Short Description" rows="3" cols="20">
+                                                            </textarea>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                  <label class="col-sm-5 form-control-label" for="input-description">Description</label>
+                  <textarea type="text" formControlName="Description" class="form-control form-control-alternative"
+                    style="border: 1px solid #ccc;" placeholder="Please Enter Description" rows="3" cols="20">
+                                              </textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                  <label class="col-sm-5 form-control-label" for="input-notes">Note</label>
+                  <textarea type="textarea" formControlName="Note" class="form-control form-control-alternative"
+                    style="border: 1px solid #ccc;" placeholder="Please Enter Note..." rows="3" cols="20">
+                                                                  </textarea>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                  <label class="col-sm-5 form-control-label" for="input-addflowline">Add 2nd Flow Line</label>
+                  <textarea class="form-control" formControlName="addFlowline" style="border: 1px solid #ccc;"
+                    placeholder="Please Enter 2nd Flow Line" rows="3" cols="20">
+                                                                    </textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                  <label class="col-sm-5 form-control-label" for="input-web">Web</label>
+                  <input type="text" formControlName="Web" class="form-control form-control-alternative"
+                    style="border: 1px solid #ccc;" placeholder="Please Enter Web Address">
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                  <label class="col-sm-5 form-control-label" for="input-list">LIST</label>
+                  <input type="text" formControlName="LIST" style="border: 1px solid #ccc;"
+                    class="form-control form-control-alternative" placeholder="Please Enter LIST">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                  <label class="col-sm-5 form-control-label" for="input-map">MAP</label>
+                  <input type="tel" formControlName="MAP" inputmode="numeric" style="border: 1px solid #ccc;"
+                    class="form-control form-control-alternative" placeholder="Please Enter MAP">
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                  <label class="col-sm-5 form-control-label" for="input-COST">COST</label>
+                  <input type="tel" formControlName="COST" inputmode="numeric" pattern="^[0-9]*.[0-9]*$"
+                    style="border: 1px solid #ccc;" class="form-control form-control-alternative"
+                    placeholder="Please Enter Cost" [ngClass]="{ 'is-invalid': submitted && d.COST.invalid }">
+                  <div *ngIf="submitted && a.COST.invalid" class="invalid-feedback">
+                    <div *ngIf="a.COST.errors.pattern">Only Numbers are allowed</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-inline">
+                <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                  <label class="col-sm-5 form-control-label" for="input-list">Labor Hours</label>
+                  <input type="text" formControlName="labourHour" style="border: 1px solid #ccc;"
+                    class="form-control form-control-alternative" placeholder="Please Labour Hours">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group">
+                <button type="button" class="btn btn-sm" (click)="addImage()"
+                  style="background-color: #00c9fd;color: #fff;">Add Image +</button>
+                <div class="m-t-10">
+                  <label class="form-control-label" for="gallery-image">Picture</label>
+                </div>
+              </div>
+              <div class="form-group">
+                <ng-container formArrayName="images"
+                  *ngFor="let image of addform.get('images')['controls']; let i = index">
+                  <div [formGroupName]="i" style="margin-bottom: 20px;">
+                    <input type="file" class="team-image" formControlName="image" (change)="fileImageEvent($event,i)"
+                      accept="image/*" />
+                    <button type="button" class="btn btn-sm" (click)="deleteImage(i)"
+                      style="background-color: #00c9fd;color: #fff;">x</button>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="calloutmodal" id="modalDeleteArchive">
+  <div class="modal-delete-content modalnew">
+    <!--  <div class="icon" style="cursor: pointer;"> -->
+    <a style="cursor: pointer;" (click)="close1()" title="Close" class="close">X</a>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title">Archive Part Deletion</h4>
+      <hr />
+    </div>
+    <div class="modal-body">
+      <p><strong>Are you sure you want to Archive Part?</strong></p>
+    </div>
+    <br />
+    <div class="modal-footer">
+      <button type="button" (click)="close1()"
+        style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;float:right"
+        class="btn btn-sm btn-danger">Cancel</button>&nbsp;&nbsp;
+
+      <button type="button" (click)="deleteArchive()"
+        style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;float:right;margin-right: 5px;"
+        class="btn btn-sm btn-primary" id="buttons">Ok</button>
+    </div>
+  </div>
+</div>

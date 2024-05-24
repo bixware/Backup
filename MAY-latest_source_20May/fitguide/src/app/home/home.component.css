@@ -1,0 +1,239 @@
+b, strong {
+    /* color: #6559CA;
+    font-weight: 500;
+    font-size: 22px; */
+	color: #00c9fd;
+	font-size: 22px;
+
+}
+		.style-module-pageHeader-sO3T{
+			top:-24px;
+		}
+		.navbar-custom{height:65px;}
+		@media (min-width: 992px)
+		{
+		body[data-layout-mode=two-column] .navbar-custom
+				{
+					left:60px!important;
+				}
+		} 
+		.cardh{
+			padding:10px;
+			padding-bottom:0px;
+			
+		}
+		.offcanvas-header{ display:none; }
+
+.screen-darken{
+	height: 100%;
+	width:0%;
+	z-index: 30;
+	position: fixed;
+	top: 0;
+	right: 0;
+	opacity:0;
+	visibility:hidden;
+	background-color: rgba(34, 34, 34, 0.6);
+	transition:opacity .2s linear, visibility 0.2s, width 2s ease-in;
+}
+
+.screen-darken.active{
+	z-index:10; 
+	transition:opacity .3s ease, width 0s;
+    opacity:1;
+    width:100%;
+    /*visibility:visible;*/
+}
+
+@media all and (max-width: 991px) {
+	
+	.offcanvas-header{ display:block; }
+
+	.mobile-offcanvas{
+		visibility: hidden;
+		transform:translateX(-100%);
+	    border-radius:0; 
+		display:block;
+	    position: fixed;
+	    top: 0; left:0;
+	    height: 100%;
+	    z-index: 1200;
+	    width:80%;
+	    overflow-y: scroll;
+	    overflow-x: hidden;
+	    transition: visibility .3s ease-in-out, transform .3s ease-in-out;
+	}
+
+	.mobile-offcanvas.show{
+		visibility: visible;
+    	transform: translateX(0);
+	}
+	.mobile-offcanvas .container, .mobile-offcanvas .container-fluid{
+		display: block;
+	}
+
+}	
+.mobile-svg {
+    width: 25px;
+}
+.footer_para {
+	margin-left: 30px;
+	/* margin-bottom: 30px; */
+	 margin-top: 20px; 
+}
+
+.title_top {
+	font-weight: 400;
+	/* font-size: 22px; */
+	font-size: 18px;
+	/* margin-top: 25px;
+	margin-left: 10px; */
+	line-height: 70px;
+	height:70px;
+	position:absolute;
+	margin-left: 10px;
+}
+
+.screen_title_top {
+	font-weight: 400;
+	/* font-size: 22px; */
+	font-size: 22px;
+	margin-top: 25px;
+	margin-left: 10px;
+}
+/* .footer{
+	background-color: white;
+} */
+@media (min-width: 320px) and (max-width: 1024px){
+	#menu{
+		display: block !important;
+	}
+}
+
+
+@media (min-width: 320px) and (max-width: 374px){
+	/* .title_top {
+		font-weight: 400;
+		font-size: 16px;
+		margin-top: -45px;
+		margin-left: 45px;
+	} */
+	/* .title_top {
+		font-weight: 500;
+		font-size: 14px;
+		margin-top: 25px;
+		margin-left: 1px;
+	} */
+	
+	.clearfix {
+		height: 70px;
+	}
+	
+	.style-module-listGroupItem-dDJi {
+		align-items: center;
+		border: none;
+		border-radius: 4px;
+		color: var(--gray-800);
+		cursor: pointer;
+		display: flex;
+		font-family: Roboto;
+		font-size: 14px;
+		line-height: 20px;
+		margin-bottom: 4px;
+		outline: none!important;
+		padding: 8px 20px;
+		text-decoration: none!important;
+		transition: background-color .45s cubic-bezier(.3,1,.4,1) 0s,color .45s cubic-bezier(.3,1,.4,1) 0s;
+		width: 100%;
+	}
+
+	.title_top {
+		font-weight: 400;
+		font-size: 10px;
+		/* margin-top: -66px;
+		margin-left: 45px; */
+		width: 40%;
+		line-height: 15px;
+		/* display: contents; */
+		position: absolute;
+		top:12%;
+		word-break:break-word;
+		left:12%
+	}
+}
+
+@media only screen and (min-width: 375px) and (max-width: 425px){
+	.title_top {
+		font-weight: 400;
+		font-size: 10px;
+		/* margin-top: -66px;
+		margin-left: 45px; */
+		width: 40%;
+		line-height: 15px;
+		/* display: contents; */
+		position: absolute;
+		top:12%;
+		word-break:break-word;
+		left:12%
+	}
+}
+
+@media only screen and (min-width: 425px) and (max-width: 700px){
+	.title_top {
+		font-weight: 400;
+		font-size: 10px;
+		/* margin-top: 12px;
+		margin-left: 20px; */
+		width: 48%;
+		line-height: 16px;
+		position: absolute;
+		top:30%;
+		word-break:break-word;
+		left:12%;
+	}
+}
+
+@media only screen and (min-width: 701px) and (max-width: 768px){
+	.title_top {
+		font-weight: 400;
+		font-size: 12px;
+		/* margin-top: 12px;
+		margin-left: 20px; */
+		width: 50%;
+		line-height: 18px;
+		position: absolute;
+		top:30%;
+		word-break:break-word;
+		left:7%
+	}
+}
+
+@media only screen and (min-width:  769px) and (max-width: 1023px){
+	.title_top {
+		font-weight: 400;
+		font-size: 14px;
+		/* margin-top: -43px;
+		margin-left: 12px; */
+		line-height: 25px;
+		/* width: 80%; */
+		position: absolute;
+		top:12%;
+		word-break:break-word;
+		width:65%;
+	}
+}
+
+@media only screen and (min-width:  1024px) and (max-width: 1180px){
+	.title_top {
+		font-weight: 400;
+		font-size: 14px;
+		/* margin-top: -43px;
+		margin-left: 12px; */
+		line-height: 65px;
+		/* width: 80%; */
+		position: absolute;
+		top:0%;
+		word-break:break-word;
+		left:5%;
+	}
+}

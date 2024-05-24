@@ -1,0 +1,603 @@
+/* .MuiInputLabel-root {
+    top: -8px !important;
+} */
+
+.invalid-feedback {
+    color: red;
+}
+
+.downBtn {
+    border: 1px solid #000000;
+    background-color: #cccccc;
+    width: 150px;
+    height: 30px;
+    font-size: 12px;
+    color: #000000;
+    cursor: pointer;
+    padding: 3px;
+}
+
+.openBalanceSpan {
+    margin-top: -19px;
+    margin-left: 8px;
+    float:left;
+}
+
+.closeBalanceSpan {
+    margin-top: -19px;
+    margin-right: 8px;
+    float:right;
+}
+
+smart-multi-combo-input.smart-element {
+    height: 6vh;
+}
+
+/* div#dropDown84c6 {
+    width: 250px !important;
+    top: 146px !important;
+    height: 40vh !important;
+} */
+.smart-color-picker:not([animation=none]) .smart-drop-down[overlay-center],
+.smart-combo-box:not([animation=none]) .smart-drop-down[overlay-center],
+.smart-date-time-picker:not([animation=none]) .smart-drop-down[overlay-center],
+.smart-drop-down-button:not([animation=none]) .smart-drop-down[overlay-center],
+.smart-drop-down-list:not([animation=none]) .smart-drop-down[overlay-center],
+.smart-multi-split-button:not([animation=none]) .smart-drop-down[overlay-center],
+.smart-path:not([animation=none]) .smart-drop-down[overlay-center],
+.smart-text-box:not([animation=none]) .smart-drop-down[overlay-center] {
+
+    top: 240px !important;
+}
+
+/* smart-grid {
+    width: auto;
+    height: auto; */
+/* overflow-x: auto; */
+/* overflow-y: auto; */
+/* } */
+
+/* .smart-grid.smart-element {
+    height: 31vh !important;
+    width: 125vw !important;
+    overflow-x: auto;
+} */
+/* .gZmPOF {
+    margin-top: 3rem;
+    justify-content: center;
+    display: flex;
+} */
+
+svg:not(:root) {
+    overflow: hidden;
+    height: 40px !important;
+}
+
+.spinner_SVG {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+/* 
+.bidabG {
+    justify-content: center !important;
+    display: flex !important;
+} */
+
+/* .spinner_position {
+    justify-content: center !important;
+    display: flex !important;
+} */
+
+/* @media (min-width: 1600px) {
+    #creditBeditGrid {
+        height: 20.5rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #invoice_height {
+        height: 15rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #customers_height {
+        height: 26rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #orderstatus {
+        height: 12.8rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #customer_height {
+        height: 20.2rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #reports_invoice {
+        height: 12.8rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #balance_confirm_height {
+        height: 22rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #customer_ledger_height {
+        margin-top: -19px;
+        height: 13.4rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+} */
+
+/* //dharani laptop */
+/* @media (min-width: 1200px) and (max-width: 1366px) {
+    #invoice_height {
+        height: 11.5rem !important;
+        width: 100%;
+        overflow-x: auto;
+    }
+} */
+
+/* @media only screen and (max-width:1024px) {
+    #reports_invoice {
+        height: 22.3rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+
+} */
+
+
+/* @media only screen and (min-width: 992px) and (max-width: 1024px) {
+    #orderstatus {
+        height: 23rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+} */
+
+/* @media (min-width: 1200px) and (max-width: 1439px) {
+    #orderstatus {
+        height: 7.9rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #reports_invoice {
+        height: 7.3rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #customer_ledger_height {
+        margin-top: -19px;
+        height: 8.0rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #creditBeditGrid {
+        height: 15.5rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+} */
+
+/* @media only screen and (min-width: 1440px) {
+    #orderstatus {
+        height: 9.5rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #reports_invoice {
+        height: 8.3rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #customer_ledger_height {
+        margin-top: -19px;
+        height: 9.5rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #reports_invoice {
+        height: 7.3rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #creditBeditGrid {
+        height: 20.5rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+} */
+
+/* @media only screen and (min-width: 1281px) and (max-width: 1400px) {
+    #orderstatus {
+        height: 23rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+} */
+
+/* @media only screen and (max-width:1440px) {
+    #orderstatus {
+        height: 27rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+} */
+
+
+
+/* @media (min-width: 1200px) and (max-width: 1599px) {
+    #creditBeditGrid {
+        height: 15.6rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #invoice_height {
+        height: 9.6rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #customers_height {
+        height: 20.3rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #orderstatus {
+        height: 7.88rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #customer_height {
+
+        height: 15.3rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #reports_invoice {
+        height: 7.3rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #balance_confirm_height {
+        height: 15.5rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #customer_ledger_height {
+        margin-top: -19px;
+        height: 8.0rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+} */
+
+
+
+/* @media (min-width: 1200px) and (max-width: 1599px) {
+    #orderstatus {
+        height: 7.5rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #reports_invoice {
+        height: 8.3rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #customer_ledger_height {
+        margin-top: -19px;
+        height: 8rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #reports_invoice {
+        height: 7.3rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #creditBeditGrid {
+        height: 15.5rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #invoice_height {
+        height: 9.5rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #customers_height {
+        height: 20rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #customer_height {
+        height: 15.3rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #balance_confirm_height {
+        height: "15.5rem";
+        width: "100%";
+        overflow-x: "auto";
+    }
+} */
+._grid_width {
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* @media (min-width: 600px) and (max-width: 1199px) and (orientation: landscape) {
+    #orderstatus {
+        height: 7.5rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #reports_invoice {
+        height: 8.3rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #customer_ledger_height {
+        margin-top: -19px;
+        height: 8rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #reports_invoice {
+        height: 7.3rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #creditBeditGrid {
+        height: 15.5rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #invoice_height {
+        height: 9.5rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #customers_height {
+        height: 20rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #customer_height {
+        height: 15.3rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #balance_confirm_height {
+        height: "15.5rem";
+        width: "100%";
+        overflow-x: "auto";
+    }
+} */
+
+@media only screen and (min-width: 500px) and (max-width: 1024px) {
+    #orderstatus {
+        width: 100%;
+    }
+
+    #reports_invoice {
+        width: 100%;
+    }
+
+    #customer_ledger_height {
+        width: 100%;
+    }
+
+    #creditBeditGrid {
+        height: 32rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #invoice_height {
+        height: 8.2rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #customers_height {
+        height: 19rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #customer_height {
+        height: 13.3rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #balance_confirm_height {
+        width: 100%;
+    }
+
+}
+
+@media only screen and (min-width: 1030px) and (max-width: 1366px) {
+    #orderstatus {
+        width: 100%;
+    }
+
+    #customer_ledger_height {
+        width: 100%;
+    }
+
+    #reports_invoice {
+        width: 100%;
+    }
+
+    #creditBeditGrid {
+        height: 18rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #invoice_height {
+        height: 12.3rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #customers_height {
+        height: 23rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #customer_height {
+        height: 18rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #balance_confirm_height {
+        width: 100%;
+    }
+}
+
+@media only screen and (min-width: 1370px) and (max-width: 1605px) {
+    #orderstatus {
+        width: 100%;
+    }
+
+    #customer_ledger_height {
+        width: 100%;
+    }
+
+    #reports_invoice {
+        width: 100%;
+    }
+
+    #creditBeditGrid {
+        height: 27rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #invoice_height {
+        height: 15rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #customers_height {
+        height: 26rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #customer_height {
+        height: 20.3rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #balance_confirm_height {
+        width: 100%;
+    }
+}
+
+@media only screen and (min-width: 2560px) {
+    #orderstatus {
+        width: 100%;
+    }
+
+    #customer_ledger_height {
+        width: 100%;
+    }
+
+    #reports_invoice {
+        width: 100%;
+    }
+
+    #creditBeditGrid {
+        height: 23.5rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #invoice_height {
+        height: 15rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #customers_height {
+        height: 26rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #customer_height {
+        height: 20.3rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #balance_confirm_height {
+        width: 100%;
+    }
+}
+.smart-table {
+    height: auto;
+    max-height: 500px;
+}
+.columnValue{
+    display:none;
+}
+.columndisplayValue{
+    display: block;
+}
+.redColor {
+    color:red;
+}

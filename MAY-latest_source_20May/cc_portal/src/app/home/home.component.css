@@ -1,0 +1,4 @@
+a.dropdown-toggle:hover {border-bottom: 0px solid blue !important;}
+a.dropdown-item:hover {border-bottom: 0px solid blue !important; color: #000;
+    background-color: #fff;}
+a.dropdown-toggle:focus {border-bottom: 0px solid blue !important;}

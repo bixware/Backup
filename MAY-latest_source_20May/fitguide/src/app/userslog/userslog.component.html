@@ -1,0 +1,41 @@
+<!-- begin row -->
+<div class="row">
+    <div class="col-xl-12 col-md-12 col-xs-12">
+        <!-- begin panel -->
+        <div class="panel panel-inverse">
+            <!-- begin panel-heading -->
+            <div class="panel-heading">
+                <!-- <h4 class="panel-title">Users Log</h4> -->
+                <!-- <div class="panel-heading-btn">
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default"
+                        data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                </div> -->
+            </div>
+            <!-- end panel-heading -->
+            <!-- begin panel-body -->
+            <div class="panel-body">
+                <div style="margin-left:0px;">
+                    <label>Quick Filter :</label> &nbsp;&nbsp;&nbsp;<input type="text" class="agform"
+                    placeholder="Filter quickly..." (keyup)="quickSearch()" [(ngModel)]="searchValue">
+                </div>
+                <div  *ngIf="roleUID == 6 || roleUID == 1">
+                    <button class="export" style="border: 1px solid #cccccc;margin-top:-33px; float: right;" (click)="onBtnExport()">Download CSV export file</button>
+                </div>
+                <ag-grid-angular id="ag_grid"
+                style="width: 100%; height: 67vh;"
+                class="ag-theme-alpine"
+                [rowData]="rowData"
+                [columnDefs]="columnDefs"
+                [modules]="modules"
+                [defaultColDef]="defaultColDef"
+                [sortingOrder]="sortingOrder"
+                [animateRows]="true"
+                (gridReady)="onGridReady($event)"
+                [pagination]="true">
+                </ag-grid-angular>
+            </div>
+            <!-- end panel-body -->
+        </div>
+        <!-- end panel -->
+    </div>
+</div>

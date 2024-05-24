@@ -1,0 +1,873 @@
+<div class="row" style="overflow: hidden;">
+  <style>
+    .restext:focus {
+      outline: 1px solid #333333 !important;
+    }
+  </style>
+  <!-- dynamic dropdowns -->
+  <div id="target_responsive_top"> </div>
+  <div class="col-lg-2 col-md-12 col-sm-12 col-sm-12">
+    <div class="row">
+      <div class="col-12">
+        <!-- <label>Make</label> -->
+        <select class="form-select form-selectsmall" name="make_list" (change)="getModel($event)" id="make_list">
+          <option value=null>Select Make</option>
+          <option [value]="make.Make" *ngFor="let make of makes">{{make.Make}}</option>
+        </select>
+      </div>
+
+      <div class="col-12" id="model_list_hide" style="visibility: hidden;margin-top: 10px;display:none;">
+        <!-- <label>Model</label> -->
+        <select class="form-select form-selectsmall" name="model_list" id="model_list" (change)="getYear($event)">
+          <option value=null>Select Model</option>
+          <option [value]="model.Model" *ngFor="let model of models">{{model.Model}}</option>
+        </select>
+      </div>
+      <div class="col-12" id="year_list_hide" style="visibility: hidden;margin-top: 10px;display:none;">
+        <!-- <label>Year</label> -->
+        <select class="form-select form-selectsmall" name="year_list" id="year_list" (change)="getOption1()">
+          <option value=null>Select Year</option>
+          <option [value]="year.Year" *ngFor="let year of years">{{year.Year}}</option>
+        </select>
+      </div>
+
+      <div class="col-12" id="options_1_hide" style="visibility: hidden;margin-top: 10px;display:none;">
+        <!-- <label>Key type</label> -->
+        <select class="form-select form-selectsmall" name="options_1" (change)="getOption2()" id="options_1">
+          <option value=null>Select Option 1</option>
+          <option [value]="one.Option1" *ngFor="let one of option1">{{one.Option1}}</option>
+        </select>
+      </div>
+      <div class="col-12" id="options_2_hide" style="visibility: hidden;margin-top: 10px;display:none;">
+        <!-- <label>Options 1</label> -->
+        <select class="form-select form-selectsmall" name="options_2" (change)="getOption3()" id="options_2">
+          <option value=null>Select Option 2</option>
+          <option [value]="two.Option2" *ngFor="let two of option2">{{two.Option2}}</option>
+        </select>
+      </div>
+      <div class="col-12" id="options_3_hide" style="visibility: hidden;margin-top: 10px;display:none;">
+        <!-- <label>Options 2</label> -->
+        <select class="form-select form-selectsmall" name="options_3" (change)="getOption4()" id="options_3">
+          <option value=null>Select Option 3</option>
+          <option [value]="three.Option3" *ngFor="let three of option3">{{three.Option3}}</option>
+        </select>
+      </div>
+      <div class="col-12" id="options_4_hide" style="visibility: hidden;margin-top: 10px;display:none;">
+        <!-- <label>Options 3</label> -->
+        <select class="form-select form-selectsmall" name="options_4" id="options_4" (change)="getOption5()">
+          <option value=null>Select Option 4</option>
+          <option [value]="four.Option4" *ngFor="let four of option4">{{four.Option4}}</option>
+        </select>
+      </div>
+      <div class="col-12" id="options_5_hide" style="visibility: hidden;margin-top: 10px;display:none;">
+        <!-- <label>Options 4</label> -->
+        <select class="form-select form-selectsmall" name="options_5" id="options_5" (change)="getOption6()">
+          <option value=null>Select Option 5</option>
+          <option [value]="five.Option5" *ngFor="let five of option5">{{five.Option5}}</option>
+        </select>
+      </div>
+      <div class="col-12" id="options_6_hide" style="visibility: hidden;margin-top: 10px;display:none;">
+        <!-- <label>Options 5</label> -->
+        <select class="form-select form-selectsmall" name="options_6" id="options_6" (change)="getOption7()">
+          <option value=null>Select Option 6</option>
+          <option [value]="six.Option6" *ngFor="let six of option6">{{six.Option6}}</option>
+        </select>
+      </div>
+      <div class="col-12">
+        <a id="feed" style="cursor: pointer;" (click)="loadFeedback()" class="fade show"><img
+            src="assets/images/Feedback_image.png" width="90"></a>
+      </div>
+      <div class="col-12" *ngIf="isShow && vehicleData.roleUID === '1'">
+        <div>Vehicle UID : {{feedback.vehicleUID}}</div>
+        <div>FromTo : {{fromTo}}</div>
+      </div>
+
+      <div><!--searchresults-->
+        <button id="vsearch" style="visibility: hidden;" type="button">Search Results</button>
+      </div>
+      <div class="col-12" *ngIf="this.vehicleData.roleUID == '1'" style="display: none;" id="edit_vehicle">
+        <button (click)="openEditor()" target="_blank" rel="noreferrer noopener" class="btn btn-primary editvehiclemob"
+          style=" background-color: #00c9fd;">Edit Vehicle</button>
+      </div>
+    </div>
+    <div class="col-12" id="feedback_section" style="margin-top: 10px;display:none;">
+      <div class="swat-pop" id="pop">
+        <div class="feed-form" id="f-form">
+          <h3>Feedback Form</h3>
+          <textarea rows="4" cols="30" style="outline: 1px solid #DCDCDC !important; border: 1px solid #DCDCDC;"
+            id="feedback_text" name="feedback_text" placeholder="Enter your feedback..." [(ngModel)]="feedback_text"
+            value='' [ngModelOptions]="{standalone: true}"></textarea>
+          <div *ngIf="feedLoader == true" class="loaderContent"><i class="fa fa-spinner fa-spin"
+              style="font-size:24px;color:rgb(105,105,105);"></i></div>
+          <div *ngIf="feedinfo == true" id="feed-succ" class="alert alert-info">Feedback Updated Successfully.</div>
+          <div style="margin-top: 15px;">
+            <button class="btn btn-success" (click)="addFeedbackSave()"
+              [disabled]="feedback_text === '' ">Submit</button>&nbsp;&nbsp;
+            <button class="btn btn-danger" (click)="addFeedbackClose()" onclick="feedclose();">Close</button>
+          </div>
+          <!-- <button type="button" (click)="addFeedbackClose()" style="background-color: #c0c3d1; min-height: 36px; border: #c0c3d1; border-radius: 5px; color: #343643; font-family: Roboto; font-size: 14px; line-height: 20px;" class="btn btn-sm btn-danger">Back</button>&nbsp;&nbsp;
+              <button type="button" (click)="addFeedbackSave()" [disabled]="feedback_text === '' " style="background-color: #1c3fff; min-height: 36px; border: #1c3fff; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;" class="btn btn-success">Save</button>
+              -->
+        </div>
+      </div>
+      <br><br><br>
+    </div>
+  </div>
+  <!-- dynamic results -->
+  <div class="col-lg-8 col-md-12 col-sm-12 col-sm-12 style-4" id="dynamic_heightforscroller">
+    <div class="dynamic-results">
+      <!-- Content for dynamic results -->
+      <div>
+        <!-- Dynamic content goes here -->
+        <div id="target"> </div>
+        <!-- <div class="accordion_placement"> -->
+        <!-- <div class="accordion" id="accordionExample"> -->
+        <!-- First Accordion Item -->
+        <div *ngIf="globalannouncelist.length>0" class="accordion_style">
+          <div class="accordion accordion-item" style="background: #00c9fd30;">
+
+            <h2 class="accordion-header" id="headingOne">
+              <button class="accordion-button" type="button" [class.collapsed]="globalannouncelist.length === 0"
+                data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                [attr.aria-expanded]="globalannouncelist.length !== 0 ? 'true' : 'false'" aria-controls="collapseOne">
+                <span (click)="onCloseGlobal()" style="padding-right: 5px;" ><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0,0,256,256">
+                  <g fill="#736e6e" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M25,2c-12.69047,0 -23,10.30953 -23,23c0,12.69047 10.30953,23 23,23c12.69047,0 23,-10.30953 23,-23c0,-12.69047 -10.30953,-23 -23,-23zM25,4c11.60953,0 21,9.39047 21,21c0,11.60953 -9.39047,21 -21,21c-11.60953,0 -21,-9.39047 -21,-21c0,-11.60953 9.39047,-21 21,-21zM32.99023,15.98633c-0.26377,0.00624 -0.51439,0.11645 -0.69727,0.30664l-7.29297,7.29297l-7.29297,-7.29297c-0.18827,-0.19353 -0.4468,-0.30272 -0.7168,-0.30274c-0.40692,0.00011 -0.77321,0.24676 -0.92633,0.62377c-0.15312,0.37701 -0.06255,0.80921 0.22907,1.09303l7.29297,7.29297l-7.29297,7.29297c-0.26124,0.25082 -0.36648,0.62327 -0.27512,0.97371c0.09136,0.35044 0.36503,0.62411 0.71547,0.71547c0.35044,0.09136 0.72289,-0.01388 0.97371,-0.27512l7.29297,-7.29297l7.29297,7.29297c0.25082,0.26124 0.62327,0.36648 0.97371,0.27512c0.35044,-0.09136 0.62411,-0.36503 0.71547,-0.71547c0.09136,-0.35044 -0.01388,-0.72289 -0.27512,-0.97371l-7.29297,-7.29297l7.29297,-7.29297c0.29724,-0.28583 0.38857,-0.7248 0.23,-1.10546c-0.15857,-0.38066 -0.53454,-0.62497 -0.94679,-0.61524z"></path></g></g>
+                  </svg></span>
+                <span> 12V Dashboard Announcement</span>
+              </button>
+            </h2>
+            <div *ngFor="let announecontent of globalannouncelist;">
+              <div id="collapseOne" class="accordion-collapse collapse" [class.show]="globalannouncelist.length !== 0"
+                aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <p style="color: black;">{{announecontent.announcementContent}}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Second Accordion Item -->
+        <div *ngIf="companyannouncelist.length>0" class="accordion_style">
+          <div class="accordion accordion-item" *ngIf="roleUID == 5 || roleUID == 6 || roleUID == 7 "
+            style="background: #98FF98;">
+            <h2 class="accordion-header" id="headingTwo">
+              <button class="accordion-button" type="button" [class.collapsed]="companyannouncelist.length === 0"
+                data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+                [attr.aria-expanded]="companyannouncelist.length !== 0 ? 'true' : 'false'" aria-controls="collapseTwo">
+                <span (click)="onCloseCompany()" style="padding-right: 5px;" ><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0,0,256,256">
+                  <g fill="#736e6e" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M25,2c-12.69047,0 -23,10.30953 -23,23c0,12.69047 10.30953,23 23,23c12.69047,0 23,-10.30953 23,-23c0,-12.69047 -10.30953,-23 -23,-23zM25,4c11.60953,0 21,9.39047 21,21c0,11.60953 -9.39047,21 -21,21c-11.60953,0 -21,-9.39047 -21,-21c0,-11.60953 9.39047,-21 21,-21zM32.99023,15.98633c-0.26377,0.00624 -0.51439,0.11645 -0.69727,0.30664l-7.29297,7.29297l-7.29297,-7.29297c-0.18827,-0.19353 -0.4468,-0.30272 -0.7168,-0.30274c-0.40692,0.00011 -0.77321,0.24676 -0.92633,0.62377c-0.15312,0.37701 -0.06255,0.80921 0.22907,1.09303l7.29297,7.29297l-7.29297,7.29297c-0.26124,0.25082 -0.36648,0.62327 -0.27512,0.97371c0.09136,0.35044 0.36503,0.62411 0.71547,0.71547c0.35044,0.09136 0.72289,-0.01388 0.97371,-0.27512l7.29297,-7.29297l7.29297,7.29297c0.25082,0.26124 0.62327,0.36648 0.97371,0.27512c0.35044,-0.09136 0.62411,-0.36503 0.71547,-0.71547c0.09136,-0.35044 -0.01388,-0.72289 -0.27512,-0.97371l-7.29297,-7.29297l7.29297,-7.29297c0.29724,-0.28583 0.38857,-0.7248 0.23,-1.10546c-0.15857,-0.38066 -0.53454,-0.62497 -0.94679,-0.61524z"></path></g></g>
+                  </svg></span>
+                <span> Company Announcement</span>
+              </button>
+            </h2>
+            <div *ngFor="let compannounecontent of companyannouncelist;">
+              <div id="collapseTwo" class="accordion-collapse collapse" [class.show]="companyannouncelist.length !== 0"
+                aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <p style="color: black;">{{compannounecontent.announcementContent}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Third Accordion Item -->
+        <div *ngIf="storeannouncelist.length>0" class="accordion_style">
+          <div class="accordion accordion-item" *ngIf="roleUID == 7" style="background: #80008054;">
+            <h2 class="accordion-header" id="headingThree">
+              <button class="accordion-button" type="button" [class.collapsed]="storeannouncelist.length === 0"
+                data-bs-toggle="collapse" data-bs-target="#collapseThree"
+                [attr.aria-expanded]="storeannouncelist.length !== 0 ? 'true' : 'false'" aria-controls="collapseThree">
+                <span (click)="onCloseStore()" style="padding-right: 5px;" ><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0,0,256,256">
+                  <g fill="#736e6e" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M25,2c-12.69047,0 -23,10.30953 -23,23c0,12.69047 10.30953,23 23,23c12.69047,0 23,-10.30953 23,-23c0,-12.69047 -10.30953,-23 -23,-23zM25,4c11.60953,0 21,9.39047 21,21c0,11.60953 -9.39047,21 -21,21c-11.60953,0 -21,-9.39047 -21,-21c0,-11.60953 9.39047,-21 21,-21zM32.99023,15.98633c-0.26377,0.00624 -0.51439,0.11645 -0.69727,0.30664l-7.29297,7.29297l-7.29297,-7.29297c-0.18827,-0.19353 -0.4468,-0.30272 -0.7168,-0.30274c-0.40692,0.00011 -0.77321,0.24676 -0.92633,0.62377c-0.15312,0.37701 -0.06255,0.80921 0.22907,1.09303l7.29297,7.29297l-7.29297,7.29297c-0.26124,0.25082 -0.36648,0.62327 -0.27512,0.97371c0.09136,0.35044 0.36503,0.62411 0.71547,0.71547c0.35044,0.09136 0.72289,-0.01388 0.97371,-0.27512l7.29297,-7.29297l7.29297,7.29297c0.25082,0.26124 0.62327,0.36648 0.97371,0.27512c0.35044,-0.09136 0.62411,-0.36503 0.71547,-0.71547c0.09136,-0.35044 -0.01388,-0.72289 -0.27512,-0.97371l-7.29297,-7.29297l7.29297,-7.29297c0.29724,-0.28583 0.38857,-0.7248 0.23,-1.10546c-0.15857,-0.38066 -0.53454,-0.62497 -0.94679,-0.61524z"></path></g></g>
+                  </svg></span>
+                <span> Store Announcement</span>
+              </button>
+            </h2>
+            <div *ngFor="let storeannounecontent of storeannouncelist;">
+              <div id="collapseThree" class="accordion-collapse collapse" [class.show]="storeannouncelist.length !== 0"
+                aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <p style="color: black;">{{storeannounecontent.announcementContent}}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- </div> -->
+        <!-- </div> -->
+        <div class="loaderContent" id="loader"><i class="fa fa-spinner fa-spin"
+            style="font-size:35px;color:rgb(105,105,105);"></i>
+        </div>
+        <div class="alert alert-info alert-dismissible" style="margin-left:30px;" *ngIf="info">
+          <button class="close" (click)="close()">&times;</button>
+          {{failureMessage}}
+        </div>
+
+
+        <div id="resultbtn" class="resultbtnlist" style="visibility: hidden;">
+          <button class="btn btn-secondary waves-effect showallmob" (click)="loadAllDetailsAgain()"
+            style="margin-left: 5px;margin-right: 5px;">Show All</button>
+          <!--<ng-container *ngFor="let data of AllSectionListDetailsArray">
+                    <button class="btn btn-sm w-20 btnall"   [attr.id]="'btn' +data.searchSectionUID" (click)="filterSelection(data.searchSectionName,'btn'+data.searchSectionUID)">{{data.Name}}</button>
+                  </ng-container>
+                  <ng-container *ngFor="let data of displaySectionNameList">
+                    <button class="btn btn-white waves-effect active btnall" [attr.id]="'btn' +data.searchSectionUID" (click)="filterSelection(data.searchSectionName,'btn'+data.searchSectionUID)">{{data.Name}}</button>
+                  </ng-container>-->
+
+          <ng-container *ngFor="let data of displaySectionNameList">
+            <button *ngIf="data.searchSectionUID == '26' && bmwFlagArray == true"
+              class="btn btn-white waves-effect active btnall" [attr.id]="'btn' +data.searchSectionUID"
+              (click)="filterSelection(data.searchSectionName,'btn'+data.searchSectionUID)">{{data.Name}}
+            </button>
+            <button *ngIf="data.Blocked=='No' && data.searchSectionUID != '26'"
+              class="btn btn-white waves-effect active btnall" [attr.id]="'btn' +data.searchSectionUID"
+              (click)="filterSelection(data.searchSectionName,'btn'+data.searchSectionUID)">{{data.Name}}
+            </button>
+            <a [routerLink]="['/home/bannerads']" style="color:#ffffff;text-decoration: none;" title="Click to Unlock"
+              target="_blank"><button *ngIf="data.Blocked=='Yes'" style="background-color: grey;"
+                class="btn btn-white waves-effect active btnall" [attr.id]="'btn' +data.searchSectionUID">{{data.Name}}
+                <div class="corner-ribbon top-left sticky shadow"><i class="fa fa-lock" aria-hidden="true"></i>
+                </div>
+              </button></a>
+          </ng-container>
+
+        </div>
+
+        <div id="search_results" class="collapse show">
+          <div id="dynamic_results">
+            <form [formGroup]="mainForm">
+              <ng-container *ngFor="let data of AllSectionListDetailsArray; let i = index">
+                <div class="filterDiv  {{data.searchSectionName}}" [attr.id]="'print' +data.searchSectionUID"
+                  style="display: block;">
+                  <!-- Start filterDiv-body -->
+                  <div class="panel panel-inverse">
+                    <!-- begin panel-heading -->
+                    <div class="card-header bg-primary text-white">
+                      <h4 class="card-title mb-0">{{data.Name}}</h4>
+                      <div class="card-widgets" style="margin-top: -20px;">
+                        <a href="javascript:;" (click)="forPrint('print' +data.searchSectionUID)"
+                          style="cursor: pointer;"><i class="mdi mdi-printer"></i></a>
+                        <a data-bs-toggle="collapse" style="cursor: pointer;"
+                          style="display: block; margin-left: 25px; margin-top: -20px;" [attr.href]="'#secdiv_'+i"
+                          [attr.id]="'sec_'+i"><i class="mdi mdi-minus"></i></a>
+                      </div>
+                    </div>
+                    <!-- end panel-heading -->
+                    <!-- begin panel-body 
+                        <div class="panel-body">-->
+                    <!-- begin table-responsive-->
+                    <div class="collapse show" [attr.id]="'secdiv_'+i">
+
+                      <ng-container *ngFor="let part of data.searchSectionPartDeatails">
+                        <div style="width: 100%;margin-bottom: 0px !important;">
+                          <ng-container *ngIf="(part.partDisplayHeader || '').toLowerCase() == 'warning'">
+                            <div class="row">
+                              <div *ngIf="!part.editFlag" class="col-md-10" id="calloutrespon"
+                                style="width:96%;padding-top: 5px;position:relative;left:5px;"
+                                [innerHTML]="part.partNumber">
+                              </div>
+                              <div *ngIf="!part.editFlag && part.partNumber2 =='YES'" style="width:2% !important"
+                                class="col-md-2 editresimagecol"><i class='fa fa-edit' id="editresimage"
+                                  (click)="warningEdit(part)"
+                                  style='font-size:14px;color:black;cursor: pointer;position:relative;right:10px;'></i>
+                              </div>
+                            </div>
+                            <div *ngIf="part.editFlag">
+                              <textarea class="textareaBorder" [ngModelOptions]="{standalone: true}"
+                                [(ngModel)]="part.partNumber" value="{{part.partNumber}}"
+                                style="width: 95%;margin-top:5px;height: 65px;margin-left: 5px;"></textarea><br />
+
+                              <div colspan="12" style="border-top: 0px solid #dadce0 !important;margin-left: 5px;">
+                                <button (click)="warningEditUpdate(part,data,i)"
+                                  class="btn btn-sm btn-primary resupdate">Update</button>
+                                <button (click)="warningEditHide(part)" style="margin-left: 10px;"
+                                  class="btn btn-sm btn-primary rescancel1">Cancel</button>
+                              </div>
+                            </div>
+                          </ng-container>
+                        </div>
+                      </ng-container>
+
+                      <!-- <div class="table-responsive"> -->
+                      <!-- <table class="table m-b-0 tblColumnCount">
+                              <tbody> -->
+                      <!--  <tr *ngIf="data.searchSectionUID == 16">
+                                  <th></th>
+                                  <th>Function</th>
+                                  <th></th>
+                                  <th>Wire Color</th>
+                                  <th>Wire Location</th>
+                                  <th>Additional Note</th>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                               </tr> -->
+
+                      <!-- <div> -->
+                      <ng-container *ngFor="let subSection of data.searchSubSectionPartDeatails;">
+                        <div id="borderbox"
+                          [ngClass]="subSection.subsectionName != 'Maestro' ? 'bordernormal' : 'bordermaestro'">
+                          <div *ngIf="subSection.subsectionName != 'Maestro'" style="background-color: #9DEBFF;height: 6vh;width: 100%;
+                                  margin-left: -4px;border-radius: 7px;" class="ressubSection">
+                            <div><b class="subSectiontitle" style="font-size: 15px;">{{subSection.subsectionName}}</b>
+                            </div>
+                          </div>
+                          <div *ngIf="subSection.subsectionName == 'Maestro'" style="background-color: #7DCEA0;height: 6vh;width: 100%;
+                                margin-left: -4px;border-radius: 7px;" class="ressubSectionMaestro">
+                            <div><b class="subSectiontitleMaestro"
+                                style="font-size: 16px;">{{subSection.subsectionName}}&nbsp;&nbsp;&nbsp;&nbsp;Please
+                                make
+                                sure to pair with a Maestro compatible radio for obtaining all available Maestro
+                                Features.</b></div>
+                          </div>
+                          <!-- <tr *ngIf="data.searchSectionUID != 16 &&  data.searchSectionUID != 2 && data.searchSectionUID != 31 && data.searchSectionUID != 17 && data.searchSectionUID != 7 && data.searchSectionUID != 11 && data.searchSectionUID != 20">
+                                  <th style="cursor: pointer;" [appSort]="subSection.subSectionPartDetails" data-order="desc" data-type="" data-name="shortDescription">Short Description</th>
+                                  <th style="cursor: pointer;" [appSort]="subSection.subSectionPartDetails" data-order="desc" data-type="" data-name="partDisplayHeader">Part Display Header</th>
+                                  <th style="cursor: pointer;" [appSort]="subSection.subSectionPartDetails" data-order="desc" data-type="" data-name="BrandName">Brand</th>
+                                  <th style="cursor: pointer;" [appSort]="subSection.subSectionPartDetails" data-order="desc" data-type="" data-name="partNumber">Part Number</th>
+                                  <th></th>
+                                  <th></th>
+                                  <th>MSRP</th>
+                                  <th>Labor Hours</th>
+                                  <th>Description</th>
+                                  <th>Notes</th>
+                                  <th>Link</th>
+                                  <th>Image</th>
+                                </tr> -->
+                          <ng-container *ngFor="let part of subSection.subSectionPartDetails; let j = index">
+
+                            <ng-container
+                              *ngIf="(part.partDisplayHeader || '').toLowerCase() != 'warning' && (part.partDisplayHeader || '').toLowerCase() != 'banner img' && (part.partDisplayHeader || '').toLowerCase() != 'banner notes'  && (part.partDisplayHeader || '').toLowerCase() != 'picturegallery' && (part.partDisplayHeader || '').toLowerCase() != 'notesgallery'">
+                              <!-- <div>{{part.shortDescription == 'NULL'?'': part.shortDescription}}</div> -->
+                              <div id="input">
+
+                                <div class="row">
+                                  <div class="col-lg-7 col-md-5 col-sm-7">
+                                    <b *ngIf="part.partNumber">{{part.partNumber}}</b>
+                                    <b *ngIf="part.partNumber1">{{part.partNumber1}}</b>
+                                    <b *ngIf="part.partNumber2">{{part.partNumber2}}</b>&nbsp;&nbsp;
+                                    <b>{{part.BrandName}}</b>&nbsp;&nbsp;
+                                    <b>{{part.MSRP}}</b>&nbsp;&nbsp;
+                                    <b *ngIf="part.LaborHours">{{part.LaborHours}}&nbsp;hour</b>&nbsp;&nbsp;
+                                    <b *ngIf="!part.LaborHours">{{''}}</b>
+
+                                    <div><b>{{part.partDisplayHeader}}</b></div>
+
+                                    <div>{{part.shortDescription}}</div>
+
+                                    <div *ngIf="part.description">{{part.description}}</div>
+                                    <div *ngIf="part.note">{{part.note}}</div>
+                                    <div *ngIf="part.flowLine"
+                                      style="background-color: #FCE795; border: 0px; border-radius: 5px;padding:5px;">
+                                      Please
+                                      Note : {{part.flowLine}}</div>
+
+                                    <div *ngIf="part.web"><a href="{{part.web}}" target="_blank"> CLICK FOR
+                                        WEBSITE</a>
+                                    </div>
+                                  </div>
+                                  <div class="col-lg-5 col-md-7 col-sm-5">
+                                    <div class="image-slideshow">
+                                      <div *ngIf="part.picture" class="section-image">
+                                        <img src="{{this.blobURL + part.picture}}" alt="" height="64px" width="64px"
+                                          style="border: 1px solid darkgray;
+                                      border-radius: 8px;" class="imgs" />
+                                      </div>
+                                      <div *ngIf="part.picture_1" class="section-image">
+                                        <img src="{{this.blobURL + part.picture_1}}" alt="" height="64px" width="64px"
+                                          style="border: 1px solid darkgray;
+                                      border-radius: 8px;" class="imgs" />
+                                      </div>
+                                      <div *ngIf="part.picture_2" class="section-image">
+                                        <img src="{{this.blobURL + part.picture_2}}" alt="" height="64px" width="64px"
+                                          style="border: 1px solid darkgray;
+                                      border-radius: 8px;" class="imgs" />
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                </div>
+
+                              </div>
+                            </ng-container>
+                            <ng-container *ngIf="(part.partDisplayHeader || '').toLowerCase() == 'warning'">
+                              <div id="input">
+                                <div class="row">
+                                  <div colspan="11" *ngIf="!part.editFlag"
+                                    style="max-width: 500px !important; overflow: hidden;"
+                                    [innerHTML]="part.partNumber">
+                                  </div>
+                                  <div *ngIf="!part.editFlag && part.partNumber2 =='YES'"><i class='fa fa-edit'
+                                      (click)="warningEdit(part)"
+                                      style='font-size:14px;color:black;cursor: pointer;float:right'></i></div>
+                                </div>
+                                <div *ngIf="part.editFlag">
+                                  <textarea style="width:80% !important;margin-top:5px;margin-left: 5%;"
+                                    [(ngModel)]="part.partNumber" [ngModelOptions]="{standalone: true}"
+                                    value="{{part.partNumber}}"></textarea><br />
+                                  <button (click)="warningEditUpdate(part,data)"
+                                    class="btn btn-sm btn-primary resupdate">Update</button>
+                                  <button (click)="warningEditHide(part)" style="margin-left: 10px;"
+                                    class="btn btn-sm btn-primary rescancel1">Cancel</button>
+                                </div>
+                              </div>
+                            </ng-container>
+                            <ng-container *ngIf="(part.partDisplayHeader || '').toLowerCase() == 'banner img'">
+                              <div>
+                                <img *ngIf="part.partNumber" src="{{this.imgURL +'storage/' + part.partNumber}}"
+                                  alt="" />
+                              </div>
+                            </ng-container>
+                          </ng-container>
+                        </div>
+                      </ng-container>
+
+
+                      <ng-container *ngFor="let part of data.searchSectionPartDeatails; let j = index">
+
+                        <ng-container
+                          *ngIf="(part.partDisplayHeader || '').toLowerCase() != 'warning' && (part.partDisplayHeader || '').toLowerCase() != 'banner img' && (part.partDisplayHeader || '').toLowerCase() != 'banner notes'  && (part.partDisplayHeader || '').toLowerCase() != 'picturegallery'  && (part.partDisplayHeader || '').toLowerCase() != 'notesgallery' && data.searchSectionUID != 16 && data.searchSectionUID != 2">
+                          <!-- <div>{{part.shortDescription == 'NULL'?'': part.shortDescription}}</div> -->
+                          <div id="mainSectionborder">
+                            <div class="row">
+                              <div class="col-lg-7 col-md-5 col-sm-7">
+                                <b *ngIf="part.partNumber">{{part.partNumber}}</b>
+                                <b *ngIf="part.partNumber1">{{part.partNumber1}}</b>
+                                <b *ngIf="part.partNumber2">{{part.partNumber2}}</b>&nbsp;&nbsp;
+                                <b>{{part.BrandName}}</b>&nbsp;&nbsp;
+                                <b>{{part.MSRP}}</b>&nbsp;&nbsp;
+                                <b *ngIf="part.LaborHours">{{part.LaborHours}}&nbsp;hour</b>&nbsp;&nbsp;
+                                <b *ngIf="!part.LaborHours">{{''}}</b>&nbsp;&nbsp;
+                                <div>{{part.partDisplayHeader}}</div>
+                                <div>{{part.shortDescription}}</div>
+                                <div *ngIf="part.description">{{part.description}}</div>
+                                <!-- <div *ngIf="vehicleDetailNonPartUID"><b>{{part.partDisplayHeader}}</b>
+                                    <b>{{partValue1}}</b>
+                                    <b>{{partValue2}}</b>
+                                    <b>{{partValue3}}</b>
+                                  </div> -->
+                                <div *ngIf="part.note">{{part.note}}</div>
+                                <div *ngIf="part.flowLine"
+                                  style="background-color: #FCE795; border: 0px; border-radius: 5px;padding:5px;">
+                                  Please
+                                  Note : {{part.flowLine}}</div>
+
+                                <div *ngIf="part.web"><a href="{{part.web}}" target="_blank"> CLICK FOR
+                                    WEBSITE</a></div>
+                              </div>
+                              <!-- <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <img *ngIf="part.picture" src="{{this.blobURL + part.picture}}" class="imgResponsive" alt="" height="75px"
+                                    width="75px"  style="float: right;border: 1px solid darkgray;
+                                    border-radius: 8px;" />
+                                  </div> -->
+                              <div class="col-lg-5 col-md-7 col-sm-5">
+                                <div class="image-slideshow">
+                                  <div *ngIf="part.picture" class="section-image">
+                                    <img src="{{this.blobURL + part.picture}}" alt="" height="64px" width="64px" style="border: 1px solid darkgray;
+                                      border-radius: 8px;" class="imgs" />
+                                  </div>
+                                  <div *ngIf="part.picture_1" class="section-image">
+                                    <img src="{{this.blobURL + part.picture_1}}" alt="" height="64px" width="64px"
+                                      style="border: 1px solid darkgray;
+                                      border-radius: 8px;" class="imgs" />
+                                  </div>
+                                  <div *ngIf="part.picture_2" class="section-image">
+                                    <img src="{{this.blobURL + part.picture_2}}" alt="" height="64px" width="64px"
+                                      style="border: 1px solid darkgray;
+                                      border-radius: 8px;" class="imgs" />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </ng-container>
+
+
+                        <ng-container *ngIf="(part.partDisplayHeader || '').toLowerCase() == 'banner img'">
+                          <div colspan="12">
+                            <img *ngIf="part.partNumber" src="{{this.imgURL +'storage/' + part.partNumber}}" alt="" />
+                          </div>
+                        </ng-container>
+
+
+
+                      </ng-container>
+
+                      <ng-container *ngFor="let part of data.searchSectionPartDeatails;let j = index">
+                        <div
+                          *ngIf="(data.searchSectionUID == 2) && ((part.partDisplayHeader || '').toLowerCase() != 'warning' && (part.partDisplayHeader || '').toLowerCase() != 'banner img' && (part.partDisplayHeader || '').toLowerCase() != 'banner notes'  && (part.partDisplayHeader || '').toLowerCase() != 'picturegallery'  && (part.partDisplayHeader || '').toLowerCase() != 'notesgallery')">
+                          <div id="mainSectionborder">
+                            <div><b>{{part.shortDescription}}</b></div>
+                            <div *ngIf="part.partValue1 || part.partValue2">{{part.partValue1}} -
+                              {{part.partValue2}}</div>
+                            <div *ngIf="part.partValue3 || part.partValue4">{{part.partValue3}} -
+                              {{part.partValue4}}</div>
+                            <div *ngIf="part.partValue5 || part.partValue6">{{part.partValue5}} -
+                              {{part.partValue6}}</div>
+                            <div *ngIf="part.partValue7"><b>{{part.partValue7}}</b></div>
+                            <div *ngIf="part.partValue8"><b>{{part.partValue8}}</b></div>
+                          </div>
+                        </div>
+                      </ng-container>
+
+
+                      <!--<ng-container *ngFor="let part of data.searchSectionPartDeatails; let j = index">
+                        <div *ngIf="data.searchSectionUID == 16  && ((part.partDisplayHeader || '').toLowerCase() != 'warning' && (part.partDisplayHeader || '').toLowerCase() != 'banner img' && (part.partDisplayHeader || '').toLowerCase() != 'banner notes'  && (part.partDisplayHeader || '').toLowerCase() != 'picturegallery'  && (part.partDisplayHeader || '').toLowerCase() != 'notesgallery')
+              ">
+                          <div id="mainSectionborder">
+                            <div class="row">
+                              <div><b>{{part.shortDescription}}</b></div>&nbsp;&nbsp;
+                              <div>{{part.partDisplayHeader}}</div>&nbsp;&nbsp;
+                              <div *ngIf="part.partNumber">{{part.partNumber}}</div>&nbsp;&nbsp;
+                              <div *ngIf="part.partNumber1">{{part.partNumber1}}</div>&nbsp;&nbsp;
+                              <div *ngIf="part.partNumber2">{{part.partNumber2}}</div>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-container>-->
+
+                      <div class="ign" *ngIf="data.searchSectionUID == 16">
+                        <table class="table m-b-0 tblColumnCount" style="margin: 10px;width:100%;">
+                          <tbody class="col-lg-10 col-md-10 col-sm-10">
+                            <tr *ngIf="data.searchSectionUID == 16">
+                              <th class="col-lg-2 col-md-2 col-sm-2">Funtion Name</th>
+                              <th class="col-lg-2 col-md-2 col-sm-2">Wire Color</th>
+                              <th class="col-lg-2 col-md-2 col-sm-2">Wire Location</th>
+                              <th class="col-lg-2 col-md-2 col-sm-2">Additional Note</th>
+                              <th class="col-lg-2 col-md-2 col-sm-2">Short Description</th>
+                            </tr>
+                            <tr *ngFor="let part of data.searchSectionPartDeatails;let j = index">
+                              <ng-container
+                                *ngIf="data.searchSectionUID == 16 && ((part.partDisplayHeader || '').toLowerCase() != 'warning' && (part.partDisplayHeader || '').toLowerCase() != 'banner img' && (part.partDisplayHeader || '').toLowerCase() != 'banner notes'  && (part.partDisplayHeader || '').toLowerCase() != 'picturegallery'  && (part.partDisplayHeader || '').toLowerCase() != 'notesgallery')">
+                                <td class="col-lg-2 col-md-2 col-sm-2">{{part.partDisplayHeader}}</td>
+                                <td class="col-lg-2 col-md-2 col-sm-2" *ngIf="part.partNumber">{{part.partNumber}}</td>
+                                <td class="col-lg-2 col-md-2 col-sm-2" *ngIf="part.partNumber1">{{part.partNumber1}}
+                                </td>
+                                <td class="col-lg-2 col-md-2 col-sm-2" *ngIf="part.partNumber2">{{part.partNumber2}}
+                                </td>
+                                <td class="col-lg-2 col-md-2 col-sm-2">{{part.shortDescription}}</td>
+                              </ng-container>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+
+
+                      <div *ngIf="data.searchSectionGallery.length > 0">
+                        <div class="row">
+                          <div class="works-slideshow text-center"
+                            style="width: 600px;margin-left: 100px;margin-top: 10px;">
+                            <div class="team-item">
+                              <ng-container *ngFor="let gallery of data.searchSectionGallery; let k = index">
+                                <div class="team-image">
+                                  <img src="{{gallery.image}}" class="thumb" title="{{gallery.title}}" />
+                                  <i class='fa fa-edit' *ngIf="data.searchSectionGallery[k].Edit == 'YES'"
+                                    (click)="imageEdit(gallery, data, k)"
+                                    style='font-size:12px;color:black;z-index:9999 !important;position: relative;top:-18px;left: -10px;cursor: pointer;'></i>
+                                </div>
+                              </ng-container>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <ng-container *ngFor="let notes of data.searchSectionNotes; let j = index">
+                        <div id="notesborder" *ngIf="notes">
+                          <div [innerHTML]="notes['title header']"></div>
+                          <div class="row">
+                            <div colspan="10" *ngIf="!notes.editFlag" [innerHTML]="notes.title"></div>
+                            <div *ngIf="!notes.editFlag"><i class='fa fa-edit'
+                                *ngIf="data.searchSectionNotes[j].Edit == 'YES'" (click)="noteEdit(notes)"
+                                style='font-size:14px;color:black;cursor: pointer;float: right;'></i>
+                            </div>
+                          </div>
+                          <div colspan="11" *ngIf="notes.editFlag" style="border-top: 0px solid #dadce0 !important;
+                                  ">
+                            <textarea class="textareaBorder" style="width: 93% !important; 
+                                    margin-top: 5px;" [(ngModel)]="notes.title" [ngModelOptions]="{standalone: true}"
+                              value="{{notes.title}}"></textarea>
+                            <button (click)="noteEditUpdate(notes,data,i)"
+                              class="btn btn-sm btn-primary resupdate">Update</button>
+                            <button (click)="noteEditHide(notes)" style="margin-left: 10px;"
+                              class="btn btn-sm btn-primary rescancel1">Cancel</button>
+                          </div>
+                        </div>
+                      </ng-container>
+                      <ng-container *ngFor="let document of data.searchSectionDocument; let d = index">
+                        <div>
+                          <a href="{{this.imgURL + document.path}}" target="_blank" download
+                              style="padding: 0px 0px 0px 25px;cursor: pointer !important;">{{document.name}}</a>                           
+                        </div>
+                      </ng-container>
+                      <!--<ng-container *ngFor="let document of data.searchSectionDocument; let d = index">
+                        <div *ngIf="document">
+                          <div>{{document.name}}</div>
+                          <div>
+                            <a href="{{this.imgURL +'/' + document.path}}" target="_blank" download>
+
+                              <button class="btn btn-sm btn-primary downloadmob">Download</button>
+                            </a>
+
+                          </div>
+                        </div>
+                      </ng-container>-->
+                      <div *ngIf="data.addFlag">
+                        <div style="border-top: 0px solid #dadce0 !important;">
+                          <textarea value="" style="width:80% !important;margin-left:2%;margin-top: 10px;"
+                            [(ngModel)]="data.dynamicNote" [ngModelOptions]="{standalone: true}"
+                            class="restext"></textarea>
+                        </div>
+                      </div>
+                      <div *ngIf="data.warningFlag">
+                        <div style="border-top: 0px solid #dadce0 !important;">
+                          <textarea value="" style="width:80% !important;margin-left: 2%;margin-top: 10px;"
+                            [(ngModel)]="data.dynamicWarning" [ngModelOptions]="{standalone: true}"
+                            class="restext"></textarea>
+                        </div>
+                      </div>
+                      <div *ngIf="data.imageFlag">
+                        <ng-container *ngFor="let dynamic of this.mainForm.controls['dynamicForm'][i]; let x = index">
+                          <ng-container *ngFor="let img of dynamic.get('images').controls;let y = index">
+                            <div *ngIf="!data.imageUpdateFlag"><i class="fa fa-plus"
+                                style="margin-left: 20px;cursor: pointer;" (click)="addFileImage(i)"></i> Add
+                              Files</div>
+                            <ng-container *ngFor="let files of img.get('addImage').controls;let z = index">
+                              <div colspan="12"
+                                style="border-top: 0px solid #dadce0 !important;margin-left: 2%;margin-top: 10px;">
+                                <input type="file" (change)="fileEvent($event, data, z)">
+                                <i class="fa fa-window-close" (click)="deleteFileImage(data,i,z)"></i>
+                              </div>
+                            </ng-container>
+                          </ng-container>
+                        </ng-container>
+                      </div>
+                      <div *ngIf="data.dxfSectionInputFlag">
+                        <div colspan="12" style="border-top: 0px solid #dadce0 !important;">
+                          <input type="file" style="margin: 12px 0px 1px 25px;" (change)="dxfSecfileEvent($event, data)"
+                            id="dxfSecfile">
+                          <span style="color: red !important;" class="dxfSectionInputError"
+                            *ngIf="data.dxfSectionInputError">
+                            maximum file input limit 1 MB
+                          </span>
+                          <span style="color: red !important;" class="dxfSectionInputError"
+                            *ngIf="data.dxfileTypeError">
+                            File type must be STL | DXF | PDF | XLS | SVG | CDR | AI | FBX | PLY | AMF | 3DS | DOC
+                          </span>
+                        </div>
+                      </div>
+                      <!--<div *ngIf="data.dxfSectionInputFlag">
+                        <div colspan="12" style="border-top: 0px solid #dadce0 !important;">
+                          <input type="file" accept=".Dxf, .svg, .pdf, .AI, .EPS"
+                            (change)="dxfSecfileEvent($event, data)" id="dxfSecfile">
+                          <span style="color: red !important;" class="dxfSectionInputError"
+                            *ngIf="data.dxfSectionInputError">
+                            maximum file input limit 1 MB
+                          </span>
+                        </div>
+                      </div>-->
+                      <div>
+                        <div *ngIf="data.searchSectionUID != 20" style="border-top: 0px solid #dadce0 !important;margin-left: 2%;">
+                          <button
+                            *ngIf="!data.addFlag && !data.imageFlag && !data.warningFlag && data.searchSectionNotesEditPermission =='YES' && !data.dxfSectionInputFlag"
+                            style="margin:10px;" (click)="noteAdd(data)" class="btn btn-sm btn-primary resnote">Add
+                            Note</button>
+                          <button *ngIf="data.addFlag" (click)="noteAddUpdate(data,i)"
+                            class="btn btn-sm btn-primary ressavebtn" style="margin:10px;">Save Note</button>
+                          <button *ngIf="data.addFlag" style="margin: 10px;" (click)="noteAddHide(data)"
+                            class="btn btn-sm btn-primary rescancel" style="margin:10px;">Cancel</button>
+                          <button
+                            *ngIf="!data.imageFlag && !data.addFlag && !data.warningFlag && data.searchSectionGalleryEditPermission =='YES' && !data.dxfSectionInputFlag"
+                            (click)="imageFile(data,i)" class="btn btn-sm btn-primary mobimage" style="margin:10px;">Add
+                            Image</button>
+                          <button *ngIf="data.imageFlag && !data.imageUpdateFlag" (click)="imageAddUpdate(data,i)"
+                            class="btn btn-sm btn-primary ressavebtn" style="margin:10px;">Save Image</button>
+                          <button *ngIf="data.imageUpdateFlag && data.imageFlag" (click)="imageEditUpdate(data,i)"
+                            class="btn btn-sm btn-primary" style="margin:10px;">Update Image</button>
+                          <button *ngIf="data.imageFlag" (click)="imageAddHide(data,i)"
+                            class="btn btn-sm btn-primary rescancel" style="margin:10px;">Cancel</button>
+                          <button
+                            *ngIf="!data.addFlag && !data.imageFlag && !data.warningFlag && data.warningTextEditPermission=='YES' && !data.dxfSectionInputFlag"
+                            (click)="warningAdd(data)" class="btn btn-sm btn-primary rescallout"
+                            style="margin:10px;">Add
+                            Callout</button>
+                          <button *ngIf="data.warningFlag" (click)="warningAddUpdate(data,i)"
+                            class="btn btn-sm btn-primary ressavebtn" style="margin:10px;">Save Callout</button>
+                          <button *ngIf="data.warningFlag" (click)="warningAddHide(data)"
+                            class="btn btn-sm btn-primary rescancel" style="margin:10px;">Cancel</button>
+                          <button *ngIf="!data.imageFlag && !data.addFlag && !data.warningFlag && !data.dxfSectionInputFlag  && data.searchSectionGalleryEditPermission =='YES'"
+                            (click)="uploadDocAdd(data)"
+                            class="btn btn-sm btn-primary uploadmob">Upload
+                            Document</button>
+                          <button *ngIf="data.dxfSectionInputFlag" [disabled]="!data.dxfbutton"
+                            (click)="documentUpload(data,i)" class="btn btn-sm btn-primary ressavebtn" style="margin:10px;">Save Document</button>
+                          <button *ngIf="data.dxfSectionInputFlag" (click)="docDFXAddHide(data)" class="btn btn-sm btn-primary rescancel" style="margin:10px;">Cancel</button>
+                        </div>
+                        <div *ngIf="data.searchSectionUID != 20" [attr.id]="'isave_'+i"
+                          style="text-align: left; display:none; border-top: 0px solid #dadce0 !important; height: 50px;margin-left: 3%;">
+                          <i class="fa fa-spinner fa-spin"
+                            style="font-size:24px; margin:3px;color:rgb(105,105,105);"></i>
+                        </div>
+                      </div>
+                      <div>
+                        <div *ngIf="data.searchSectionUID == 20" style="border-top: 0px solid #dadce0 !important;margin-left: 2%;">
+                          <button *ngIf="!data.dxfSectionInputFlag  && data.searchSectionGalleryEditPermission =='YES'"
+                            style="margin: 10px;" (click)="uploadDocAdd(data)"
+                            class="btn btn-sm btn-primary uploadmob">Upload
+                            Document</button>
+                          <button *ngIf="data.dxfSectionInputFlag" [disabled]="!data.dxfbutton" (click)="documentUpload(data,i)"
+                            class="btn btn-sm btn-primary ressavebtn" style="margin: 10px;">Save Document</button>
+                          <button *ngIf="data.dxfSectionInputFlag" style="margin: 10px;" (click)="docDFXAddHide(data)"
+                            class="btn btn-sm btn-primary rescancel">Cancel</button>
+                        </div>
+                        <div *ngIf="data.searchSectionUID == 20" [attr.id]="'isave_'+i"
+                          style="text-align: left; display:none; border-top: 0px solid #dadce0 !important; height: 50px;margin-left: 3%;">
+                          <i class="fa fa-spinner fa-spin"
+                            style="font-size:24px; margin:3px;color:rgb(105,105,105);"></i>
+                        </div>
+                      </div>
+                      <!--  </tbody>
+                            </table> -->
+                      <!-- </div> -->
+                      <!-- end table-responsive -->
+                    </div>
+                    <!-- </div>
+                        end panel-body -->
+                  </div>
+                  <!-- end filterDiv-body -->
+                  <!-- Start filterDiv-body -->
+                </div>
+              </ng-container>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="row" id="scroll_top">
+      <div class="col-12" id="scrolltopiconplacment" style="justify-content: flex-end;display: flex;">
+        <button class="scrolltotopbtn" style="border:none;background:none;" (click)="scroll()"><img
+            src="assets/images/up-arrow.png" width="32px" height="32px"></button>
+      </div>
+    </div>
+  </div>
+  <!-- banner images -->
+  <div class="col-lg-2 col-md-12 col-sm-12 col-sm-12 style-4" id="dynamic_heightforscroller">
+    <div class="dynamic-results">
+      <!-- Content for dynamic results -->
+      <div>
+        <div class="banner_placement" *ngIf="rightbannerImage">
+          <div *ngFor="let image of rightbannerImage">
+            <ng-container *ngIf="image.bannerURL && image.bannerURL != 'null'">
+              <a href="{{image.bannerURL}}" target="_blank">
+                <img src="{{image.imagePath}}" class="imgResponsiveMax bannersRight" alt="" width="100%" /><br /><br />
+              </a>
+            </ng-container>
+            <ng-container *ngIf="!image.bannerURL || image.bannerURL == 'null'">
+              <img src="{{image.imagePath}}" class="imgResponsiveMax bannersRight" alt="" width="100%" /><br /><br />
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" id="responsive_scrolltop">
+    <div class="col-12" id="responsivscrolltopiconplacment" style="justify-content: flex-end;display: flex;">
+      <button class="scrolltotopbtn" style="border: none;;background:none;" (click)="scroll()"><img
+          src="assets/images/up-arrow.png" width="32px" height="32px"></button>
+    </div>
+  </div>
+</div>
+<div *ngIf="alertFlag == true" id="overlay">
+  <div id="info_alert" class="alert_info alert">
+    <strong>{{alertMessage}}</strong>
+  </div>
+</div>
+<div class="bannerModal" id="adModal" style="display: none;height: 651px;">
+  <div class="modals-content">
+    <div class="row align-items-center">
+      <div class="col-12 text-right">
+        <button type="button" (click)="cancel()" class="btn btn-sm btn-danger" id="responsivebtn" style="float: right;
+      margin-right: 4px;margin-bottom: 4px;width: 8%;">Close</button>
+      </div>
+    </div>
+    <div class="modal-body" style="width: 100%; display: flex;">
+      <!-- begin row -->
+      <div class="row">
+        <div class="col-xl-12 order-xl-1">
+          <a routerLink="/home/bannerads" id="toggle" style="cursor: pointer;"><img style="width: 100%;"
+              src={{contentImage}}></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row" *ngIf="topBanner">
+  <div class="col-md-10 col-sm-12">
+    <ng-container *ngFor="let banner of topBanner">
+      <div style="margin-bottom: 10px;">
+        <ng-container *ngIf="banner.bannerURL">
+          <a href="{{banner.bannerURL}}" target="_blank">
+            <img src="{{this.imgURL + 'storage/' + banner.imagePath}}" width="468px" height="60px" />
+          </a>
+        </ng-container>
+        <ng-container *ngIf="!banner.bannerURL">
+          <img src="{{this.imgURL + 'storage/' + banner.imagePath}}" width="468px" height="60px" />
+        </ng-container>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<div class="bannerModal" id="limitmodel" style="display: none">
+  <div class="modals-content">
+    <div class="row align-items-center">
+      <div class="col-12" style="justify-content: end;display: flex;">
+        <svg style="cursor: pointer;" (click)="cancel()" xmlns="http://www.w3.org/2000/svg" width="48" height="48"
+          viewBox="0 0 24 24">
+          <path fill="red"
+            d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2m0 16H5V5h14zM17 8.4L13.4 12l3.6 3.6l-1.4 1.4l-3.6-3.6L8.4 17L7 15.6l3.6-3.6L7 8.4L8.4 7l3.6 3.6L15.6 7z" />
+        </svg>
+      </div>
+    </div>
+    <div class="modal-body" style="width: 100%;">
+      <!-- begin row -->
+      <div class="row">
+        <div class="col-12">
+          <div style="justify-content: center;display: flex;
+    justify-content: center;
+    display: flex;
+    width: 100%;
+    margin-bottom: 45px;
+    filter: drop-shadow(1px 0px 1px red);">
+            <h2 style="color: black;    align-items: center;
+    display: flex"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 128 128">
+                <circle cx="64" cy="64" r="60" fill="#98c0d0" />
+                <circle cx="64" cy="64" r="48.14" fill="#fcebcd" />
+                <path fill="#c2e3f0"
+                  d="M50.3 15.06c-6.42 1.86-15.41 4.71-25.03 16.2c-9.5 11.37-11.46 24.58-12.07 33.69c0 0-5.49 6.87-5.75 5.59c-2.07-9.95 2.11-32.19 13.04-43.95C33.21 12.91 49.75 8.06 55.73 7.15c1.03-.16-3.48 7.35-5.43 7.91" />
+                <circle cx="64" cy="64" r="45.59" fill="#fff" />
+                <path fill="none" stroke="#563428" stroke-linecap="round" stroke-miterlimit="10" stroke-width="4"
+                  d="M64 35v29" />
+                <circle cx="64" cy="64" r="5.06" fill="#563428" />
+                <path fill="none" stroke="#563428" stroke-linecap="round" stroke-miterlimit="10" stroke-width="6"
+                  d="M82.61 53.26L64.29 64" />
+                <g fill="none" stroke-miterlimit="10">
+                  <path stroke="#6596a3" stroke-width="5"
+                    d="M64 100v5m0-82v5m0 72v5m0-82v5M28 64h-5m82 0h-5m-72 0h-5m82 0h-5" />
+                  <path stroke="#b0bec5" stroke-width="3"
+                    d="m46 95.18l-2.5 4.33m41-71.02L82 32.82M46 95.18l-2.5 4.33m41-71.02L82 32.82m0 62.36l2.5 4.33m-41-71.02l2.5 4.33m36 62.36l2.5 4.33m-41-71.02l2.5 4.33M95.18 82l4.33 2.5m-71.02-41l4.33 2.5m62.36 36l4.33 2.5m-71.02-41l4.33 2.5m0 36l-4.33 2.5m71.02-41L95.18 46M32.82 82l-4.33 2.5m71.02-41L95.18 46" />
+                </g>
+              </svg>&nbsp;&nbsp;Your Company reached today's search limit</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

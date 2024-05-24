@@ -1,0 +1,363 @@
+<div *ngIf="apiFlag == true" id="overlay">
+    <div id="text">Processing...<br/><i class="fa fa-spinner fa-spin" style="font-size:24px;color:rgb(0,0,0);"></i></div>
+    <div id="info_alert" class="alert_info alert" style="display: none;">
+      <span class="closebtn" (click)="close1()">&times;</span> 
+      <strong>{{successMessage}}</strong>
+    </div>
+    <div id="info_success" class="success_info success" style="display: none;">
+      <span class="closebtn" (click)="close1()">&times;</span> 
+      <strong>{{successMessage}}</strong>
+    </div>
+  </div>
+  <div *ngIf="apiFlagModal == true" id="overlay_modal">
+    <div id="text_modal">Processing...<br/><i class="fa fa-spinner fa-spin" style="font-size:24px;color:rgb(0,0,0);"></i></div>
+    <div id="info_alert" class="alert_info alert" style="display: none;">
+      <span class="closebtn" (click)="closeModalError()">&times;</span> 
+      <strong>{{successMessage}}</strong>
+    </div>
+    <div id="info_success" class="success_info success" style="display: none;">
+      <span class="closebtn" (click)="closeModal()">&times;</span> 
+      <strong>{{successMessage}}</strong>
+    </div>
+  </div>
+  
+  <!--Country modal box-->
+  <!-- Modal content -->
+  <div class="countrymodal" id="myModal">
+    
+    <div class="modals-content">
+      
+    <div class="modal-header" style="margin-top: 10px;">
+        <h4 class="modal-title" id="modal-title">Add Country</h4>
+    </div>
+    <div class="modal-body" style="margin-top: 12px;">
+    <!-- begin row -->
+    <div class="row">
+      <div class="col-xl-12 order-xl-1">
+        <div class="card bg-secondary shadow">
+          <form [formGroup]="editcountryform">
+                  <div class="row">
+                      <div class="col-xl-12 order-xl-1">
+                        <div class="card bg-secondary shadow">
+                          
+                          <div class="card-body">
+                              <h6 class="heading-small text-muted mb-4">Country information</h6>
+                              <div class="pl-lg-4">
+                                <div class="row">
+                                  <div class="col-lg-4">
+                                    <div class="form-group">
+                                      <label class="form-control-label" for="input-countryname">Country Name <span class="text-danger">*</span></label>
+                                      <input type="text" formControlName="countryName" class="form-control form-control-alternative" placeholder="Please Enter Country Name" [ngClass]="{ 'is-invalid': submitted && e.countryName?.invalid }" required>
+                                      <div *ngIf="submitted && e.countryName?.invalid" class="invalid-feedback">
+                                        <div *ngIf="e.countryName.errors.required">Country Name is required</div>
+                                      </div>
+                                      <!--<div id="distributorName_error" style="color:red; display:none;">Distributor Name is required</div>-->
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>                               
+                             </div>                        
+                          </div>
+                          <!-- <div class="card-header bg-white border-0">
+                              <div class="row align-items-center">                          
+                                <div class="col-12 text-right"> -->
+                                    <button type="button" style="float: right;background-color: #c0c3d1;min-height: 36px; border: #c0c3d1; border-radius: 5px; color: #343643; font-family: Roboto; font-size: 14px; line-height: 20px;" (click)="cancel()" class="btn btn-sm btn-danger">Cancel</button>
+                                  <button  type="button" style="background-color: #1c3fff; min-height: 36px; border: #1c3fff; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;float:right;margin-right: 5px;" (click)="saveCountry()" class="btn btn-sm btn-primary">Save</button>
+                                <!-- </div>
+                              </div>
+                          </div> -->
+                      </div>
+                  </div>
+              </form>
+        </div>
+      </div>
+    </div>
+    </div>
+    
+  </div>
+  </div>
+  
+    <!--Country form-->
+  
+  <!-- begin row -->
+  <div class="row" style="margin-right: -20px;
+  margin-top: 3px;
+  margin-bottom: -30px;">
+      <div class="col-xl-12 order-xl-1">
+        <div class="card bg-secondary shadow">
+          <form (ngSubmit)="submitForm()" [formGroup]="form">
+                  <div class="row">
+                      <div class="col-xl-12 order-xl-1">
+                        <div class="card bg-secondary shadow">
+                          <div class="card-header bg-white border-0">
+                            <div class="row align-items-center">
+                              <div class="col-8">
+                                <h5 class="mb-0">Edit Store Details Here...</h5>
+                              </div>
+                              <div class="col-4 text-right">
+                                <button type="button" style="float: right;background-color: #c0c3d1;min-height: 36px; border: #c0c3d1; border-radius: 5px; color: #343643; font-family: Roboto; font-size: 14px; line-height: 20px;" (click)="back()" class="btn btn-sm btn-danger">Back</button>
+                                <button  type="button" style="background-color: #1c3fff; min-height: 36px; border: #1c3fff; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;float:right;margin-right: 5px;" [disabled]="clicked" (click)="submitForm()" class="btn btn-sm btn-primary">Save</button>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="card-body">
+                              <h6 class="heading-small text-muted mb-4">Store information</h6>
+                              <div class="pl-lg-4">
+                                <div class="row">
+                                  <div class="col-lg-4">
+                                    <div class="form-group">
+                                      <label class="form-control-label" for="input-sname">Store Name <span class="text-danger">*</span></label>
+                                      <input type="text" formControlName="storeName" class="form-control form-control-alternative" placeholder="Please Enter Store Name" [ngClass]="{ 'is-invalid': submitted && f.storeName.invalid }" required>
+                                      <div *ngIf="submitted && f.storeName.invalid" class="invalid-feedback">
+                                        <div *ngIf="f.storeName.errors.required">Store Name is required</div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-lg-4">
+                                    <div class="form-group focused">
+                                      <label class="form-control-label" for="input-country">Distributor Name <span class="text-danger">*</span></label>
+                                      <select (change)="getCompany($event)" formControlName="distributorName" class="form-select form-control-alternative" [ngClass]="{ 'is-invalid': submitted && f.distributorName?.invalid }" required>
+                                        <option value="">Select Distributor</option>
+                                        <option [value]="dist.distributorUID" *ngFor="let dist of distributors">{{dist.distributorName}}</option>                                                                               
+                                      </select>
+                                      <div *ngIf="submitted && f.distributorName?.invalid" class="invalid-feedback">
+                                        <div *ngIf="f.distributorName.errors.required">Distributor Name is required</div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-lg-4">
+                                    <div class="form-group focused">
+                                      <label class="form-control-label" for="input-country">Company Name <span class="text-danger">*</span></label>
+                                      <select formControlName="companyName" class="form-select form-control-alternative" [ngClass]="{ 'is-invalid': submitted && f.companyName?.invalid }" required>
+                                        <option value="">Select Company</option>
+                                        <option [value]="comp.companyUID" *ngFor="let comp of company">{{comp.companyName}}</option>                                                                               
+                                      </select>
+                                      <div *ngIf="submitted && f.companyName?.invalid" class="invalid-feedback">
+                                        <div *ngIf="f.companyName.errors.required">Company Name is required</div>
+                                      </div>
+                                    </div>
+                                  </div>                                
+                                </div>
+                                <div class="row">
+                                  <div class="col-lg-4">
+                                    <div class="form-group">
+                                      <label class="form-control-label" for="input-saddress">Store Address</label>
+                                      <input type="text" formControlName="storeAddress" class="form-control form-control-alternative" placeholder="Please Enter Store Address">
+                                    </div>
+                                  </div>
+                                  <div class="col-lg-4">
+                                    <label class="form-control-label" placeholder="">Store Primary Contact Name</label>
+                                    <input type="name" formControlName="storePrimaryContact" class="form-control" placeholder="Please Enter the Primary Contact Name">
+                                  </div>
+                                  <div class="col-lg-4">
+                                    <label class="form-control-label" placeholder="">Store Website</label>
+                                    <input type="name" formControlName="storeWebsite" class="form-control" placeholder="Please Enter Store Website">
+                                  </div>
+                                                                                              
+                                </div>
+  
+                                <div class="row">
+                                  <div class="col-lg-4">
+                                    <div class="form-group focused">
+                                      <label class="form-control-label" for="input-country">Store Country
+                                        <span>
+                                          <a href="javascript:;" (click)="addcountry()" title="Add Country"><i class="fa fa-plus-square" style="font-size: 20px;color:green;padding-left: 9px;"></i></a>
+                                        </span>
+                                      </label>
+                                      <select  (change)="countryOnchange($event)"
+                                        formControlName="storeCountry" class="form-select form-control-alternative">
+                                          <option value="">Select Country</option>
+                                          <option [value]="country.countryName" *ngFor="let country of countries">{{country.countryName}}</option>                                               
+                                        </select>
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-4">
+                                    <div class="form-group focused">
+                                      <label class="form-control-label" for="input-country">Store State</label>
+                                      <select (change)="getCity($event)" formControlName="storeState" id="stateStore" class="form-select form-control-alternative">
+                                        <option value="">Select State</option>
+                                        <option [value]="state.StateUID" *ngFor="let state of states">{{state.StateName}}</option>                                                                               
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div class="col-lg-4">
+                                    <div class="form-group focused">
+                                      <label class="form-control-label" for="input-city">Store City</label>
+                                      <select formControlName="storeCity" class="form-select form-control-alternative">
+                                        <option value="">Select City</option>
+                                        <option [value]="city.cityUID" *ngFor="let city of cities">{{city.CityName}}</option>                                                  
+                                      </select>                                   
+                                    </div>
+                                  </div>
+                                    
+                                </div>
+  
+                                <div class="row">
+                                  <div class="col-lg-4">
+                                    <div class="form-group focused">
+                                      <label class="form-control-label" for="input-Region">Store Region</label>
+                                      <!-- <input type="text" formControlName="storeRegion" placeholder="Please Enter Store Region" class="form-control"/> -->
+                                      <select formControlName="storeRegion" class="form-select form-control-alternative">
+                                        <option value="">Select Region</option>
+                                        <option [value]="region.regionName" *ngFor="let region of regions">{{region.regionName}}</option>                                                
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div class="col-lg-4">
+                                    <div class="form-group">
+                                      <label class="form-control-label" for="input-country">Store Zip code</label>
+                                      <input type="text" formControlName="storeZipcode" class="form-control" placeholder="Please Enter Store ZipCode"/>
+                                    </div>
+                                  </div>
+                                  
+                                   <div class="col-lg-4">
+                                      <div class="form-group focused">
+                                        <label class="form-control-label" for="input-email">Store Email</label>
+                                        <input type="text" formControlName="storeEmail" placeholder="Please Enter Store Email" class="form-control"/>
+                                      </div>
+                                    </div> 
+                                </div>
+                                <div class="row">
+                                  <div class="col-lg-4">
+                                    <div class="form-group">
+                                      <label class="form-control-label" for="input-phone">Store Contact Number</label>
+                                      <input type="text" formControlName="storeContact" class="form-control form-control-alternative" placeholder="Please Enter Store Contact Number">
+                                    </div>
+                                  </div> 
+                                    <div class="col-lg-4">
+                                      <div class="form-group focused">
+                                        <label class="form-control-label" for="store-branch">Branch Available</label>
+                                        <select (change)="setBranch($event)"  class="form-select" formControlName="isBranchAvailable">
+                                          <option value="">Select Branch</option>  
+                                          <option value="1">Yes</option>
+                                          <option value="0">No</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-lg-4">
+                                    <div class="form-group">                                     
+                                      <label class="form-control-label" for="store-image">Store Image</label>
+                                      <img *ngIf="prevImage" src={{prevImage}} width="300px" height="150px"><br/><br/>
+                                      <input type="file" formControlName="storeImage" (change)="fileEvent($event)" />                                   
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div *ngIf='this.form.value.isBranchAvailable==="1"'>
+                              <hr class="my-4">
+                              <!-- Address -->
+                              <h6 class="heading-small text-muted mb-4">Branch information</h6>
+                              <div class="alert alert-info alert-dismissible" *ngIf="branchInfo">
+                                <button class="close" (click)="close()">&times;</button>
+                                  {{branchDeleteMessage}}
+                              </div>
+                              <button type="button" class="btn btn-sm btn-primary" (click)="addBranch()">Add Branch +</button>
+                              <ng-container formArrayName="branches" *ngFor="let branch of form.get('branches').controls; let i = index">
+                              <div class="pl-lg-4 m-t-30" [formGroupName]="i">
+                                  <div class="row">
+                                      <div class="col-lg-6">
+                                        <div class="form-group">
+                                          <label class="form-control-label" for="input-bname">Branch Name <span class="text-danger">*</span></label>
+                                          <input type="text" formControlName="branchName" class="form-control form-control-alternative"  placeholder="Please Enter Branch Name" [ngClass]="{ 'is-invalid': submitted && branch.controls.branchName.invalid }" required />
+                                          <div *ngIf="submitted && branch.controls.branchName.invalid" class="invalid-feedback">
+                                            <div *ngIf="branch.controls.branchName.errors.required">Branch Name is required</div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="col-lg-6">
+                                        <div class="form-group">
+                                          <label class="form-control-label" for="input-baddress">Branch Address</label>
+                                          <input type="text" formControlName="branchAddress" class="form-control form-control-alternative" placeholder="Please Enter Branch Address"/>
+                                        </div>
+                                      </div>
+                                    </div> 
+  
+                                    <div class="row">
+                                      <div class="col-lg-4">
+                                        <div class="form-group focused">
+                                          <label class="form-control-label" for="input-country">Branch State</label>        
+                                          <select (change)="getBranchCity($event, i)" formControlName="branchState" [attr.id]="'stateBranch' +i" class="form-control form-control-alternative">
+                                            <option value="">Select State</option>
+                                            <option [value]="state.StateUID" *ngFor="let state of states">{{state.StateName}}</option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                      <div class="col-lg-4">
+                                        <div class="form-group focused">
+                                          <label class="form-control-label" for="input-city">Branch City</label>
+                                          <select class="form-control form-control-alternative" formControlName="branchCity">
+                                            <option value="">Select City</option>
+                                            <option [value]="city.cityUID" *ngFor="let city of this['cities' + i]">{{city.CityName}}</option>                                                                               
+                                          </select>  
+                                        </div>
+                                      </div>
+                                      <div class="col-lg-4">
+                                        <div class="form-group focused">
+                                          <label class="form-control-label" for="input-region">Branch Region</label>
+                                          <!-- <input type="text" formControlName="branchRegion" class="form-control form-control-alternative" placeholder="Please Enter branch Region"> -->
+                                          <select formControlName="branchRegion" class="form-control form-control-alternative">
+                                            <option value="">Select Region</option>
+                                            <option value="Midwest">Midwest</option>  
+                                            <option value="Mountain">Mountain</option>
+                                            <option value="West">West</option>
+                                            <option value="South">South</option>
+                                            <option value="Southeast">Southeast</option>
+                                            <option value="Southwest">Southwest</option>
+                                            <option value="Northern">Northern</option>
+                                            <option value="Northwest">Northwest</option>
+                                            <option value="Northeast">Northeast</option>
+                                            <option value="East">East</option>                                                                                                 
+                                          </select>
+                                        </div>
+                                      </div>                                    
+                                    </div>
+  
+                                    <div class="row">
+                                      <div class="col-lg-4">
+                                        <div class="form-group">
+                                          <label class="form-control-label" for="input-country">Branch Zip code</label>
+                                          <input type="text" formControlName="branchZip" class="form-control" placeholder="Please Enter Branch ZipCode"/>
+                                        </div>
+                                      </div>
+                                        <div class="col-lg-4">
+                                          <div class="form-group">
+                                          <label class="form-control-label" for="input-bemail">Branch Email</label>
+                                            <input type="text" formControlName="branchEmail" placeholder="Please Enter Branch Email" class="form-control"/>
+                                          </div>
+                                        </div>    
+                                        <div class="col-lg-4">
+                                          <div class="form-group">
+                                            <label class="form-control-label" for="input-bphone">Branch Contact Number</label>
+                                            <input type="text" formControlName="branchContact" class="form-control form-control-alternative" placeholder="Please Enter Branch Contact Numbers" >
+                                          </div>
+                                        </div> 
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-lg-12 float-right">
+                                          <div class="form-group">
+                                              <button type="button" class="btn btn-sm btn-primary" (click)="deleteBranch(i)">Delete Branch x</button>
+                                          </div>
+                                      </div>
+                                    </div>
+                                  </div> 
+                                </ng-container>                                
+                              </div> 
+                             </div>                        
+                          </div>
+                          <!-- <div class="card-header bg-white border-0">
+                              <div class="row align-items-center">                          
+                                <div class="col-12 text-right"> -->
+                                    <button type="button" style="float: right;background-color: #c0c3d1;min-height: 36px; border: #c0c3d1; border-radius: 5px; color: #343643; font-family: Roboto; font-size: 14px; line-height: 20px;" (click)="back()" class="btn btn-sm btn-danger">Back</button>
+                                  <button  type="button" style="background-color: #1c3fff; min-height: 36px; border: #1c3fff; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;float:right;margin-right: 5px;" [disabled]="clicked" (click)="submitForm()"  class="btn btn-sm btn-primary">Save</button>
+                                <!-- </div>
+                              </div>
+                          </div> -->
+                      </div>
+                  </div>
+              </form>
+        </div>
+      </div>
+  </div>
+  

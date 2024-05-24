@@ -1,0 +1,27 @@
+<div id="page-content" style="min-height: 89vh !important;">
+    <div style="text-align: center;" *ngIf="ptFlag != true">
+        <i class="fa fa-spinner fa-spin" style="font-size:24px;color:rgb(105,105,105);"></i>
+    </div>
+    <div class="table" *ngIf="ptFlag == true">
+        <table>
+            <tr>
+                <th>
+                   PT File
+                </th>
+                <th>
+                   Details
+                </th>
+            </tr>
+            <tr  *ngFor="let row of PTFiles.fileName; let i = index" >
+                <td>
+               <!--<a href="{{'https://mgorder1.abfrl.com/CCPortal/API/storage/'+ PTFiles.filePath[i]}}">{{row}}</a>-->
+               <a (click)="getFile(row)" style="cursor: pointer;">{{row}}</a>
+                </td>
+                <td>
+                 {{ removeWhitespaces(PTFiles.msqDetails[i]) }}
+                </td>
+            </tr>            
+        </table>
+        <p *ngIf="PTFiles.fileName.length == 0">No PT Files to download</p>
+    </div>
+</div>

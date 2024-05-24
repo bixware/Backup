@@ -1,0 +1,21 @@
+.icon_btn_success {
+	border: none;
+	font-size: 24px;
+	color: #5cb85c;
+	background-color: transparent !important;
+}
+.icon_btn_success:hover {
+	color: #449B44;
+}
+.handCursor {
+	cursor:pointer;
+}
+.icon_btn_danger {
+	border: none;
+	font-size: 24px;
+	color: #d9534f;
+	background-color: transparent !important;
+}
+.icon_btn_danger:hover {
+	color: #d43f3a;
+}

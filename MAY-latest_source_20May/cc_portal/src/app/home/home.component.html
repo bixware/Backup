@@ -1,0 +1,84 @@
+<div id="page-container">
+<header class="navbar navbar-inverse">
+<a href="javascript:void(0)" class="navbar-brand">
+    <img src="assets/img/fav.jpg" style="margin-top: -3px" class="logo"></a>
+	<div class="navbar-brand" style="margin-top: 4px; color: white">Customer Complaints</div>
+
+    <ul id="widgets" class="navbar-nav-custom pull-right">
+    <li class="vendoruser" style="color: white" >{{firstName}}</li>
+        <li class="divider-vertical"></li>
+        <li class="dropdown pull-right dropdown-user">
+            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/avatar.png" alt="avatar"> <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a class="dropdown-item" style="cursor: pointer;" (click)="logout()"><i class="fa fa-lock"></i> Log out</a>
+                    </li>
+                </ul>
+        </li>   
+    </ul>
+</header>
+
+<div id="inner-container">
+<aside id="page-sidebar" class="collapse navbar-collapse navbar-main-collapse">
+    <button class="nav-toggle">
+        <span class="nav-toggle__text">Toggle Menu</span>
+    </button>
+    <nav id="primary-nav">
+        <ul>
+            <!--<li>
+                <a routerLink="/home/dashboard" class="active"><i class="fa fa-fire"></i>Dashboard</a>
+            </li>-->
+            <li *ngIf="roleUID === '3'">
+                <a class="p-3 shadow" routerLinkActive="active" routerLink="/home/customer-complain" style="padding-top: 10px"><i class="fa fa-sticky-note"></i>Customer Complaints List</a>
+            </li>
+            <li *ngIf="roleUID === '3'">
+                <a class="p-3 shadow" routerLinkActive="active" routerLink="/home/addcustomercomplaints" style="padding-top: 10px" ><i class="fa fa-plus-square"></i> Add Customer Complaints</a> 
+            </li>                  
+            <li *ngIf="roleUID === '3'">
+                <a class="p-3 shadow" routerLinkActive="active" routerLink="/home/barcode generation" style="padding-top: 10px"><i class="fa fa-tag"></i>Barcode Tag Request</a>
+            </li>
+            <li *ngIf="roleUID === '3'">
+                <a class="p-3 shadow" routerLinkActive="active" routerLink="/home/barcodereqdetails" style="padding-top: 10px"><i class="fa fa-tags"></i>Barcode Tag Request Details</a>
+            </li>
+            <li *ngIf="roleUID === '3'">
+                <a class="p-3 shadow" routerLinkActive="active" routerLink="/home/ptdownload" style="padding-top: 10px"><i class="fa fa-download"></i>PT Download</a>
+            </li>
+            <li *ngIf="roleUID === '2'">
+                <a class="p-3 shadow" routerLinkActive="active" routerLink="/home/qccustomercomplaints" style="padding-top: 10px"><i class="fa fa-envelope-open-o"></i>Open Customer Complaints</a>
+            </li>
+            <li *ngIf="roleUID === '2'">
+                <a class="p-3 shadow" routerLinkActive="active" routerLink="/home/closedcustomercomplaints" style="padding-top: 10px"><i class="fa fa-envelope-o"></i>Closed Customer Complaints</a>
+            </li>
+            <li *ngIf="roleUID === '2'">
+                <a class="p-3 shadow" routerLinkActive="active" routerLink="/home/addqccuscomplaints" style="padding-top: 10px"><i class="fa fa-plus-square"></i>Add Customer Complaints</a>
+            </li>
+            <li *ngIf="roleUID === '2'">
+                <a class="p-3 shadow" routerLinkActive="active" routerLink="/home/bulk-returns" style="padding-top: 10px"><i class="fa fa-exchange"></i>Bulk Returns</a>
+            </li>
+            <!--<li *ngIf="roleUID === '2'">
+                <a class="p-3 shadow" routerLinkActive="active" routerLink="/home/addcuscomplaints" style="padding-top: 10px"><i class="fa fa-plus-square"></i>Add Customer Complaints</a>
+            </li>-->
+            <li *ngIf="roleUID === '2'">
+                <a class="p-3 shadow" routerLinkActive="active" routerLink="/home/qcreport" style="padding-top: 10px"><i class="fa fa-file"></i>QC Report</a>
+            </li>
+            <li *ngIf="roleUID === '4'">
+                <a class="p-3 shadow" routerLinkActive="active" routerLink="/home/GenerateGiftVoucher" style="padding-top: 10px"><i class="fa fa-gift"></i>Generate Gift Voucher</a>
+            </li>
+            <li *ngIf="roleUID === '5'">
+                <a class="p-3 shadow" routerLinkActive="active" routerLink="/home/barcodetagreqdetails" style="padding-top: 10px"><i class="fa fa-tags"></i>Barcode Tag Request Details</a>
+            </li>
+            <li *ngIf="roleUID === '5'">
+                <a class="p-3 shadow" routerLinkActive="active" routerLink="/home/barcodetagrequpload" style="padding-top: 10px"><i class="fa fa-upload"></i>Barcode Tag Request Upload</a>
+            </li>
+            <li *ngIf="roleUID === '6'">
+                <a class="p-3 shadow" routerLinkActive="active" routerLink="/home/retailcustomercomplaints" style="padding-top: 10px"><i class="fa fa-sticky-note"></i>Retail Customer Complaints</a>
+            </li>
+            <li *ngIf="roleUID === '7'">
+                <a class="p-3 shadow" routerLinkActive="active" routerLink="/home/lpview" style="padding-top: 10px"><i class="fa fa-download"></i>LP View</a>
+            </li>
+        </ul>
+    </nav>
+</aside>
+<router-outlet></router-outlet>
+</div>
+</div>

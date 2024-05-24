@@ -1,0 +1,183 @@
+<div *ngIf="apiFlag == true" id="overlay">
+    <div id="text">Processing...<br/><i class="fa fa-spinner fa-spin" style="font-size:24px;color:rgb(0,0,0);"></i></div>
+    <div id="info_alert" class="alert_info alert" style="display: none;">
+      <span class="closebtn" (click)="close1()">&times;</span> 
+      <strong>{{successMessage}}</strong>
+    </div>
+    <div id="info_success" class="success_info success" style="display: none;">
+      <span class="closebtn" (click)="close1()">&times;</span> 
+      <strong>{{successMessage}}</strong>
+    </div>
+  </div>
+  <!-- begin row -->
+  <div class="row">
+    <div class="col-xl-12 order-xl-1">
+      <div class="card bg-secondary shadow">
+        <form (ngSubmit)="addUser(f)" #f="ngForm">
+                <div class="row">
+                    <div class="col-xl-12 order-xl-1">
+                      <div class="card bg-secondary shadow">
+                        <div class="card-header bg-white border-0" style="height: 100px;">
+                          
+                          <div class="row align-items-center">
+                            <div class="col-lg-8 col-md-6 col-xs-6">
+                              <h5 class="mb-0">Role Based Brand Edit Details Here...</h5>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-xs-6 text-right"  style="float: right;">
+                                <!-- <button type="button" (click)="back()" class="btn btn-sm btn-danger">Back</button>
+                              <button  type="submit" [disabled]="clicked" class="btn btn-sm btn-primary">Save</button> -->
+                              <button type="button" style="background-color: #00c9fd;min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;" (click)="back()" class="btn btn-sm">Back</button>
+                            <button type="submit" style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;" [disabled]="clicked" class="btn btn-sm">Save</button>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-xs-6 text-left mb-2">
+                              <input type="radio" id="add" name="add1" (click)="add()" value="Add"><label style="padding-left: 3px;" for="add">Add</label>  
+                              <input type="radio" id="edit" name="add1" (click)="edit()" value="Edit" style="margin-left:12px;"><label style="padding-left: 3px;" for="edit">Edit</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-lg-6" >
+                              <div  class="form-inline">
+                                <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                                  <label class="col-sm-4 form-control-label" for="role">Role <span class="text-danger">*</span></label>
+                                  <select  class="form-select form-control-alternative" (change)="getUserRole($event)" [(ngModel)]="Adduser.roleUID" required #roleUID="ngModel" name="roleUID" id="roleUID" [ngClass]="{ 'is-invalid': f.submitted && roleUID.invalid }">
+                                    <option value="null">Select Role</option>
+                                    <option [value]="role.roleUID" *ngFor="let role of roles">{{role.roleName}}</option>
+                                  </select>
+                                  <div *ngIf="f.submitted && roleUID.invalid" class="invalid-feedback">
+                                    <div *ngIf="roleUID.errors.required">Role is required</div>
+                                </div> 
+                                </div>
+                                </div>
+                                </div>
+                                <div class="col-lg-6" >
+                                  <div  class="form-inline">
+                                    <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                                      <label class="col-sm-4 form-control-label" for="distributor">Distributor</label>
+                                      <select (change)="getUserDistributor($event)" class="form-select form-control-alternative" name="distributorName" id="distributorName">
+                                        <option value="">Select Distributor</option>
+                                        <option [value]="dist.distributorUID" *ngFor="let dist of distributors">{{dist.distributorName}}</option>
+                                      </select>
+                                    </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-lg-6" >
+                                    <div  class="form-inline">
+                                      <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                                        <label class="col-sm-4 form-control-label" for="company">Company</label>
+                                        <select (change)="getUserCompany($event)" class="form-select form-control-alternative" name="companyName" id="companyName">
+                                          <option value="">Select Company</option>
+                                          <option [value]="comp.companyUID" *ngFor="let comp of companyList">{{comp.companyName}}</option>
+                                        </select>
+                                      </div>
+                                      </div>
+                                      </div>
+                                      <div class="col-lg-6" >
+                                        <div  class="form-inline">
+                                          <div class="col-md-12 form-group" style="margin-bottom: 1.75rem !important;">
+                                            <label class="col-sm-4 form-control-label" for="store">Store</label>
+                                            <select (change)="getUserStore($event)" class="form-select form-control-alternative" name="storeName" id="storeuser">
+                                              <option value="">Select store</option>
+                                              <option [value]="store.storeUID" *ngFor="let store of storeList">{{store.storeName}}</option>
+                                            </select>
+                                          </div>
+                                          </div>
+                                          </div>
+                                      </div>
+                            <!-- Menu Informations -->
+                            <!-- <h6 class="heading-small text-muted mb-4">Additional information</h6> -->
+                            <div class="row">
+                              <div class="col-lg-5">
+                                <label class="form-control-label" for="store">Select Users <span class="text-danger">*</span></label>  
+                                <ul>
+                                  <li>                                  
+                                    <select multiple class="form-control" [(ngModel)]="sectionGroup.section1" required #section1="ngModel" name="section1" id="section1" [ngClass]="{ 'is-invalid': f.submitted && section1.invalid }" style="width:140px;height:100px;padding:0px 0px 0px 5px;font-size:12px !important;">
+                                      <option [value]="user.userUID" *ngFor="let user of users">{{user.firstName}} {{user.lastName}}</option>
+                                    </select> 
+                                    <div *ngIf="f.submitted && section1.invalid" class="invalid-feedback"> 
+                                      <div *ngIf="section1.errors.required">User selection is required</div>
+                                   </div>
+                                   <div *ngIf="formErrorSection1" class="text-danger" style="font-size: 11px;"> 
+                                    <div>User selection is required</div>
+                                  </div>
+                                  </li>
+                                  <li class="relative">
+                                      <input  type="button" class="section_add" value="&#8702;" (click)="swap('section1','section2')" />
+                                      <input  type="button" class="section_remove" value="&#8701;" (click)="swap('section2', 'section1')" />
+                                  </li>
+                                  <li>
+                                      <select class="form-control" [(ngModel)]="sectionGroup.section2" #section2="ngModel" style="width:140px;height:100px;padding:0px 0px 0px 5px;font-size:12px !important;" id="section2" name="section2" multiple>
+                                      </select>
+                                  </li>
+                              </ul>
+                              </div>
+                              <div class="col-lg-5" *ngIf="roleFlag == false">
+                                <label class="form-control-label" for="brand">Select Brand<span class="text-danger">*</span></label>
+                                <ul>
+                                  <li>  
+                                    <select multiple class="form-control" [(ngModel)]="sectionGroup.section3" #section3="ngModel" name="section3" id="section3" required style="width:140px;height:100px;padding:0px 0px 0px 5px;font-size:12px !important;" [ngClass]="{ 'is-invalid': f.submitted && section3.invalid }">
+                                        <option [value]="brand.brandUID" *ngFor="let brand of brands">{{brand.brandName}}</option>
+                                        <!-- <option [value]="menu.menuUID" *ngFor="let menu of menus">{{menu.menuName}}</option> -->
+                                  </select>
+                                  <div *ngIf="f.submitted && section3.invalid" class="invalid-feedback"> 
+                                    <div *ngIf="section3.errors.required">Brand selection is required</div>
+                                 </div>
+                                 <div *ngIf="formErrorSection2" class="text-danger" style="font-size: 11px;"> 
+                                  <div>Brand selection is required</div>
+                                </div>
+                                  </li>
+                                  <li class="relative">
+                                      <input  type="button" value="&#8702;" class="section_add" (click)="swap('section3','section4')" />
+                                      <input  type="button" value="&#8701;" class="section_remove" (click)="swap('section4','section3')" />
+                                  </li>
+                                  <li>
+                                      <select class="form-control" [(ngModel)]="sectionGroup.section4" #section4="ngModel" style="width:140px;height:100px;padding:0px 0px 0px 5px;font-size:12px !important;" id="section4" name="section4" multiple>
+                                      </select>
+                                  </li>
+                              </ul>
+                              </div>                            
+                            </div>
+                            <div class="row" *ngIf="roleFlag == true">
+                              <div class="col-lg-2">
+                                <button type="button" id="vDetails" class="btn " (click)="viewDetails()" style="margin-top: 20px;
+                                background-color: #00c9fd;
+                                color: #fff;">View Details</button>
+                              </div>
+                              <div class="col-lg-10" style="margin-top: 30px;color:red;" *ngIf="viewDetailsFlag == true">
+                                User selection is required
+                              </div>
+                            </div>
+                            <div class="row" *ngIf="roleFlag == true && viewDetailsGridFlag == true">
+                              <div class="col-lg-12">
+                                 <ag-grid-angular style="width: 100%; height: 45vh;padding-top:10px;"
+                                  class="ag-theme-alpine"
+                                  [rowData]="rowData"
+                                  [columnDefs]="columnDefs"
+                                  [modules]="modules"
+                                  [frameworkComponents]="frameworkComponents"
+                                  [context]="context"
+                                  (gridReady)="onGridReady($event)">
+                                  </ag-grid-angular>
+                              </div>
+                            </div> 
+                          </div>
+                      </div>
+                      <div class="card-header bg-white border-0">
+                        <div class="row align-items-center">                 
+                          <div class="col-12 text-right"  style="float: right;">
+                              <!-- <button type="button" (click)="back()" class="btn btn-sm btn-danger">Back</button>
+                            <button  type="submit" [disabled]="clicked" class="btn btn-sm btn-primary">Save</button> -->
+                            <button type="button" style="background-color: #00c9fd;min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;" (click)="back()" class="btn btn-sm">Back</button>
+                            <button type="submit" style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;" [disabled]="clicked" class="btn btn-sm">Save</button>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+            </form>
+      </div>
+    </div>
+  </div>

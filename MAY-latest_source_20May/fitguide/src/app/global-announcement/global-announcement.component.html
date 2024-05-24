@@ -1,0 +1,243 @@
+<div *ngIf="apiFlag == true" id="overlay">
+    <div id="text">Processing...<br /><i class="fa fa-spinner fa-spin" style="font-size:24px;color:rgb(0,0,0);"></i>
+    </div>
+    <div id="info_alert" class="alert_info alert responsivealert" style="display: none;">
+        <span class="closebtn" (click)="close1()">&times;</span>
+        <strong>{{successMessage}}</strong>
+    </div>
+    <div id="info_success" class="success_info success responsivesuccess" style="display: none;">
+        <span class="closebtn" (click)="close1()">&times;</span>
+        <strong>{{successMessage}}</strong>
+    </div>
+</div>
+
+<!-- begin row -->
+<div class="row">
+    <div class="col-xl-12 order-xl-1">
+        <div class="card bg-secondary shadow">
+            <div class="card-header bg-white border-0">
+                <div class="row align-items-center">
+                    <div class="col-8">
+                        <h5 class="mb-0">View Global Announcement Details Here...</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="form-group row">
+                    <div class="col-lg-12 col-xl-12">
+                        <div class="row row-space-6">
+                            <div class="col-2">
+                                <label>From Date</label><span class="text-danger">*</span>
+                                <div class="input-group input-daterange">
+                                    <input type="text" class="form-control" (click)="fromDateValidation()" name="start"
+                                        id="start" placeholder="From Date" style="text-align: left;" />
+                                </div>
+                                <span id="fd_text" style="visibility: hidden;display: none;"
+                                    class="m-l-10 text-warning"><small>Please Select
+                                        From Date</small></span>
+                            </div>
+                            <div class="col-2">
+                                <label>To Date</label><span class="text-danger">*</span>
+                                <div class="input-group input-daterange">
+                                    <input type="text" class="form-control" (click)="toDateValidation()" name="end"
+                                        id="end" placeholder="End Date" style="text-align: left;" />
+                                </div>
+                                <span id="td_text" style="visibility: hidden;display: none;"
+                                    class="m-l-10 text-warning"><small>Please Select
+                                        To Date</small></span>
+                            </div>
+                        </div>
+                        <div class="row row-space-6" style="padding-top: 15px;">
+                            <div class="col-10">
+                                <label class="col-sm-5 form-control-label" for="input-last-name">Announcement Message
+                                    <span class="text-danger">*</span></label>
+                                <textarea name="announcement" [(ngModel)]="message"
+                                    (change)="announcementValidation($event)" placeholder="Please enter announcement"
+                                    class="form-control" rows="3" cols="50"></textarea>
+                                <span id="message_text" style="visibility: hidden;display: none;"
+                                    class="m-l-10 text-warning"><small>Please Enter Announcement Message</small></span>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="m-b-10 m-t-20">
+                            <button id="vsearch" (click)="getAnnouncementDetails()" type="button" class="btn"
+                                style="background-color: #00c9fd; color: #fff;">Add</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="part_details">
+                    <div class="row no-margin">
+                        <div class="col-lg-12 col-xs-12 col-sm-12 no-padding table-responsive">
+                            <h4>Current Announcement</h4>
+                            <br />
+                            <table class="col-xs-3 view_part" width="100%">
+                                <tbody>
+                                    <tr>
+                                        <th>Announcement</th>
+                                        <th>From Date</th>
+                                        <th>To Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    <td  colspan="4" *ngIf="currentAnnouncementList.length===0"> No Records found</td>
+                                    <tr *ngFor="let announcement of currentAnnouncementList;let i = index">
+                                        <td>{{announcement.announcementContent}}</td>
+                                        <td>{{announcement.startDate}}</td>
+                                        <td>{{announcement.endDate}}</td>
+                                        <td> <i (click)="edit(announcement)" class="ri-file-edit-fill"
+                                                title="Edit Announcement"
+                                                style="cursor:pointer;font-size:20px;color: #026680;"></i>&nbsp;&nbsp;
+                                            <i (click)="delete(announcement)" class="ri-delete-bin-5-fill"
+                                                title="Delete Announcement"
+                                                style="cursor:pointer;font-size:20px;color: #d80c0c;margin-right: -8px;"></i>
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <br /><br />
+                <div class="row" id="part_details">
+                    <div class="row no-margin">
+                        <div class="col-lg-12 col-xs-12 col-sm-12 no-padding table-responsive">
+                            <h4>Old Announcement</h4>
+                            <br />
+                            <table class="col-xs-3 view_part" width="100%">
+                                <tbody>
+                                    <tr>
+                                        <th>Announcement</th>
+                                        <th>From Date</th>
+                                        <th>To Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    <td  colspan="4" *ngIf="oldAnnouncementList.length===0"> No Records found</td>
+                                    <tr *ngFor="let announcement of oldAnnouncementList;let i = index">
+                                        <td>{{announcement.announcementContent}}</td>
+                                        <td>{{announcement.startDate}}</td>
+                                        <td>{{announcement.endDate}}</td>
+                                        <td> <i (click)="archive(announcement)" class="ri-archive-fill"
+                                                style="cursor:pointer; font-size: 20px; margin-left: 10px;color: #026680;"
+                                                title="Archive Announcement"></i>&nbsp;&nbsp;</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <br /><br />
+            </div>
+        </div>
+    </div>
+    <div class="calloutmodal" id="modalDelete">
+        <div class="modal-delete-content modalnew">
+          <!--  <div class="icon" style="cursor: pointer;"> -->
+          <a style="cursor: pointer;" (click)="closeDeleteModal()" title="Close" class="close">X</a>
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-title">Delete Announcement</h4>
+            <hr />
+          </div>
+          <div class="modal-body">
+            <p><strong>Are you sure you want to delete?</strong></p>
+          </div>
+          <br />
+          <div class="modal-footer">
+            <button type="button" (click)="closeDeleteModal()"
+              style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;float:right"
+              class="btn btn-sm btn-danger">Cancel</button>&nbsp;&nbsp;
+            
+            <button type="button" (click)="deleteAnnouncement()"
+              style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;float:right;margin-right: 5px;"
+              class="btn btn-sm btn-primary" id="buttons">Ok</button>
+          </div>
+        </div>
+      </div>
+      <div class="calloutmodal" id="modalArchive">
+        <div class="modal-delete-content modalnew">
+          <!--  <div class="icon" style="cursor: pointer;"> -->
+          <a style="cursor: pointer;" (click)="closeArchiveModal()" title="Close" class="close">X</a>
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-title">Archive Announcement</h4>
+            <hr />
+          </div>
+          <div class="modal-body">
+            <p><strong>Are you sure you want to Archive?</strong></p>
+          </div>
+          <br />
+          <div class="modal-footer">
+            <button type="button" (click)="closeArchiveModal()"
+              style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;float:right"
+              class="btn btn-sm btn-danger">Cancel</button>&nbsp;&nbsp;
+            
+            <button type="button" (click)="archiveAnnouncement()"
+              style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;float:right;margin-right: 5px;"
+              class="btn btn-sm btn-primary" id="buttons">Ok</button>
+          </div>
+        </div>
+      </div>
+      <div class="calloutmodal" id="modalEdit">
+        <div class="modal-edit-content modalnew">
+          <!--  <div class="icon" style="cursor: pointer;"> -->
+          <a style="cursor: pointer;" (click)="closeEditModal()" title="Close" class="close">X</a>
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-title">Edit Announcement</h4>
+            <hr />
+          </div>
+          <div class="modal-body">
+            <div class="form-group row">
+                <div class="col-lg-12 col-xl-12">
+                    <div class="row row-space-6">
+                        <div class="col-4">
+                            <label>From Date</label><span class="text-danger">*</span>
+                            <div class="input-group input-daterange">
+                                <input type="text" class="form-control" (click)="fromDateValidation()" name="editStart"
+                                    id="editStart" placeholder="From Date" style="text-align: left;" />
+                            </div>
+                            <span id="edit_fd_text" style="visibility: hidden;display: none;"
+                                class="m-l-10 text-warning"><small>Please Select
+                                    From Date</small></span>
+                        </div>
+                        <div class="col-4">
+                            <label>To Date</label><span class="text-danger">*</span>
+                            <div class="input-group input-daterange">
+                                <input type="text" class="form-control" (click)="toDateValidation()" name="editEnd"
+                                    id="editEnd" placeholder="End Date" style="text-align: left;" />
+                            </div>
+                            <span id="edit_td_text" style="visibility: hidden;display: none;"
+                                class="m-l-10 text-warning"><small>Please Select
+                                    To Date</small></span>
+                        </div>
+                    </div>
+                    <div class="row row-space-6" style="padding-top: 15px;">
+                        <div class="col-10">
+                            <label class="col-sm-5 form-control-label" for="input-last-name">Announcement Message
+                                <span class="text-danger">*</span></label>
+                            <textarea name="announcement" [(ngModel)]="editMessage"
+                                (change)="announcementValidation($event)" placeholder="Please enter announcement"
+                                class="form-control" rows="3" cols="50"></textarea>
+                            <span id="edit_message_text" style="visibility: hidden;display: none;"
+                                class="m-l-10 text-warning"><small>Please Enter Announcement Message</small></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <br />
+          <div class="modal-footer">
+            <button type="button" (click)="closeEditModal()"
+              style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;float:right"
+              class="btn btn-sm btn-danger">Cancel</button>&nbsp;&nbsp;
+            
+            <button type="button" (click)="editAnnouncement()"
+              style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;float:right;margin-right: 5px;"
+              class="btn btn-sm btn-primary" id="buttons">Ok</button>
+          </div>
+        </div>
+      </div>
+</div>
+
+
+
+
+
+<!-- end row -->

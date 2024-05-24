@@ -1,0 +1,34 @@
+<div id="page-content" style="min-height: 89vh !important;">
+    <div class="row">
+        <div class="col-lg-12">
+            <form [formGroup]="form">
+                <div style="display: inline;float:left;margin-top: 5px;">Enter Trip Sheet Number:  <span class="red">* </span>: &nbsp;</div>                
+                <div style="display: inline;float:left;">
+                    <input type="text" formControlName="tripcode" class="form-control" style= "width:200px;">
+                    <div *ngIf="submitted && f.tripcode.errors.required" class="red">Trip Sheet Number is required</div>
+                </div>
+                <div style="display: inline;float:left;">
+                    <button type="button" (click)="search()" class="btn btn-success">Search</button>
+                </div>
+            </form>
+        </div>             
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div *ngIf="loader == true"><img src="assets/img/loader.gif" width="100px" height="100px"/></div>
+            <table class="table" *ngIf="LPFiles.fileName.length > 0 && display == true && loader != true">
+                <tr>
+                    <th>
+                        LP Files
+                    </th>
+                </tr>
+                <tr  *ngFor="let row of LPFiles.fileName; let i = index" >
+                    <td>
+                        <a href="https://mgorder1.abfrl.com/CCPortal/assets/tripSheet_files/{{row}}" download>{{row}}</a>
+                    </td>
+                </tr>            
+            </table>
+            <p *ngIf="nofiles == true">No LP Files to download</p>
+        </div>
+    </div>
+</div>

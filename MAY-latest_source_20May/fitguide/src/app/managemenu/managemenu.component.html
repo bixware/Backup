@@ -1,0 +1,279 @@
+<div *ngIf="apiFlag == true" id="overlay">
+  <div id="text">Processing...<br /><i class="fa fa-spinner fa-spin" style="font-size:24px;color:rgb(0,0,0);"></i>
+  </div>
+  <div id="info_alert" class="alert_info alert" style="display: none;">
+    <span class="closebtn" (click)="close1()">&times;</span>
+    <strong>{{successMessage}}</strong>
+  </div>
+  <div id="info_success" class="success_info success" style="display: none;">
+    <span class="closebtn" (click)="close1()">&times;</span>
+    <strong>{{successMessage}}</strong>
+  </div>
+</div>
+
+<!-- begin row -->
+<div class="row">
+  <div class="col-xl-12">
+    <!-- begin panel -->
+    <div class="panel panel-inverse" style="margin: 0px !important;">
+
+      <!-- begin panel-heading -->
+      <div class="panel-heading">
+        <div class="row">
+         <!--  <div class="col-lg-12">
+
+          
+          <div class="col-lg-8">
+            <div style="margin-left: 30px;">
+              <label>Quick Filter :</label><input type="text" class="agform"
+                placeholder="Filter quickly..." (keyup)="quickSearch()" [(ngModel)]="searchValue">
+            </div>
+
+          </div>
+          
+          <div class="col-lg-4">
+              <a (click)="AddMenu()" class="button btn-xs icon_btn_primary" title="Add New Menu"  ><i class="fe-plus me-1"
+                  style="padding: 7px 9px 7px 0px;
+                          border-radius: 5px;
+                          color: #fff;font-size: 16px;
+                          border-color: #00c9fd;
+                          background-color:#00c9fd;
+                          cursor:pointer;">Add New</i></a>
+          </div>
+          
+        </div> -->
+        <div class="col-12">
+          <div class="page-title-boxnew">
+              <div class="style-module-titleWrap-mfvE" data-e2e="headerContentBlock">
+                
+                  <label>Quick Filter :</label><input type="text" class="agform"
+                    placeholder="Filter quickly..." (keyup)="quickSearch()" [(ngModel)]="searchValue">
+                
+              </div>
+
+          <div class="style-module-actions-t2Ea mt-2" data-e2e="headerActionsBlock">
+            <a (click)="AddMenu()" class="button btn-xs icon_btn_primary" title="Add New Menu"  ><i class="fe-plus me-1"
+              style="padding: 7px 9px 7px 0px;
+                      border-radius: 5px;
+                      color: #fff;font-size: 16px;
+                      border-color: #00c9fd;
+                      background-color:#00c9fd;
+                      cursor:pointer;">Add New</i></a>
+ 
+          </div>
+
+
+          </div>
+      </div>
+      </div>
+    </div>
+      <div class="panel-body">
+        <!-- <label>Quick Filter :</label> &nbsp;&nbsp;&nbsp;<input type="text" class="agform" placeholder="Filter quickly..." (keyup)="quickSearch()" [(ngModel)]="searchValue"><br/> -->
+        <ag-grid-angular id="ag_grid" style="width:100%;height: 62vh;" class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs"
+          [modules]="modules" [animateRows]="true" [frameworkComponents]="frameworkComponents"
+          (gridReady)="onGridReady($event)" [pagination]="true" [gridOptions]="gridOptions">
+        </ag-grid-angular>
+      </div>
+
+
+      <!-- end panel-body -->
+    </div>
+    <!-- end panel -->
+  </div>
+</div>
+
+
+<div class="calloutmodal" id="modalAddmenu">
+  <div class="modals-content">
+    <!--  <div class="icon" style="cursor: pointer;"> -->
+    
+    <!-- <div style="float:right"> -->
+
+    <!--  </div>
+        </div> -->
+    <div class="modal-header">
+      <a style="cursor: pointer;z-index: 1 !important;" (click)="close1()" title="Close" class="close">X</a>
+    </div>
+     
+    <div class="modal-body" style="overflow-x:hidden;overflow-y: auto;">
+      <div class="row">
+        <div class="col-xl-12 order-xl-1">
+          <!-- <div class="card-body" style="height: 100vh; max-height: 50%; width: auto; margin-left: -50px;
+                    margin-right: -40px;margin-top: -20px;"> -->
+          <!-- <div class="card-header bg-white border-0" style= "background-color:#fff !important; "> -->
+          <form [formGroup]="form">
+            <!-- <div class="row">
+                                  <div class="col-xl-12 order-xl-1"> -->
+            <!-- <div class="card bg-secondary shadow"> -->
+            <!-- <div class="card-header bg-white border-0">
+                                        <div class="row align-items-center">
+                                          <div class="col-8">
+                                            <h5 class="mb-0">Add Menu Details Here...</h5>
+                                          </div>
+                                          <div class="col-4 text-right">
+                                            <button type="button" (click)="back()" class="btn btn-sm btn-danger">Back</button>
+                                            <button type="button" [disabled]="clicked" (click)="addMenu()" class="btn btn-sm btn-primary">Save</button>
+                                          </div>
+                                        </div>
+                                      </div> -->
+            <!-- <div class="card-body"> -->
+            <!-- <h6 class="heading-small text-muted mb-4">Add Menu information</h6> -->
+            <div class="pl-lg-4" style="height: 62vh;">
+              <div class="row align-items-center">
+                <div class="col-lg-8 col-md-6 col-xs-6">
+                  <h5 class="modal-title" id="modal-title">Add / Edit Menu Details Here...</h5>
+                </div>
+                  <div class="col-lg-4 col-md-6 col-xs-6 text-right" style="float: right;">
+                    <button type="button" (click)=" close1()"
+                    style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+                    class="btn btn-sm btn-danger">Back</button>&nbsp;&nbsp;
+                  <button *ngIf="editFlag == false" type="button" (click)="addMenu()"
+                    style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+                    class="btn btn-sm btn-primary">Save</button>
+                    <button *ngIf="editFlag == true" type="button" (click)="editMenu()"
+                    style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+                    class="btn btn-sm btn-primary">Save</button>
+                  
+                </div>
+              </div>
+              
+              <div class="row mb-2">
+                <div class="col-lg-6">
+                <div  class="form-inline">
+                  <div class="col-md-12 form-group" style="margin-bottom: 0.75rem !important;">
+                    <label class=" col-sm-4 form-control-label" for="input-mname">Menu Name <span
+                        class="text-danger">*</span></label>
+                    <input type="text" formControlName="menuName" class="form-control form-control-alternative"
+                      placeholder="Please Enter Menu Name" [ngClass]="{ 'is-invalid': submitted && f.menuName.invalid }"
+                      required>
+                    <div *ngIf="submitted && f.menuName.invalid" class="invalid-feedback">
+                      <div *ngIf="f.menuName.errors.required">Menu Name is required</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-inline">
+                  <div class="col-md-12 form-group">
+                    <label class="col-sm-4 form-control-label" for="input-murl">Menu URL <span
+                        class="text-danger">*</span></label>
+                    <input type="text" formControlName="menuURL" class="form-control form-control-alternative"
+                      placeholder="Please Enter Menu URL" [ngClass]="{ 'is-invalid': submitted && f.menuURL.invalid }"
+                      required>
+                    <div *ngIf="submitted && f.menuURL.invalid" class="invalid-feedback">
+                      <div *ngIf="f.menuURL.errors.required">Menu URL is required</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </div>
+              <div class="row mb-2">
+                <div class="col-lg-6">
+                  <div class="form-inline">
+                  <div class="col-md-12 form-group" style="margin-bottom: 0.75rem !important;">
+                    <label class="col-sm-4 form-control-label" for="input-ielink">Is External Link<span
+                        class="text-danger">*</span></label>
+                    <select class="form-select form-control-alternative" formControlName="isExternalLink"
+                      [ngClass]="{ 'is-invalid': submitted && f.isExternalLink.invalid }" required>
+                      <option value="">Select Link Option</option>
+                      <option value="0">Yes</option>
+                      <option value="1">No</option>
+                    </select>
+                    <div *ngIf="submitted && f.isExternalLink.invalid" class="invalid-feedback">
+                      <div *ngIf="f.isExternalLink.errors.required">isExternalLink is required</div>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-inline">
+                  <div class="col-md-12 form-group">
+                    <label class="col-sm-4 form-control-label" for="input-pMenu">Parent Menu<span
+                        class="text-danger">*</span></label>
+                    <select class="form-select form-control-alternative"
+                      (change)='setCustomValidators(f.parentMenu.value)' formControlName="parentMenu"
+                      [ngClass]="{ 'is-invalid': submitted && f.parentMenu.invalid }" required>
+                      <option value="">Select Menu Option</option>
+                      <option value="1">Yes</option>
+                      <option value="0">No</option>
+                    </select>
+                    <div *ngIf="submitted && f.parentMenu.invalid" class="invalid-feedback">
+                      <div *ngIf="f.parentMenu.errors.required">Parent Menu is required</div>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mb-2">
+                
+                <div class="col-lg-6">
+                  <div class="form-inline">
+                  <div class="col-md-12 form-group" *ngIf="f.parentMenu.value == '1'">
+                    <label class="col-sm-4 form-control-label" for="menu-image">Menu Icon <span
+                        class="text-danger">*</span></label>
+                    <input type="text" formControlName="menuIcon" class="form-control form-control-alternative"
+                      placeholder="icon name" />
+                    <!--
+                                                    [ngClass]="{ 'is-invalid': submitted && f.menuIcon.invalid }" required
+                                                    <div *ngIf="submitted && f.menuIcon.invalid" class="invalid-feedback">
+                                                    <div *ngIf="f.menuIcon.errors.required">Menu Icon is required</div>
+                                                  </div> -->
+                  </div>
+                  <div class="col-md-12 form-group" *ngIf="f.parentMenu.value == '0'">
+                    <label class="col-sm-4 form-control-label" for="input-pMenu">Choose Parent Menu<span
+                        class="text-danger">*</span></label>
+                    <select class="form-select form-control-alternative" formControlName="ParentMenuDetails"
+                      [ngClass]="{ 'is-invalid': submitted && f.ParentMenuDetails.invalid }" required>
+                      <option value="">Select Parent Section</option>
+                      <option [value]="pmenu.menuUID" *ngFor="let pmenu of parents">{{pmenu.menuName}}</option>
+                    </select>
+                    <div *ngIf="submitted && f.ParentMenuDetails.invalid" class="invalid-feedback">
+                      <div *ngIf="f.ParentMenuDetails.errors.required">Parent Section is required</div>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-check" class="col-lg-12">
+                  <ng-container formArrayName="options" *ngFor="let role of roles; let i = index">
+                    <span [formGroupName]="i" style="display: inline-block;">
+                      <input type="checkbox" [checked]="role.checked" id="{{'role' + i}}" [value]="role.roleUID" formControlName="option"
+                        (change)="onCheckboxChange(role,$event)">
+                      <label class="rolecheckbox">{{role.roleName}}</label>
+                    </span>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+            <!-- </div> -->
+            <!-- </div> -->
+            <!-- <div class="card-header bg-white border-0">
+                                      <div class="row align-items-center">
+                                        <div class="col-12 text-right">
+                                          <button type="button" (click)="back()" class="btn btn-sm btn-danger">Back</button>
+                                          <button type="button" [disabled]="clicked" (click)="addMenu()" class="btn btn-sm btn-primary">Save</button>
+                                          <button type="button" (click)=" close1()"
+                    style="background-color: #c0c3d1; min-height: 36px; border: #c0c3d1; border-radius: 5px; color: #343643; font-family: Roboto; font-size: 14px; line-height: 20px;float:right"
+                    class="btn btn-sm btn-danger">Back</button>&nbsp;&nbsp;
+                <button type="button" (click)="addMenu()"
+                    style="background-color: #1c3fff; min-height: 36px; border: #1c3fff; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;float:right;margin-right: 5px;"
+                    class="btn btn-sm btn-primary">Save</button>
+                                        </div>
+                                      </div>
+                                    </div> -->
+            <!-- </div>
+                                </div> -->
+          </form>
+          <!-- </div> -->
+          <!-- </div> -->
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>

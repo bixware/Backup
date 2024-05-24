@@ -1,0 +1,153 @@
+.style-module-page-UXT9 {
+    background-color: var(--gray-100);
+    margin-left: 0px;
+    min-height: calc(100vh - 66px)!important;
+}
+
+b, strong {
+    color: #6559CA;
+    /* font-weight: 500; */
+    font-size: 22px;
+}
+		.style-module-pageHeader-sO3T{
+			top:-24px;
+		}
+		.navbar-custom{height:65px;}
+		@media (min-width: 992px)
+		{
+		body[data-layout-mode=two-column] .navbar-custom
+				{
+					left:60px!important;
+				}
+		} 
+		.cardh{
+			padding:10px;
+			padding-bottom:0px;
+			
+		}
+		.offcanvas-header{ display:none; }
+
+.screen-darken{
+	height: 100%;
+	width:0%;
+	z-index: 30;
+	position: fixed;
+	top: 0;
+	right: 0;
+	opacity:0;
+	visibility:hidden;
+	background-color: rgba(34, 34, 34, 0.6);
+	transition:opacity .2s linear, visibility 0.2s, width 2s ease-in;
+}
+
+.screen-darken.active{
+	z-index:10; 
+	transition:opacity .3s ease, width 0s;
+    opacity:1;
+    width:100%;
+    /*visibility:visible;*/
+}
+
+@media only screen and (max-width: 375px) {
+	.container-fluid{
+	  /* width: 100%; */
+	  text-align:left;
+	}
+  }
+
+@media all and (max-width: 991px) {
+	
+	.offcanvas-header{ display:block; }
+
+	.mobile-offcanvas{
+		visibility: hidden;
+		transform:translateX(-100%);
+	    border-radius:0; 
+		display:block;
+	    position: fixed;
+	    top: 0; left:0;
+	    height: 100%;
+	    z-index: 1200;
+	    width:80%;
+	    overflow-y: scroll;
+	    overflow-x: hidden;
+	    transition: visibility .3s ease-in-out, transform .3s ease-in-out;
+	}
+
+	.mobile-offcanvas.show{
+		visibility: visible;
+    	transform: translateX(0);
+	}
+	.mobile-offcanvas .container, .mobile-offcanvas .container-fluid{
+		display: block;
+	}
+
+}	
+.mobile-svg {
+    width: 25px;
+}
+
+.widget-stats .stats-link a,
+.widget.widget-stats .stats-link a {
+    display: block;
+    margin: 15px -15px -15px;
+    padding: 7px 15px;
+    background: rgba(0, 0, 0, .4);
+    text-align: right;
+    color: rgba(255, 255, 255, .7);
+    text-decoration: none
+}
+
+.widget-stats .stats-link a:focus,
+.widget-stats .stats-link a:hover,
+.widget.widget-stats .stats-link a:focus,
+.widget.widget-stats .stats-link a:hover {
+    background: rgba(0, 0, 0, .6);
+    color: #fff
+}
+
+#calendar_basic0{
+		
+	
+	height: 170px !important;
+}
+
+/* @media (min-width: 280px) and (max-width: 990px) {
+	#calendar_basic0{
+		
+		overflow-x: auto;
+		overflow-y: hidden;
+		height: 100px !important;
+	}
+	#calendar_basic1{
+		
+		overflow-x: auto;
+		overflow-y: hidden;
+		
+	}
+} */
+@media only screen and (min-width: 320px) and (max-width: 990px){
+	
+	
+	#calendar_basic0{
+		
+		overflow-x: auto;
+		overflow-y: hidden;
+		
+	}
+	#calendar_basic1{
+		
+		overflow-x: auto;
+		overflow-y: hidden;
+		
+	}
+	
+	
+	}
+
+	.leaflet-container {
+		height: 300px;
+		width: 100%;
+		max-width: 100%;
+		max-height: 300px;
+	}

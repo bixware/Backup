@@ -1,0 +1,215 @@
+<div id="page-content" style="min-height: 89vh !important;">
+    <!-- Navigation info -->
+    
+    <form [formGroup]="form" class="form-horizontal form-box remove-margin">
+        <!-- Form Header -->
+        <div class="form">  
+        <!-- Form Content -->
+        <div class="form-box-content">
+            <div class="row">
+                <div class="col-lg-3"> 
+                    <div class="form-group">
+                    <label class="control-label col-md-8">Receipt Date : &nbsp;</label>
+                    <div class="input-group date input-datepicker">
+                        <input type="date" formControlName="ReceiptDate" id="ReceiptDate" class="form-control" style="width: 40px; height:30px;" >
+                    </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                    <label class="control-label col-md-6" for="val_date">Serial No :&nbsp;&nbsp;</label>
+                    <div class="input-group" style="width:180px;">
+                        <input type="text" formControlName="SerialNo" class="form-control" name="SerialNo">
+                    </div> 
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                <div class="form-group">
+                  <div class="row"> 
+                    <div class="col-lg-2">  <label class="control-label">Store :&nbsp;</label></div>
+                
+                    <div class="col-lg-2">
+                        <div class="input-group" style="margin-top:-5px; margin-left:-35px;">
+                            <input type="text" formControlName="StoreNo" class="form-control" name="Store">
+                        </div>
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="input-group" style="margin-top:-5px;  margin-left:15px; ">
+                            <input type="text"  formControlName="StoreName" class="form-control">
+                        </div>
+                    </div>
+
+                    </div>
+                </div> 
+                </div>
+                
+            </div>
+
+            <div class="row">
+                <div class="col-lg-3"> 
+                    <div class="form-group">
+                    <label class="control-label col-md-8">Style code :&nbsp;</label>
+                    <div class="input-group" style="width:180px;">
+                        <input type="text" formControlName="Stylecode" class="form-control" name="Stylecode">
+                    </div>
+                    </div>
+                </div>
+                <div class="col-lg-2"> 
+                    <div class="form-group">
+                    <label class="control-label col-md-2">Sleeve :&nbsp;</label>
+                    <div class="input-group" style="width:120px;">
+                        <input type="text" formControlName="Sleeve" class="form-control" name="Sleeve">
+                    </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                    <label class="control-label col-md-3">Size :&nbsp;</label>
+                    <div class="input-group" style="width:120px;">
+                        <input type="text" formControlName="Size" class="form-control" name="Size">
+                    </div>
+                    </div>
+                </div> 
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="form-group">
+                    <label class="control-label col-md-6">Customer Name :&nbsp;</label>
+                    <div class="input-group" style= width:250px;>
+                        <input type="text" formControlName="CustomerName" class="form-control" name="CustomerName">
+                    </div>
+                    </div>
+                </div> 
+                <div class="col-lg-3">
+                    <div class="form-group">
+                    <label class="control-label col-md-6">Customer Mobile :&nbsp;</label>
+                    <div class="input-group" style= width:250px;>
+                        <input type="text" formControlName="CustomerMobile" class="form-control" name="CustomerMobile">
+                    </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                    <label class="control-label col-md-6">Address :&nbsp;</label>
+                    <div class="input-group" style= width:500px;>
+                        <input type="text" formControlName="Address" class="form-control" name="Address">
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                    <label class="control-label col-md-6">Customer Comments :&nbsp;</label>
+                    <div class="input-group" style= width:700px;>
+                        <input type="text" formControlName="CustomerComments" class="form-control" name="CustomerComments">
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="form-group">
+                    <label class="control-label col-md-6" >Bill No : &nbsp;</label>
+                    <div class="input-group">
+                        <input type="text" formControlName="BillNo"  class="form-control" name="BillNo">
+                    </div>
+                </div>
+                </div>
+                <div class="col-lg-3"> 
+                    <div class="form-group">
+                    <label class="control-label col-md-6">Bill Date : &nbsp;</label>
+                    <div class="input-group date input-datepicker">
+                        <input type="date" formControlName="BillDate" id="BillDate" class="form-control" style="width: 150px; height:30px" >
+                    </div>
+                    </div> 
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                    <label class="control-label col-md-6" >Garment MRP : &nbsp;</label>
+                    <div class="input-group">
+                        <input type="text" formControlName="GarmentMRP"  class="form-control" name="GarmentMRP">
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="form-group">
+                    <label class="control-label col-md-6" >No of washes : &nbsp;</label>
+                    <div class="input-group">
+                        <input type="text" formControlName="Noofwashes" class="form-control" name="Noofwashes" style="width: 50px;">
+                    </div>
+                    </div> 
+                </div>
+                <div class="col-lg-8">
+                    <div class="form-group">
+                        <label class="control-label col-md-6" >CCA Comments : &nbsp;</label>
+                        <div class="input-group">
+                            <input type="text" formControlName="CCAComments" class="form-control" name="CCAComments" style="width:520px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label class="control-label col-md-6" >Courier name : &nbsp;</label>
+                        <div class="input-group">
+                            <input type="text" formControlName="Couriername" class="form-control" name="Couriername">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label class="control-label col-md-6" >Airway Bill No :&nbsp;</label>
+                        <div class="input-group">
+                            <input type="text" formControlName="AirwayBillNo" class="form-control" name="AirwayBillNo">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label class="control-label col-md-6" >LR Date :&nbsp;</label>
+                        <div class="input-group date input-datepicker">
+                            <input type="date" formControlName="LRDate" name="LRDate" class="form-control" style="width: 40px; height:30px;" >
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-6">Rejection Reason :&nbsp;</label>
+                        <div class="input-group" style= width:700px;>
+                            <input type="text" formControlName="RejectionReason" class="form-control" name="RejectionReason">
+                        </div>
+                       <br/> <p id="reject" style="color:red; display:none;">It's mandatory to fill Reject Reason for returning back to Store</p>
+                    </div>
+                </div>
+            </div>
+                
+            <div class="form-group form-actions"style= "padding-bottom:5px; margin-top:25px;">
+                    <button type="button" (click)="returntostore()" class="btn btn-success">Return to Store</button> 
+                    <button type="button" (click)="confirminwards()" class="btn btn-success" style="margin-right: 20px;">Confirm Inwards</button>
+                    <button type="button" (click)="back()" class="btn btn-success" style="margin-right: 15px;">Back</button>
+            </div>
+
+        </div> 
+        </div>
+        <!-- END Form Content -->
+    </form>
+</div>
+<footer>
+    <div class="footer">
+        <p>Copyrights &copy;2022. ABFRL Customer Complaints</p>
+    </div>
+</footer>

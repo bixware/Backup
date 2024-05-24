@@ -1,0 +1,118 @@
+<div *ngIf="apiFlag == true" id="overlay">
+    <div id="text">Processing...<br/><i class="fa fa-spinner fa-spin" style="font-size:24px;color:rgb(0,0,0);"></i></div>
+    <div id="info_alert" class="alert_info alert" style="display: none;">
+      <span class="closebtn" (click)="close1()">&times;</span> 
+      <strong>{{successMessage}}</strong>
+    </div>
+    <div id="info_success" class="success_info success" style="display: none;">
+      <span class="closebtn" (click)="close1()">&times;</span> 
+      <strong>{{successMessage}}</strong>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+            
+                 <div class="style-module-formGroup-fo3l">
+    <div class="col-md-12 col-sm-12 search_place">
+      <div class="m-t-30">
+  
+          <div class="col-lg-10 col-xl-10 p-l-10">
+            <form [formGroup]="form">
+           <!--  <div class="row">
+              <div class="col-12">
+                <h3 class="page-header" style="line-height:50px;">Part Callout Conversion</h3>
+              </div>
+            </div> -->
+            
+            <div class="row">
+  
+              <div class="col-lg-3 col-md-3 col-xs-3 m-t-10" id="brand_list_hide">
+                <select class="form-select" name="listBrand" id="listBrand" (change)="getPart($event)" formControlName="brandList" 
+                  style="height:30px;padding:0px 0px 0px 5px;font-size:12px !important;">
+                  <option value="">Select Brand</option>
+                  <option [value]="brand.brandUID" *ngFor="let brand of brands">{{brand.brandName}}</option>
+                </select>
+                <span id="b_text" style="visibility: hidden;display: none;" class="m-l-10 text-warning"><small>Select
+                    Brand</small></span>
+                   <!--  <div *ngIf="submitted && f.brandList?.invalid"  style="display:block!important;"  class="invalid-feedback">
+                      <div *ngIf="f.brandList.errors.required">brandList is required</div>
+                    </div> -->
+              </div>
+            </div>
+              <div class="row">
+              <div class="col-lg-3 col-xs-3 col-md-3 m-t-10" id="part_list_hide">
+                <select class="form-select" name="listPart" id="listPart" (change)="getCallout($event)" formControlName="partList"
+                  style="height:30px;padding:0px 0px 0px 5px;font-size:12px !important; margin-top: 10px;">
+                  <option value="">Select Part</option>
+                  <option [value]="part.partUID" *ngFor="let part of parts">{{part.partNumber}}</option>
+                </select>
+                <span id="p_text" style="visibility: hidden;display: none;" class="m-l-10 text-warning"><small>Select
+                    Part</small></span>
+                    <!-- <div *ngIf="submitted && f.partList?.invalid"  style="display:block!important;"  class="invalid-feedback">
+                      <div *ngIf="f.partList.errors.required">partList is required</div>
+                    </div> -->
+              </div>
+            
+            </div>
+            <div class="row">
+            <div class="col-lg-8 text-left">
+                
+                <input type="radio" id="alert-danger" name="color1" (click)="changeColor1()" value="alert alert-danger" checked/>
+                <label style="padding-top: 8px;padding-left: 2px;" for="alert-danger">Blue&nbsp;&nbsp;</label>  
+                
+                <input type="radio" id="alert-primary" name="color1" (click)="changeColor1()" value="alert alert-primary">
+                <label style="padding-top: 8px;padding-left: 2px;" for="alert-primary">Yellow&nbsp;&nbsp;</label>
+                
+                <input type="radio" id="alert-success" name="color1" (click)="changeColor1()" value="alert alert-success">
+                <label style="padding-top: 8px;padding-left: 2px;" for="alert-success">Red&nbsp;&nbsp;</label>  
+                
+                <input type="radio" id="alert-warning" name="color1" (click)="changeColor1()" value="alert alert-warning">
+                <label style="padding-top: 8px;padding-left: 2px;"for="alert-warning">Pink&nbsp;&nbsp;</label>
+                
+                <input type="radio" id="alert-dark" name="color1" (click)="changeColor1()" value="alert alert-dark">
+                <label style="padding-top: 8px;padding-left: 2px;" for="alert-dark">Green</label>  
+                </div>
+            </div>
+            
+
+            <div class="table-responsive">
+                <table class="table m-b-0 tblColumnCount">
+                <tbody>
+                <tr>
+                <td colspan="12" style="border-top: 0px solid #dadce0 !important;padding: 0px;width: 100% !important;">
+                  <textarea value="" id="Callout" class="form-control" style="margin-top: 25px;" formControlName="callOut"></textarea>
+                </td>
+                
+                  <!-- <span id="c_text" style="visibility: hidden;display: none;" class="m-l-10 text-warning"><small>Select
+                    Part</small></span> -->
+                
+                <!--<div id="callout_error" style="color:red; display:none;margin-top: 62px;
+                margin-left: -840px;">Callout is required to update the vehicle</div>-->
+                </tr>
+                </tbody>
+                </table>
+            </div>
+        
+           
+            <div class="row">
+                <div class="col-lg-4" style="margin-top: 18px"> 
+                <button type="button" (click)="convertparttoCallout()" class="btn btn-sm btn-primary">Convert Part into Callout</button>
+                </div>   
+            </div> 
+        </form>
+          </div>
+       
+      </div>
+    
+    </div>
+    
+  </div>
+            </div>
+          </div>
+    
+        </div>
+                  </div>
+

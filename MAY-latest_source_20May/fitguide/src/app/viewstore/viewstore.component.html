@@ -1,0 +1,90 @@
+<!-- begin row -->
+<div class="row">
+    <div class="col-xl-12 order-xl-1">
+      <div class="card bg-secondary shadow">
+          <div class="card-header bg-white border-0">
+              <div class="row align-items-center">
+                 <div class="col-8">
+                   <h5 class="mb-0">View Store Details Here...</h5>
+                 </div>
+                 <div class="col-4 text-right">
+                     <!-- <button (click)="back()" type="button" class="btn btn-sm btn-danger">Back</button> -->
+                     <button type="button" style="float: right;background-color: #c0c3d1;min-height: 36px; border: #c0c3d1; border-radius: 5px; color: #343643; font-family: Roboto; font-size: 14px; line-height: 20px;" (click)="back()" class="btn btn-sm btn-danger">Back</button>
+                 </div>
+               </div>
+             </div>
+        <div class="card-body">          
+            <h6 class="heading-small text-muted mb-4">Store information</h6>
+            <div class="pl-lg-4">
+             <div class="row no-margin">
+                  <table width="100%" class="store_details">
+                      <tbody>
+                          <tr>
+                              <th>Store Name</th>
+                              <th>Distributor Name</th>
+                              <th>Company Name</th>
+                              <th>Store Primary Contact Name</th>                              
+                          </tr>
+                          <tr>
+                              <td>{{storeDetails.storeName}}</td>                               
+                              <td>{{storeDetails.distributorName}}</td>
+                              <td>{{storeDetails.companyName}}</td>
+                              <td>{{storeDetails.storePrimaryContactName}}</td>
+                          </tr>
+                          <tr>
+                              <th>Store Address</th>
+                              <th>Store Email</th>
+                              <th>Store Contact</th>                                
+                              <th>Store State</th>                                                           
+                          </tr>
+                          <tr>
+                              <td>{{storeDetails.storeAddress}}</td>
+                              <td>{{storeDetails.storeEmail}}</td>
+                              <td>{{storeDetails.storeContact}}</td>
+                              <td>{{storeDetails.storeState}}</td>
+                                                            
+                          </tr>
+                          <tr>
+                              <th>Store Country</th>
+                              <th>Store Region</th> 
+                              <th>Store City</th>
+                              <th>Store Zip</th>                                                             
+                          </tr>
+                          <tr>
+                              <td>{{storeDetails.storeCountry}}</td>
+                              <td>{{storeDetails.storeRegion}}</td>
+                              <td>{{storeDetails.storeCity}}</td>
+                              <td>{{storeDetails.storeZipcode}}</td>
+                          </tr>
+                          <tr colspan="4">
+                              <th>Store Website</th>
+                              <th>Store Image</th>
+                          </tr>
+                          <tr>
+                              <td>{{storeDetails.storeWebsite}}</td>
+                              <td colspan="4">
+                                  <div *ngIf="imageFlag == true" class="dropdown">
+                                      Image
+                                     <div class="dropdown-content">
+                                      <img src="{{prevImage}}" class="imgResponsiveMax" alt="" height="150px" width="250px" />
+                                     </div>
+                                   </div>
+                              </td>
+                          </tr>
+                      </tbody>
+                      </table>           
+              </div>
+            </div>
+        </div>
+        <!-- <div class="card-header bg-white border-0">
+          <div class="row align-items-center">  
+             <div class="col-12 text-right">
+                 <button type="button" style="float: right;background-color: #c0c3d1;min-height: 36px; border: #c0c3d1; border-radius: 5px; color: #343643; font-family: Roboto; font-size: 14px; line-height: 20px;" (click)="back()" class="btn btn-sm btn-danger">Back</button>
+             </div>
+           </div>
+         </div> -->
+      </div>
+    </div>
+</div>
+
+<!-- end row -->  

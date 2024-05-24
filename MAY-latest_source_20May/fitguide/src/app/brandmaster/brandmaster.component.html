@@ -1,0 +1,572 @@
+<div *ngIf="apiFlag == true" id="overlay">
+    <div id="text">Processing...<br /><i class="fa fa-spinner fa-spin" style="font-size:24px;color:rgb(0,0,0);"></i>
+    </div>
+    <div id="info_alert" class="alert_info alert" style="display: none;">
+        <span class="closebtn" (click)="close1()">&times;</span>
+        <strong>{{successMessage}}</strong>
+    </div>
+    <div id="info_success" class="success_info success" style="display: none;">
+        <span class="closebtn" (click)="close1()">&times;</span>
+        <strong>{{successMessage}}</strong>
+    </div>
+</div>
+<!-- begin row -->
+<div class="row">
+    <div class="col-xl-12">
+        <!-- begin panel -->
+        <div class="panel panel-inverse" style="margin: 0px !important;">
+            <!-- begin panel-heading -->
+            <div class="panel-heading">
+                <div class="row">
+                    <!-- <div class="col-xl-3">
+                    <h4 class="panel-title">Brand Master</h4>
+                    </div> -->
+                   <!--  <div class="col-xl-5">
+                        <div style="margin-left: 30px;">
+                            <label>Quick Filter :</label> &nbsp;&nbsp;&nbsp;<input type="text" class="agform" placeholder="Filter quickly..." (keyup)="quickSearch()" [(ngModel)]="searchValue"/>
+                        </div>
+                    </div> -->
+                    <!-- <div class="col-xl-7" style="margin-top: 18px;">                    
+                      <div style="float:right;margin-right: 30px;">
+                        <a (click)="addBrandModal()" style="cursor: pointer;" class="icon_btn_success" title="Add Brand"><i class="fa fa-plus-square" style="font-size: 32px; color:green;"></i></a>
+                      </div>
+                      <div style="float:right;margin-top: 10px;margin-right: 10px;">
+                        <label>Archive :</label> &nbsp;
+                        <input type="checkbox" (click)="clickEvent()" class="form control" style="margin-right:6px;" id="archive">
+                      </div>
+                      <div *ngIf="roleUID == 6 || roleUID == 1" style="float: right;margin-top: 4px;margin-right: 10px;">
+                        <button style="border: 1px solid #cccccc;" (click)="onBtnExport()">Download CSV export file</button>
+                    </div>
+                    </div> -->
+                    <!-- <div class="col-12">
+                        <div class="page-title-boxnew">
+                            <div class="style-module-titleWrap-mfvE filtermbview" data-e2e="headerContentBlock">
+                                <label>Quick Filter :</label> &nbsp;&nbsp;&nbsp;<input type="text" class="agform" placeholder="Filter quickly..." (keyup)="quickSearch()" [(ngModel)]="searchValue"/>
+                            </div>
+                            <div class="style-module-actions-t2Ea mt-2 stylebuttons" data-e2e="headerActionsBlock">
+                                <a (click)="addBrandModal()" style="cursor: pointer;" class="icon_btn_success" title="Add Brand"><i class="fa fa-plus-square" style="font-size: 32px; color:green;"></i></a>
+                                <label>Archive :</label> &nbsp;
+                                <input type="checkbox" (click)="clickEvent()" class="form control" style="margin-right:6px;" id="archive"> 
+                                <div *ngIf="roleUID == 6 || roleUID == 1">
+                                    <button style="border: 1px solid #cccccc;" (click)="onBtnExport()">Download CSV export file</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="col-12">
+                        <div class="page-title-boxnew">
+                            <div class="style-module-titleWrap-mfvE" data-e2e="headerContentBlock">
+                               
+                                <label>Quick Filter :</label><input type="text" class="agform"
+                                  placeholder="Filter quickly..." (keyup)="quickSearch()" [(ngModel)]="searchValue">
+                              
+                            </div>
+              
+                        <div class="style-module-actions-t2Ea mt-2 stylebuttons"  data-e2e="headerActionsBlock">
+                            <a (click)="addBrandModal()" style="cursor: pointer;" class="icon_btn_success" title="Add Brand"><i class="fa fa-plus-square" style="font-size: 32px; color:green;"></i></a>&nbsp;&nbsp;
+                          <label style="padding:5px;">Archive :</label>
+                          <input type="checkbox" (click)="clickEvent()" class="form control" style="margin-right:6px;margin-bottom: 2px;" id="archive">
+                          
+                          
+                             <button style="border: 1px solid #cccccc;" class="downloadcsv" (click)="onBtnExport()">Download CSV export file</button>
+                <!-- <button class="style-module-btn-dck8 style-module-btn_primary-x7pK style-module-btn_m-yQoV"   data-e2e="saveCompanyChanges" type="button">Save
+                </button> -->
+                        </div>
+              
+              
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end panel-heading -->
+            <!-- begin panel-body -->
+            <div class="panel-body">               
+                <ag-grid-angular id="ag_grid" style="width: 100%; height: 63vh;"
+                    class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs" [modules]="modules"
+                    [tooltipShowDelay]="tooltipShowDelay" [animateRows]="true"
+                    [frameworkComponents]="frameworkComponents" (gridReady)="onGridReady($event)" [pagination]="true"
+                    [gridOptions]="gridOptions">
+                </ag-grid-angular>
+            </div>
+            <!-- end panel-body -->
+        </div>
+        <!-- end panel -->
+    </div>
+</div>
+
+<!-- Edit modal popup -->
+<div class="calloutmodal" id="modalEditbrand">
+    <div class="modals-content editbrand">
+        <!-- <div class="icon" (click)="cancelEdit()" style="cursor: pointer;"> -->
+            <!-- <i style="font-size:23px !important; float:right; margin-top: -37px; margin-right:-37px;" title="Close" class="fa fa-window-close"></i> -->
+            <!-- <a (click)="cancelEdit()" style="cursor: pointer;" title="Close" class="close">X</a> -->
+            <!-- <div style="float:right"> -->
+        
+            <!-- </div> -->
+       <!--  </div> -->
+        <div class="modal-header">
+            <a (click)="cancelEdit()" style="cursor: pointer;" title="Close" class="close">X</a>
+           <!--  <h4 class="modal-title" id="modal-title">Edit Brand Details Here...</h4>
+            <div style="float:right">
+                <button type="button" (click)="cancelEdit()"
+                style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+                class="btn btn-sm btn-danger">Back</button>&nbsp;&nbsp;
+            <button type="button" (click)="EditBrand()"
+                style="background-color: #00c9fd; min-height: 36px;  border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+                class="btn btn-sm btn-primary">Save</button>
+            </div> -->
+        </div>
+        <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden;">
+            <!-- <div class="row">
+                <div class="col-xl-12 order-xl-1">
+                    <div class="card-body">
+                        <div class="card-header bg-white border-0" style= "background-color:#fff !important;" > -->
+                        <form (ngSubmit)="EditBrand()" [formGroup]="form">
+                            <div class="pl-lg-4" style="height: 60vh;width: auto;">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-8 col-md-6 col-xs-6">
+                                      <h5 class="mb-2 header">Edit Brand Details Here...</h5>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6 col-xs-6 mb-2 text-right" style="float: right;">
+                                       <!--  <a href="users_list.php" class="btn btn-sm btn-danger">Back</a> -->
+                                       
+                                      <button (click)="cancelEdit()" style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;" type="button" class="btn btn-sm btn-danger" id="buttons">Back</button>&nbsp;&nbsp;
+                                      <button type="button" (click)="EditBrand()" style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;" name="submit" id="buttons" class="btn btn-sm btn-primary">Save</button>
+                                    </div>
+                                  </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6">
+                                        <div class="form-inline">
+                                             <div class="col-md-12 col-xs-12 form-group" style="margin-bottom: 0.75rem !important;">
+                                                <label class="col-sm-5 form-control-label" for="input-bname">Brand Name <span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text"
+                                                style="border: 1px solid #ccc;"
+                                                formControlName="brandName"
+                                                class="form-control form-control-alternative"
+                                                placeholder="Please Enter Brand Name"
+                                                [ngClass]="{ 'is-invalid': submitted && f.brandName.invalid }" required>
+                                                <div *ngIf="submitted && f.brandName.invalid" class="invalid-feedback">
+                                                    <div *ngIf="f.brandName.errors.required">Brand Name is required
+                                                    </div>
+                                                </div>
+                                             </div>
+                                        </div>
+                                   </div>
+                                   <div class="col-lg-6 col-sm-6">
+                                    <div class="form-inline">
+                                         <div class="col-md-12 col-xs-12 form-group" style="margin-bottom: 0.75rem !important;">
+                                            <label class="col-sm-5 form-control-label" for="input-phone">PHONE</label>
+                                            <input type="tel" formControlName="phone" pattern="[0-9]*"
+                                                style="border: 1px solid #ccc;"
+                                                class="form-control form-control-alternative"
+                                                placeholder="Please Enter Contact Number"
+                                                [ngClass]="{ 'is-invalid': submitted && f.phone.invalid }"
+                                                minlength="10" maxlength="10">
+                                            <div *ngIf="submitted && f.phone.invalid" class="invalid-feedback">
+                                                <div *ngIf="f.phone.errors.minlength">Phone must be at least 10
+                                                    characters</div>
+                                                <div *ngIf="f.phone.errors.pattern">Only Numbers Are Allowed</div>
+                                            </div>
+                                         </div>
+                                    </div>
+                               </div>
+                            </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-6">
+                                            <div class="form-inline">
+                                                 <div class="col-md-12 col-xs-12 form-group" style="margin-bottom: 0.75rem !important;">
+                                                    <label class="col-sm-5 form-control-label" for="input-tech-line">Tech
+                                                        Line</label>
+                                                    <input type="text" formControlName="techLine"
+                                                        style="border: 1px solid #ccc;"
+                                                        class="form-control form-control-alternative"
+                                                        placeholder="Please Enter tech line"
+                                                        >
+                                                 </div>
+                                            </div>
+                                       </div>
+                                       <div class="col-lg-6 col-sm-6">
+                                        <div class="form-inline">
+                                             <div class="col-md-12 col-xs-12 form-group" style="margin-bottom: 0.75rem !important;">
+                                                <label class="col-sm-5 form-control-label" for="input-web-address">Web
+                                                    Address<span
+                                                    class="text-danger">*</span></label>
+                                                <input type="text" formControlName="webaddress"
+                                                    class="form-control form-control-alternative"
+                                                    placeholder="Please Enter Web Address"
+                                                    style="border: 1px solid #ccc;" [ngClass]="{ 'is-invalid': submitted && f.webaddress.invalid }">
+                                                <div *ngIf="submitted && f.webaddress.invalid" class="invalid-feedback">
+                                                    <div *ngIf="f.webaddress.errors.pattern">Please enter valid Web Address</div>
+                                                </div>
+                                             </div>
+                                        </div>
+                                   </div>
+                                      
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-6">
+                                            <div class="form-inline">
+                                                 <div class="col-md-12 col-xs-12 form-group" style="margin-bottom: 0.75rem !important;">
+                                                    <label class="col-sm-5 form-control-label"
+                                                    for="input-abvreation">Abbreviation<span
+                                                        class="text-danger">*</span></label>
+                                                <input type="text" formControlName="abvreation"
+                                                    style="border: 1px solid #ccc;"
+                                                    placeholder="Please Ener Abbreveation" class="form-control form-control-alternative"
+                                                    [ngClass]="{ 'is-invalid': submitted && f.abvreation.invalid }"
+                                                    required>
+                                                <div *ngIf="submitted && f.abvreation.invalid" class="invalid-feedback" style="margin-top: 16px;   margin-left:107px;">
+                                                    <div *ngIf="f.abvreation.errors.required">Abbreviation is required
+                                                    </div>
+                                                </div>
+                                                 </div>
+                                            </div>
+                                       </div>
+                                        
+                                        <div class="col-lg-6 col-sm-6">
+                                            <div class="form-inline">
+                                                 <div class="col-md-12 col-xs-12 form-group" style="margin-bottom: 0.75rem !important;">
+                                                    <label class="col-sm-5 form-control-label" for="input-zip">Zip Code</label>
+                                                    <input type="tel" formControlName="zip" inputmode="numeric"
+                                                        style="border: 1px solid #ccc;"
+                                                        class="form-control form-control-alternative"
+                                                        placeholder="Please Enter ZipCode" class="form-control"
+                                                        pattern="^[0-9]{5}(?:-[0-9]{4})?$" minlength="5" maxlength="10"
+                                                        [ngClass]="{ 'is-invalid': submitted && f.zip.invalid }">
+                                                    <div *ngIf="submitted && f.zip.invalid" class="invalid-feedback" style="margin-top: 16px;margin-left:82px;">
+                                                        <div *ngIf="f.zip.errors.pattern">Store Zip is invalid</div>
+                                                        <div *ngIf="f.zip.errors.minlength">Store Zip should be 5 or 9 digit
+                                                        </div>
+                                                    </div>
+                                                 </div>
+                                            </div>
+                                       </div>
+                                       
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-6">
+                                            <div class="form-inline">
+                                                 <div class="col-md-12 col-xs-12 form-group" style="margin-bottom: 0.75rem !important;">
+                                                    <label class="col-sm-5 form-control-label" for="input-address">Address</label>
+                                                    <input type="text" formControlName="address"
+                                                        style="border: 1px solid #ccc;"
+                                                        inputmode="numeric" class="form-control form-control-alternative"
+                                                        placeholder="Please Enter Address"
+                                                        [ngClass]="{ 'is-invalid': submitted && f.address.invalid }">
+                                                 </div>
+                                            </div>
+                                       </div>
+                                       
+                                        <div class="col-lg-6 col-sm-6">
+                                            <div class="form-inline">
+                                                 <div class="col-md-12 col-xs-12 form-group" style="margin-bottom: 0.75rem !important;">
+                                                    <label class="col-sm-5 form-control-label" for="input-state">State</label>
+                                                    <select class="form-select form-selectsmall" formControlName="state" style="border: 1px solid
+                                                    #ccc;" 
+                                                        (change)="getCity($event)"
+                                                        [ngClass]="{ 'is-invalid': submitted && f.state.invalid }">
+                                                        <option value="">Select State</option>
+                                                        <option [value]="state.StateUID" *ngFor="let state of states">
+                                                            {{state.StateName}}</option>
+                                                    </select>
+                                                 </div>
+                                            </div>
+                                       </div>
+                                        
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-6">
+                                            <div class="form-inline">
+                                                 <div class="col-md-12 col-xs-12 form-group" style="margin-bottom: 0.75rem !important;">
+                                                    <label class="col-sm-5 form-control-label" for="input-city">City</label>
+                                                    <select class="form-select form-selectsmall"
+                                                        style="border: 1px solid #ccc;"
+                                                        formControlName="city" 
+                                                        [ngClass]="{ 'is-invalid': submitted && f.city.invalid }">
+                                                        <option value="">Select City</option>
+                                                        <option [value]="city.cityUID" *ngFor="let city of cities">
+                                                            {{city.CityName}}</option>
+                                                    </select>
+                                                 </div>
+                                            </div>
+                                       </div>
+                                       
+                                       <div class="col-lg-6 col-sm-6">
+                                        <div class="form-inline">
+                                             <div class="col-md-12 col-xs-12 form-group" style="margin-bottom: 0.75rem !important;">
+                                                <label class="form-control-label" for="brand-image">Brand Image</label>
+                                                <div class="team-image"
+                                                    style="display: block;">
+                                                    <img *ngIf="prevImage" src={{prevImage}} width="300px"
+                                                        height="150px">
+                                                   <!--  <i class="fa fa-edit"
+                                                        style="font-size: 12px; color: black; z-index: 9999 !important; position: relative; top: -18px; left: -10px; cursor: pointer;"></i> -->
+                                                </div>
+                                                <input type="file" id="imgbrand"  formControlName="brandImage"
+                                                    style="width: 78%;
+                                                    margin-left: 21%;
+                                                    /* float: right; */
+                                                    margin-top: 10px;"
+                                                    (change)="fileEvent($event)" />
+                                             </div>
+                                        </div>
+                                   </div>
+
+                                     
+                                    </div>
+
+                                    <!-- <div style="margin-left: 82%; margin-top: -70px;">
+                                        <a href="#close">
+                                            <button class="btn btn-sm btn-danger" type="button">Back</button>
+                                        </a>
+                                        <button class="btn btn-sm btn-primary" type="button" [disabled]="clicked"
+                                            (click)="EditBrand()">Update</button>
+                                    </div> -->
+                                </div>
+                         </form>
+                     <!--  </div>
+                    </div>
+                </div>
+            </div>  -->
+        </div>
+    </div>
+</div>
+<!-- Add modal popup -->
+<div class="calloutmodal" id="modalAddbrand">
+    <div class="modals-content">
+        <!-- <div class="icon" style="cursor: pointer;"> -->
+            <!-- <a (click)="cancel()" style="cursor: pointer;" title="Close" class="close">X</a> -->
+            <!-- <div style="float:right"> -->
+      
+            <!-- </div> -->
+        <!-- </div> -->
+        <div class="modal-header">
+            <a (click)="cancel()" style="cursor: pointer;" title="Close" class="close">X</a>
+           <!--  <h4 class="modal-title" id="modal-title">Add Brand Details Here...</h4>
+            <div style="float:right">
+                <button type="button" (click)="cancel()"
+                style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+                class="btn btn-sm btn-danger">Back</button>&nbsp;&nbsp;
+            <button type="button" (click)="addBrand()"
+                style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;"
+                class="btn btn-sm btn-primary">Save</button>
+            </div> -->
+        </div>
+        <div class="modal-body" style="overflow-x:hidden;overflow-y: auto;">
+            <!-- <div class="row">
+                <div class="col-xl-12 order-xl-1">
+                    <div class="card-body">
+                        <div class="card-header bg-white border-0" style= "background-color:#fff !important;"> -->
+                        <form (ngSubmit)="addBrand()" [formGroup]="addform">
+                            <div class="pl-lg-4" style="height: 60vh;margin-top: 22px;max-height: 50%; margin-left: 0px;">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-8 col-md-6 col-xs-6">
+                                      <h5 class="mb-2 header">Add Brand Details Here...</h5>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6 col-xs-6 mb-2 text-right" style="float: right;">
+                                       <!--  <a href="users_list.php" class="btn btn-sm btn-danger">Back</a> -->
+                                       
+                                      <button (click)="cancel()" style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;" type="button" class="btn btn-sm btn-danger" id="buttons">Back</button>&nbsp;&nbsp;
+                                      <button type="button" (click)="addBrand()" style="background-color: #00c9fd; min-height: 36px; border: #00c9fd; border-radius: 5px; color: #fff; font-family: Roboto; font-size: 14px; line-height: 20px;" name="submit" id="buttons" class="btn btn-sm btn-primary">Save</button>
+                                    </div>
+                                  </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6">
+                                        <div class="form-inline">
+                                        <div class="col-md-12 col-xs-12 form-group" style="margin-bottom: 0.75rem !important;">
+                                            <label class="col-sm-5 form-control-label" for="input-bname">Brand Name <span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text"
+                                                style="border: 1px solid #ccc;"
+                                                formControlName="brandName"
+                                                class="form-control form-control-alternative"
+                                                placeholder="Please Enter Brand Name"
+                                                [ngClass]="{ 'is-invalid': submitted && a.brandName.invalid }" required>
+                                                <div *ngIf="submitted && a.brandName.invalid" class="invalid-feedback">
+                                                    <div *ngIf="a.brandName.errors.required">Brand Name is required
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6">
+                                        <div class="form-inline">
+                                        <div class="col-md-12 col-xs-12 form-group" style="margin-bottom: 0.75rem !important;">
+                                            <label class="col-sm-5 form-control-label" for="input-phone">PHONE</label>
+                                            <input type="tel" formControlName="phone" pattern="[0-9]*"
+                                                style="border: 1px solid #ccc;"
+                                                class="form-control form-control-alternative"
+                                                placeholder="Please Enter Contact Number"
+                                                [ngClass]="{ 'is-invalid': submitted && a.phone.invalid }"
+                                                minlength="10" maxlength="10">
+                                            <div *ngIf="submitted && a.phone.invalid" class="invalid-feedback" style="margin-top: 16px;margin-left:82px;">
+                                                <div *ngIf="a.phone.errors.minlength">Phone must be at least 10
+                                                    characters</div>
+                                                <div *ngIf="a.phone.errors.pattern">Only Numbers Are Allowed</div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                    <div class="row">
+                                        
+                                        <div class="col-lg-6 col-sm-6">
+                                            <div class="form-inline">
+                                                <div class="col-md-12 col-xs-12 form-group" style="margin-bottom:0.75rem !important">
+                                                    <label class="col-sm-5 form-control-label" for="input-tech-line">Tech
+                                                        Line</label>
+                                                    <input type="text" formControlName="techLine"
+                                                        style="border: 1px solid #ccc;"
+                                                        class="form-control form-control-alternative"
+                                                        placeholder="Please Enter tech line"
+                                                       >
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6">
+                                            <div class="form-inline">
+                                                <div class="col-md-12 col-xs-12 form-group" style="margin-bottom:0.75rem !important">
+                                                    <label class="col-sm-5 form-control-label" for="input-web-address">Web
+                                                        Address<span
+                                                        class="text-danger">*</span></label>
+                                                    <input type="text" formControlName="webaddress"
+                                                        class="form-control form-control-alternative"
+                                                        placeholder="Please Enter Web Address"
+                                                        style="border: 1px solid #ccc;" [ngClass]="{ 'is-invalid': submitted && a.webaddress.invalid }" required>
+                                                    <div *ngIf="submitted && a.webaddress.invalid" class="invalid-feedback">
+                                                        <div *ngIf="a.webaddress.errors.pattern">Please enter valid Web Address</div>
+                                                        <div *ngIf="a.webaddress.errors.required">Web Address Required</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-6">
+                                            <div class="form-inline">
+                                                <div class="col-md-12 col-xs-12 form-group" style="margin-bottom:0.75rem !important">
+                                                    <label class="col-sm-5 form-control-label"
+                                                        for="input-abvreation">Abbreviation<span
+                                                            class="text-danger">*</span></label>
+                                                    <input type="text" formControlName="abvreation"  placeholder="Please Ener Abbreveation"
+                                                        style="border: 1px solid #ccc;"
+                                                        class="form-control form-control-alternative"
+                                                        [ngClass]="{ 'is-invalid': submitted && a.abvreation.invalid }"
+                                                        required>
+                                                    <div *ngIf="submitted && a.abvreation.invalid" class="invalid-feedback">
+                                                        <div *ngIf="a.abvreation.errors.required">Abbreviation is required
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6">
+                                            <div class="form-inline">
+                                                <div class="col-md-12 col-xs-12 form-group" style="margin-bottom:0.75rem !important">
+                                                    <label class="col-sm-5 form-control-label" for="input-zip">Zip Code</label>
+                                                    <input type="tel" formControlName="zip" inputmode="numeric"
+                                                        style="border: 1px solid #ccc;"
+                                                        class="form-control form-control-alternative"
+                                                        placeholder="Please Enter ZipCode" class="form-control"
+                                                        pattern="^[0-9]{5}(?:-[0-9]{4})?$" minlength="5" maxlength="10"
+                                                        [ngClass]="{ 'is-invalid': submitted && a.zip.invalid }">
+                                                    <div *ngIf="submitted && a.zip.invalid" class="invalid-feedback" style="margin-top: 16px;margin-left:82px;">
+                                                        <div *ngIf="a.zip.errors.pattern">Store Zip is invalid</div>
+                                                        <div *ngIf="a.zip.errors.minlength">Store Zip should be 5 or 9 digit
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-6">
+                                            <div class="form-inline">
+                                                <div class="col-md-12 col-xs-12 form-group" style="margin-bottom:0.75rem !important">
+                                                    <label class="col-sm-5 form-control-label" for="input-address">Address</label>
+                                                    <input type="text" formControlName="address"
+                                                        style="border: 1px solid #ccc;"
+                                                        inputmode="numeric" class="form-control form-control-alternative"
+                                                        placeholder="Please Enter Address"
+                                                        [ngClass]="{ 'is-invalid': submitted && a.address.invalid }">
+                                                </div>
+                                            </div>
+                                           
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6">
+                                            <div class="form-inline drop_down">
+                                                <div class="col-md-12 col-xs-12 form-group" style="margin-bottom:0.75rem !important">
+                                                    <label class="col-sm-5 form-control-label" for="input-state">State</label>
+                                                    <select class="form-select form-control-alternative" formControlName="state" style="border: 1px solid
+                                                    #ccc;" 
+                                                        (change)="getCity($event)"
+                                                        [ngClass]="{ 'is-invalid': submitted && a.state.invalid }">
+                                                        <option value="null">Select State</option>
+                                                        <option [value]="state.StateUID" *ngFor="let state of states">
+                                                            {{state.StateName}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-6">
+                                            <div class="form-inline drop_down">
+                                                <div class="col-md-12 col-xs-12 form-group" style="margin-bottom:0.75rem !important">
+                                                    <label class="col-sm-5 form-control-label" for="input-city">City</label>
+                                                    <select class="form-select form-control-alternative"
+                                                        style="border: 1px solid #ccc;"
+                                                        formControlName="city"
+                                                        [ngClass]="{ 'is-invalid': submitted && a.city.invalid }">
+                                                        <option value="null">Select City</option>
+                                                        <option [value]="city.cityUID" *ngFor="let city of cities">
+                                                            {{city.CityName}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+
+
+                                        <div class="col-lg-6 col-sm-6">
+                                            <div class="form-inline">
+                                                <div class="col-md-12 col-xs-12 form-group">
+                                                    <label class="col-sm-5 form-control-label" for="brand-image">Brand Image</label>
+                                                    <!-- <div class="team-image"
+                                                    style="display: inline-block;"> -->
+                                                    <input type="file" formControlName="brandImage" class="imageview" style="width: 78%;"
+                                                       
+                                                        (change)="fileEvent($event)" />
+                                                        <!-- </div> -->
+                                                </div>
+                                            </div>
+                                           
+                                        </div>
+                                    </div>
+
+                                    <!-- <div style="margin-left: 82%; margin-top: -70px;">
+                                        <a href="#close">
+                                            <button class="btn btn-sm btn-danger" type="button">Back</button>
+                                        </a>
+                                        <button class="btn btn-sm btn-primary" type="button" [disabled]="clicked"
+                                            (click)="EditBrand()">Update</button>
+                                    </div> -->
+                                </div>
+                         </form>
+                      <!-- </div>
+                    </div>
+                </div>
+            </div>  -->
+        </div>
+    </div>
+</div>
