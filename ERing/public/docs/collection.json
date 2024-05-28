@@ -1,0 +1,91 @@
+{
+    "variable": [
+        {
+            "id": "baseUrl",
+            "key": "baseUrl",
+            "type": "string",
+            "name": "string",
+            "value": "http:\/\/127.0.0.1:8000"
+        }
+    ],
+    "info": {
+        "name": "ERing API Documetation",
+        "_postman_id": "fbdd0d51-36eb-463a-8a06-f27907077bf2",
+        "description": "",
+        "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
+    },
+    "item": [
+        {
+            "name": "Endpoints",
+            "description": "",
+            "item": [
+                {
+                    "name": "POST api\/login",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/login",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/login"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"userName\":\"dgnclgghegbirtlfhikenqwghrzajuixxctufavlouxpwduqeveklpijktgralkybycibpgseeiwuoydvdvtdxguwssmygfozbakzdlrdwvrkoooaxlcvrsohoovnrsklrxliqktaprvlbcsaxkqtjgokuuueqqnvztrdjhtb\",\"password\":\"pmbtmyecsoqaskfnjehtzetcwnxhbbjcrjlvgciwhiyrmozcwtyqzkvjttfblbqweobppsnhfwnygcctwibljgflsbakebwjqesbaqqrswvvhbaxkwxwqyhvfzukph\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "POST api\/logout",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/logout",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/logout"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": []
+                }
+            ]
+        }
+    ],
+    "auth": {
+        "type": "bearer",
+        "bearer": [
+            {
+                "key": "Bearer",
+                "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNjY4NDExNDU0LCJleHAiOjE2Njg0MTUwNTQsIm5iZiI6MTY2ODQxMTQ1NCwianRpIjoiNUhoY1IzYkRneEt5aVoxRCIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.oOWYMnFs_vGGwj0B8-yhA19HRKeV3xS61eUZ6rREVo4",
+                "type": "string"
+            }
+        ]
+    }
+}

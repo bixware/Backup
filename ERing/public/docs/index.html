@@ -1,0 +1,675 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>ERing API Documetation</title>
+
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../docs/css/theme-default.style.css" media="screen">
+    <link rel="stylesheet" href="../docs/css/theme-default.print.css" media="print">
+
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
+
+    <link rel="stylesheet"
+          href="https://unpkg.com/@highlightjs/cdn-assets@10.7.2/styles/obsidian.min.css">
+    <script src="https://unpkg.com/@highlightjs/cdn-assets@10.7.2/highlight.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jets/0.14.1/jets.min.js"></script>
+
+    <style id="language-style">
+        /* starts out as display none and is replaced with js later  */
+            </style>
+
+    <script>
+        var baseUrl = "https://console.ering.in/backend/public";
+        var useCsrf = Boolean();
+        var csrfUrl = "/sanctum/csrf-cookie";
+    </script>
+    <script src="../docs/js/tryitout-4.2.2.js"></script>
+
+    <script src="../docs/js/theme-default-4.2.2.js"></script>
+
+</head>
+
+<body data-languages="[]">
+
+<a href="#" id="nav-button">
+    <span>
+        MENU
+        <img src="../docs/images/navbar.png" alt="navbar-image" />
+    </span>
+</a>
+<div class="tocify-wrapper">
+            <img src="logo.png" alt="logo" class="logo"  width="100%"/>
+    
+            <div class="lang-selector">
+                    </div>
+    
+    <div class="search">
+        <input type="text" class="search" id="input-search" placeholder="Search">
+    </div>
+
+    <div id="toc">
+                    <ul id="tocify-header-introduction" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="introduction">
+                    <a href="#introduction">Introduction</a>
+                </li>
+                            </ul>
+                    <ul id="tocify-header-authenticating-requests" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="authenticating-requests">
+                    <a href="#authenticating-requests">Authenticating requests</a>
+                </li>
+                            </ul>
+                    <ul id="tocify-header-configuration-api" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="configuration-api">
+                    <a href="#configuration-api">Configuration API</a>
+                </li>
+                                    <ul id="tocify-subheader-configuration-api" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="configuration-api-POSTapi-description">
+                                <a href="#configuration-api-POSTapi-description">Configuration API</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+                    <ul id="tocify-header-dashboard-api" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="dashboard-api">
+                    <a href="#dashboard-api">Dashboard API</a>
+                </li>
+                                    <ul id="tocify-subheader-dashboard-api" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="dashboard-api-POSTapi-dashboard">
+                                <a href="#dashboard-api-POSTapi-dashboard">Dashboard API</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="dashboard-api-POSTapi-getmenus">
+                                <a href="#dashboard-api-POSTapi-getmenus">Menu API</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+                    <ul id="tocify-header-login-api" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="login-api">
+                    <a href="#login-api">Login API</a>
+                </li>
+                                    <ul id="tocify-subheader-login-api" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="login-api-POSTapi-login">
+                                <a href="#login-api-POSTapi-login">Login API</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+                    <ul id="tocify-header-logout-api" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="logout-api">
+                    <a href="#logout-api">Logout API</a>
+                </li>
+                                    <ul id="tocify-subheader-logout-api" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="logout-api-POSTapi-logout">
+                                <a href="#logout-api-POSTapi-logout">Logout API</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+            </div>
+
+
+    <ul class="toc-footer" id="last-updated">
+        <li>Last updated: December 13, 2022</li>
+    </ul>
+</div>
+
+<div class="page-wrapper">
+    <div class="dark-box"></div>
+    <div class="content">
+        <h1 id="introduction">Introduction</h1>
+<p>This documentation aims to provide all the information you need to work with our API.</p>
+<aside>As you scroll, you'll see code examples for working with the API in different programming languages in the dark area to the right (or as part of the content on mobile).
+You can switch the language used with the tabs at the top right (or from the nav menu at the top left on mobile).</aside>
+<blockquote>
+<p>Base URL</p>
+</blockquote>
+<pre><code class="language-yaml">https://console.ering.in</code></pre>
+
+        <h1 id="authenticating-requests">Authenticating requests</h1>
+<p>This API is authenticated by sending an <strong><code>Authorization</code></strong> header with the value <strong><code>"Bearer {YOUR_AUTH_KEY}"</code></strong>.</p>
+<p>All authenticated endpoints are marked with a <code>requires authentication</code> badge in the documentation below.</p>
+<p>You can retrieve your token by visiting your dashboard and clicking <b>Generate API token</b>.</p>
+
+        <h1 id="configuration-api">Configuration API</h1>
+
+    
+
+                                <h2 id="configuration-api-POSTapi-description">Configuration API</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>The Purpose of the Configuration API is to provide system config details of the console</p>
+
+<span id="example-requests-POSTapi-description">
+<blockquote>Example request:</blockquote>
+
+</span>
+
+<span id="example-responses-POSTapi-description">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary>
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+x-ratelimit-limit: 60
+x-ratelimit-remaining: 58
+access-control-allow-origin: *
+ </code></pre>
+        </details>         <pre>
+
+<code class="language-json">{
+    &quot;status&quot;: true,
+    &quot;code&quot;: 200,
+    &quot;message&quot;: &quot;Success&quot;,
+    &quot;data&quot;: {
+        &quot;configuration&quot;: [
+            {
+                &quot;sysConfigUID&quot;: 1,
+                &quot;configName&quot;: &quot;Project&quot;,
+                &quot;configValue&quot;: &quot;Project_Title&quot;,
+                &quot;configDescription&quot;: &quot;E-Ring&quot;,
+                &quot;helpText&quot;: null,
+                &quot;roleUID&quot;: null,
+                &quot;isActive&quot;: &quot;1&quot;,
+                &quot;createdBy&quot;: null,
+                &quot;createdDate&quot;: null,
+                &quot;modifiedBy&quot;: null,
+                &quot;modifiedDate&quot;: null
+            },
+            {
+                &quot;sysConfigUID&quot;: 2,
+                &quot;configName&quot;: &quot;CopyRight&quot;,
+                &quot;configValue&quot;: &quot;CopyRight_Header&quot;,
+                &quot;configDescription&quot;: &quot;&copy; E-Ring&quot;,
+                &quot;helpText&quot;: null,
+                &quot;roleUID&quot;: null,
+                &quot;isActive&quot;: &quot;1&quot;,
+                &quot;createdBy&quot;: null,
+                &quot;createdDate&quot;: null,
+                &quot;modifiedBy&quot;: null,
+                &quot;modifiedDate&quot;: null
+            },
+            {
+                &quot;sysConfigUID&quot;: 3,
+                &quot;configName&quot;: &quot;CopyRight&quot;,
+                &quot;configValue&quot;: &quot;CopyRight_Detail&quot;,
+                &quot;configDescription&quot;: &quot;All Rights Reserved 2022&quot;,
+                &quot;helpText&quot;: null,
+                &quot;roleUID&quot;: null,
+                &quot;isActive&quot;: &quot;1&quot;,
+                &quot;createdBy&quot;: null,
+                &quot;createdDate&quot;: null,
+                &quot;modifiedBy&quot;: null,
+                &quot;modifiedDate&quot;: null
+            },
+            {
+                &quot;sysConfigUID&quot;: 4,
+                &quot;configName&quot;: &quot;Logo&quot;,
+                &quot;configValue&quot;: &quot;logoLight&quot;,
+                &quot;configDescription&quot;: &quot;backend/public/assets/images/LogoLight.png&quot;,
+                &quot;helpText&quot;: null,
+                &quot;roleUID&quot;: null,
+                &quot;isActive&quot;: &quot;1&quot;,
+                &quot;createdBy&quot;: null,
+                &quot;createdDate&quot;: null,
+                &quot;modifiedBy&quot;: null,
+                &quot;modifiedDate&quot;: null
+            },
+            {
+                &quot;sysConfigUID&quot;: 5,
+                &quot;configName&quot;: &quot;Logo&quot;,
+                &quot;configValue&quot;: &quot;logoIcon&quot;,
+                &quot;configDescription&quot;: &quot;backend/public/assets/images/icon.png&quot;,
+                &quot;helpText&quot;: null,
+                &quot;roleUID&quot;: null,
+                &quot;isActive&quot;: &quot;1&quot;,
+                &quot;createdBy&quot;: null,
+                &quot;createdDate&quot;: null,
+                &quot;modifiedBy&quot;: null,
+                &quot;modifiedDate&quot;: null
+            },
+            {
+                &quot;sysConfigUID&quot;: 6,
+                &quot;configName&quot;: &quot;Logo&quot;,
+                &quot;configValue&quot;: &quot;logoDark&quot;,
+                &quot;configDescription&quot;: &quot;backend/public/assets/images/LogoDark.png&quot;,
+                &quot;helpText&quot;: null,
+                &quot;roleUID&quot;: null,
+                &quot;isActive&quot;: &quot;1&quot;,
+                &quot;createdBy&quot;: null,
+                &quot;createdDate&quot;: null,
+                &quot;modifiedBy&quot;: null,
+                &quot;modifiedDate&quot;: null
+            }
+        ]
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-description" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-description"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-description"></code></pre>
+</span>
+<span id="execution-error-POSTapi-description" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-description"></code></pre>
+</span>
+<form id="form-POSTapi-description" data-method="POST"
+      data-path="api/description"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Authorization":"Bearer {YOUR_AUTH_KEY}","Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-description', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-description"
+                    onclick="tryItOut('POSTapi-description');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-description"
+                    onclick="cancelTryOut('POSTapi-description');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-description" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/description</code></b>
+        </p>
+                <p>
+            <label id="auth-POSTapi-description" hidden>Authorization header:
+                <b><code>Bearer </code></b>
+                <input type="text"
+                       name="Authorization"
+                       data-prefix="Bearer "
+                       data-endpoint="POSTapi-description"
+                       data-component="header"></label>
+        </p>
+                </form>
+
+                <h1 id="dashboard-api">Dashboard API</h1>
+
+    
+
+                                <h2 id="dashboard-api-POSTapi-dashboard">Dashboard API</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>The Purpose of the Dashboard API is to provide system config details of the console</p>
+
+<span id="example-requests-POSTapi-dashboard">
+<blockquote>Example request:</blockquote>
+
+</span>
+
+<span id="example-responses-POSTapi-dashboard">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary>
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre>
+        </details>         <pre>
+
+<code class="language-json">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-dashboard" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-dashboard"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-dashboard"></code></pre>
+</span>
+<span id="execution-error-POSTapi-dashboard" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-dashboard"></code></pre>
+</span>
+<form id="form-POSTapi-dashboard" data-method="POST"
+      data-path="api/dashboard"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Authorization":"Bearer {YOUR_AUTH_KEY}","Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-dashboard', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-dashboard"
+                    onclick="tryItOut('POSTapi-dashboard');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-dashboard"
+                    onclick="cancelTryOut('POSTapi-dashboard');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-dashboard" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/dashboard</code></b>
+        </p>
+                <p>
+            <label id="auth-POSTapi-dashboard" hidden>Authorization header:
+                <b><code>Bearer </code></b>
+                <input type="text"
+                       name="Authorization"
+                       data-prefix="Bearer "
+                       data-endpoint="POSTapi-dashboard"
+                       data-component="header"></label>
+        </p>
+                </form>
+
+                    <h2 id="dashboard-api-POSTapi-getmenus">Menu API</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>The Purpose of the Menu API is to list all the menus</p>
+
+<span id="example-requests-POSTapi-getmenus">
+<blockquote>Example request:</blockquote>
+
+</span>
+
+<span id="example-responses-POSTapi-getmenus">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary>
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre>
+        </details>         <pre>
+
+<code class="language-json">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-getmenus" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-getmenus"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-getmenus"></code></pre>
+</span>
+<span id="execution-error-POSTapi-getmenus" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-getmenus"></code></pre>
+</span>
+<form id="form-POSTapi-getmenus" data-method="POST"
+      data-path="api/getmenus"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Authorization":"Bearer {YOUR_AUTH_KEY}","Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-getmenus', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-getmenus"
+                    onclick="tryItOut('POSTapi-getmenus');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-getmenus"
+                    onclick="cancelTryOut('POSTapi-getmenus');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-getmenus" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/getmenus</code></b>
+        </p>
+                <p>
+            <label id="auth-POSTapi-getmenus" hidden>Authorization header:
+                <b><code>Bearer </code></b>
+                <input type="text"
+                       name="Authorization"
+                       data-prefix="Bearer "
+                       data-endpoint="POSTapi-getmenus"
+                       data-component="header"></label>
+        </p>
+                </form>
+
+                <h1 id="login-api">Login API</h1>
+
+    
+
+                                <h2 id="login-api-POSTapi-login">Login API</h2>
+
+<p>
+</p>
+
+<p>The Purpose of the Login API is to log into the console by generating a token that provides authentication to all the other API's</p>
+
+<span id="example-requests-POSTapi-login">
+<blockquote>Example request:</blockquote>
+
+</span>
+
+<span id="example-responses-POSTapi-login">
+            <blockquote>
+            <p>Example response (404):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary>
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+x-ratelimit-limit: 60
+x-ratelimit-remaining: 59
+access-control-allow-origin: *
+ </code></pre>
+        </details>         <pre>
+
+<code class="language-json">{
+    &quot;status&quot;: false,
+    &quot;code&quot;: 404,
+    &quot;message&quot;: &quot;User Not Found&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-login" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-login"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-login"></code></pre>
+</span>
+<span id="execution-error-POSTapi-login" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-login"></code></pre>
+</span>
+<form id="form-POSTapi-login" data-method="POST"
+      data-path="api/login"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-login', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-login"
+                    onclick="tryItOut('POSTapi-login');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-login"
+                    onclick="cancelTryOut('POSTapi-login');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-login" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/login</code></b>
+        </p>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <p>
+            <b><code>userName</code></b>&nbsp;&nbsp;
+<small>email</small>&nbsp;
+ &nbsp;
+                <input type="text"
+               name="userName"
+               data-endpoint="POSTapi-login"
+               value="nihil"
+               data-component="body" hidden>
+    <br>
+<p>The email id of the user Example backiaraj@bixware.com</p>
+        </p>
+                <p>
+            <b><code>password</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text"
+               name="password"
+               data-endpoint="POSTapi-login"
+               value="aperiam"
+               data-component="body" hidden>
+    <br>
+<p>Enter your Password Example 123456</p>
+        </p>
+        </form>
+
+                <h1 id="logout-api">Logout API</h1>
+
+    
+
+                                <h2 id="logout-api-POSTapi-logout">Logout API</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Logout API logs you out of the console application</p>
+
+<span id="example-requests-POSTapi-logout">
+<blockquote>Example request:</blockquote>
+
+</span>
+
+<span id="example-responses-POSTapi-logout">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary>
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre>
+        </details>         <pre>
+
+<code class="language-json">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-logout" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-logout"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-logout"></code></pre>
+</span>
+<span id="execution-error-POSTapi-logout" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-logout"></code></pre>
+</span>
+<form id="form-POSTapi-logout" data-method="POST"
+      data-path="api/logout"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Authorization":"Bearer {YOUR_AUTH_KEY}","Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-logout', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-logout"
+                    onclick="tryItOut('POSTapi-logout');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-logout"
+                    onclick="cancelTryOut('POSTapi-logout');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-logout" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/logout</code></b>
+        </p>
+                <p>
+            <label id="auth-POSTapi-logout" hidden>Authorization header:
+                <b><code>Bearer </code></b>
+                <input type="text"
+                       name="Authorization"
+                       data-prefix="Bearer "
+                       data-endpoint="POSTapi-logout"
+                       data-component="header"></label>
+        </p>
+                </form>
+
+            
+
+        
+    </div>
+    <div class="dark-box">
+                    <div class="lang-selector">
+                            </div>
+            </div>
+</div>
+</body>
+</html>

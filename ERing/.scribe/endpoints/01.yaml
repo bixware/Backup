@@ -1,0 +1,46 @@
+name: 'Logout API'
+description: ''
+endpoints:
+  -
+    httpMethods:
+      - POST
+    uri: api/logout
+    metadata:
+      groupName: 'Logout API'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Logout API'
+      description: 'Logout API logs you out of the console application'
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNjY4NDExNDU0LCJleHAiOjE2Njg0MTUwNTQsIm5iZiI6MTY2ODQxMTQ1NCwianRpIjoiNUhoY1IzYkRneEt5aVoxRCIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.oOWYMnFs_vGGwj0B8-yhA19HRKeV3xS61eUZ6rREVo4'
+    controller: null
+    method: null
+    route: null
+    custom: []
