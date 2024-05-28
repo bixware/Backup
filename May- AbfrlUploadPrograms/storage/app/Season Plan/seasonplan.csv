@@ -1,0 +1,11 @@
+storeCode,SAPCode,storeName,month,day,WKNo,storeTGT,TCMBDepartment,departMentTGT,subBrand,subBrandTGT,monthYear,class,classTGT
+1044,1001,PEM VALUE STORE,January,Sunday,1,22.4,Coach01,22.4,Gurunanak Enterprises,22.4,January,first,22.4
+1110,1002,AMERICAN EAGLE VALUE STORE,February,Monday,1,35.8,Coach02,35.8,SALASAR TRADING COMPANY,35.8,February,second,35.8
+1123,1003,LOUIS PHILIPPE,March,Tuesday,1,49.2,Coach03,49.2,Addon Holding Pvt. Ltd,49.2,March,first,49.2
+1130,1004,SIMON CARTER VALUE STORE,April,Wednesday,1,62.6,Coach04,62.6,P Dharmendra,62.6,April,second,62.6
+1180,1005,FOREVER 21,May,Thursday,1,76,Coach05,76,A B Traders,76,May,first,76
+1990,1006,REEBOK VALUE,June,Friday,1,89.4,Coach06,89.4,Keya Apparels,89.4,June,second,89.4
+2711,1007,ALLEN SOLLY,July,Saturday,2,102.8,Coach07,102.8,CHAITANYA STYLE HOUSE,102.8,July,first,102.8
+2801,1008,LP ALL STAR,August,Sunday,2,116.2,Coach08,116.2,Sri Lakshmi Enterprises,116.2,August,second,116.2
+2824,1009,VAN HEUSEN VALUE STORE,September,Monday,2,129.6,Coach09,129.6,Haarish Readymades,129.6,September,first,129.6
+2837,1010,AS PRIME,October,Tuesday,2,143,Coach10,143,Tejha Retail,143,October,second,143
